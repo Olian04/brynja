@@ -33,7 +33,7 @@ Paramus('url', {
   arr: [1, 2, 3, 4]
 }, state => render('root')
   .child('ul', self => self
-    .children('li', (self, i) => self
+    .children('li', state.arr.length(), (self, i) => self
       .value(`Value #${state.arr[i]}!`)
       .on('click', () => state.arr[i]++)
     )
