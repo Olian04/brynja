@@ -7,7 +7,7 @@ import { render } from 'paramus-render';
 
 Paramus('url', {
   who: 'world'
-}, state => render('root')
+}, state => render('root', self => self
   .child('div', self => self
     .id('foo')
     .class([ 'bar' ])
@@ -19,7 +19,7 @@ Paramus('url', {
       })
     )
   )
-);
+));
 
 ```
 
@@ -31,13 +31,13 @@ import { render } from 'paramus-render';
 
 Paramus('url', {
   arr: [1, 2, 3, 4]
-}, state => render('root')
+}, state => render('root', self => self
   .child('ul', self => self
     .children('li', state.arr.length(), (self, i) => self
       .value(`Value #${state.arr[i]}!`)
       .on('click', () => state.arr[i]++)
     )
   )
-);
+));
 
 ```
