@@ -8,10 +8,10 @@ import { render } from 'paramus-render';
 Paramus('url', {
   who: 'world'
 }, state => render('root')
-  .child('div', _ => _
+  .child('div', self => self
     .id('foo')
     .class([ 'bar' ])
-    .child('p', _ => _
+    .child('p', self => self
       .prop('bar', 'biz')
       .value(`Hello ${state.who}!`)
       .on('click', () => {
