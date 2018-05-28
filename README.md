@@ -22,3 +22,21 @@ Paramus('url', {
 );
 
 ```
+
+---
+
+```ts
+import { Paramus } from 'paramus';
+import { render } from 'paramus-render';
+
+Paramus('url', {
+  arr: [1, 2, 3, 4]
+}, state => render('root')
+  .child('ul', self => self
+    .children('li', (self, i) => self
+      .value(`Value #${i}!`)
+    )
+  )
+);
+
+```
