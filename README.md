@@ -43,3 +43,16 @@ Paramus('url', {
 ```
 
 WIP: https://jsfiddle.net/6g41kqLc/6/
+
+
+Context methods:
+
+.child(tagName, ctx)
+.children(tagName, count, ctx) 
+.id(value)
+.class(valuesArr)
+.name(value) 
+.value(value)
+.prop(key, value)
+.on(eventName, callback)
+.when(predicat, then_ctx, else_ctx?) 
