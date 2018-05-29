@@ -41,3 +41,5 @@ Paramus('url', {
 ));
 
 ```
+
+WIP: https://jsfiddle.net/6g41kqLc/6/
