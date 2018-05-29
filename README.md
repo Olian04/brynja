@@ -7,11 +7,11 @@ import { render } from 'paramus-render';
 
 Paramus('url', {
   who: 'world'
-}, state => render('root', self => self
-  .child('div', self => self
+}, state => render('root', ctx => ctx
+  .child('div', ctx => ctx
     .id('foo')
     .class([ 'bar' ])
-    .child('p', self => self
+    .child('p', ctx => ctx
       .prop('bar', 'biz')
       .value(`Hello ${state.who}!`)
       .on('click', () => {
@@ -31,9 +31,9 @@ import { render } from 'paramus-render';
 
 Paramus('url', {
   arr: [1, 2, 3, 4]
-}, state => render('root', self => self
-  .child('ul', self => self
-    .children('li', state.arr.length(), (self, i) => self
+}, state => render('root', ctx => ctx
+  .child('ul', ctx => ctx
+    .children('li', state.arr.length(), (ctx, i) => ctx
       .value(`Value #${state.arr[i]}!`)
       .on('click', () => state.arr[i]++)
     )
