@@ -47,6 +47,7 @@ WIP: https://jsfiddle.net/6g41kqLc/6/
 
 Context methods:
 
+```ts
 .child(tagName, ctx)
 .children(tagName, count, ctx) 
 .id(value)
@@ -55,4 +56,5 @@ Context methods:
 .value(value)
 .prop(key, value)
 .on(eventName, callback)
-.when(predicat, then_ctx, else_ctx?) 
+.when(predicat, then_ctx, else_ctx?)
+```
