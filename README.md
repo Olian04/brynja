@@ -40,8 +40,8 @@ Paramus('url', {
     )
   )
  .while(i => i < 4, (_, i) =>_
-		.child(state.tags[i])
-		.value(state.tags[i].toUpperCase()) 
+     .child(state.tags[i])
+     .value(state.tags[i].toUpperCase()) 
 	)
 ));
 
