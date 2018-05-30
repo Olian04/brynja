@@ -39,10 +39,10 @@ Paramus('url', {
       .on('click', () => state.arr[i]++)
     )
   )
- .while(i => i < 4, (_, i) =>_
-   .child(state.tags[i])
-   .value(state.tags[i].toUpperCase()) 
- )
+  .while(i => i < 4, (_, i) =>_
+    .child(state.tags[i])
+    .value(state.tags[i].toUpperCase()) 
+  )
 ));
 
 ```
