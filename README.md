@@ -57,4 +57,5 @@ Context methods:
 .prop(key, value)
 .on(eventName, callback)
 .when(predicat, then_ctx, else_ctx?)
+.while(predicat, ctx) 
 ```
