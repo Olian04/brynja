@@ -30,8 +30,7 @@ import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
 Paramus('url', {
-  arr: [1, 2, 3, 4], 
-  tags: ['a', 'b', 'c'] 
+  arr: [1, 2, 3, 4]
 }, state => render('root', _=>_
   .child('ul', _=>_
     .children('li', state.arr.length(), (_, i) =>_
@@ -39,6 +38,18 @@ Paramus('url', {
       .on('click', () => state.arr[i]++)
     )
   )
+));
+
+```
+---
+
+```ts
+import { Paramus } from 'paramus';
+import { render } from 'paramus-render';
+
+Paramus('url', {
+  tags: ['a', 'b', 'c'] 
+}, state => render('root', _=>_
   .while(i => i < 4, (_, i) =>_
     .child(state.tags[i])
     .value(state.tags[i].toUpperCase()) 
