@@ -51,8 +51,9 @@ Paramus('url', {
   tags: ['a', 'b', 'c'] 
 }, state => render('root', _=>_
   .while(i => i < 4, (_, i) =>_
-    .child(state.tags[i])
-    .value(state.tags[i].toUpperCase()) 
+    .child(state.tags[i], _=>_
+       .value(state.tags[i].toUpperCase())
+    )
   )
 ));
 
