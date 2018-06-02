@@ -17,6 +17,7 @@ export interface BuilderCTX {
     id(value: string): BuilderCTX;
     class(valuesArr: string[]): BuilderCTX;
     name(value: string): BuilderCTX;
+    peek(callback: (ctx: INode) => void): void;
 }
 
 export function buildNode(tagType: string, builder: BuilderCB) {
@@ -75,6 +76,10 @@ export function buildNode(tagType: string, builder: BuilderCB) {
         },
         name(value: string) {
             ctx.props['name'] = value;
+            return this;
+        },
+        peek(callback) {
+            callback({...ctx});
             return this;
         }
     });
