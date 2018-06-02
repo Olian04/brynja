@@ -6,7 +6,8 @@
         "declaration": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "noImplicitReturns": true
+        "noImplicitReturns": true,
+        "noImplicitThis": true
     },
     "include": [
         "src/**/*.ts"
