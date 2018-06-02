@@ -78,7 +78,7 @@ Context methods:
 // --- Control flow ops ---
 .when(predicat, then_ctx, else_ctx?)
 .while(predicat, ctx) 
-.deligate(ctx) 
+.do(ctx) 
 // ---- Effect free ops ---
 .peek(callback)
 ```
