@@ -20,7 +20,7 @@ export interface BuilderCTX {
     peek(callback: (ctx: INode) => void): void;
 }
 
-export function buildNode(tagType: string, builder: BuilderCB) {
+export function buildNode(tagType: string, builder: BuilderCB): INode {
     const ctx: INode = {
         tag: tagType,
         value: null,
