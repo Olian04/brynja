@@ -64,14 +64,19 @@ WIP: https://jsfiddle.net/6g41kqLc/10/
 Context methods:
 
 ```ts
+// --- Nesting ops ---
 .child(tagName, ctx)
 .children(tagName, count, ctx) 
+// --- Mutation ops ---
 .id(value)
 .class(valuesArr)
 .name(value) 
 .value(value)
 .prop(key, value)
 .on(eventName, callback)
+// --- Control flow ops ---
 .when(predicat, then_ctx, else_ctx?)
 .while(predicat, ctx) 
+// ---- Effects free ops ---
+.peek(callback)
 ```
