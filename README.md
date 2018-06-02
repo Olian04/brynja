@@ -80,5 +80,5 @@ Context methods:
 .while(predicat, ctx) 
 // ---- Effect free ops ---
 .peek(callback)
-.mixin(ctx) 
+.deligate(ctx) // name is TBD, mixin / call / hook / use / deligate / run 
 ```
