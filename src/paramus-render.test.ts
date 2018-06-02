@@ -17,6 +17,7 @@ describe('paramus-render', () => {
         ];
         let i = 0;
         expect(ctx).to.not.be.undefined;
+        expect(typeof ctx).to.equal('object');
         funcs.forEach(f => {
             expect(ctx).to.have.haveOwnProperty(f);
             expect(typeof ctx[f]).to.equal('function');
@@ -43,9 +44,16 @@ describe('paramus-render', () => {
                 );
             });
             it('children', () => {
+                const targetCount = 3;
+                let counter = 0;
                 render(root, _=>_ 
-                    .children('li', 3, testBuilder)
+                    .children('li', targetCount, (_, i) => {
+                        testBuilder(_);
+                        expect(i).to.equal(counter);
+                        counter++;
+                    })
                 );
+                expect(counter).to.equal(targetCount);
             });
         });
 
@@ -156,8 +164,8 @@ describe('paramus-render', () => {
                 let targetCount = 3;
                 let counter = 0;
                 render(root, _=>_ 
-                    .while(i => i < targetCount, testBuilder)
                     .while(i => i < targetCount, (_, i) => {
+                        testBuilder(_);
                         expect(i).to.equal(counter);
                         counter++;
                     })

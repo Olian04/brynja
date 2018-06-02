@@ -1,15 +1,9 @@
-export interface INode {
-    tag: string;
-    value: string | number | null;
-    events: { [key: string]: ((event: object) => void)[] };
-    props: { [key: string]: string };
-    children: INode[];
-}
+import { NodeDTO } from './node';
 
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
-    children(tagName: string, count: number, builder: BuilderCB): BuilderCTX;
+    children(tagName: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
     while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     do(builder: BuilderCB): BuilderCTX;
@@ -19,11 +13,11 @@ export interface BuilderCTX {
     id(value: string): BuilderCTX;
     class(valuesArr: string[]): BuilderCTX;
     name(value: string): BuilderCTX;
-    peek(callback: (ctx: INode) => void): BuilderCTX;
+    peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
 }
 
-export function buildNode(tagType: string, builder: BuilderCB): INode {
-    const ctx: INode = {
+export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
+    const ctx: NodeDTO = {
         tag: tagType,
         value: null,
         events: {},
@@ -37,7 +31,7 @@ export function buildNode(tagType: string, builder: BuilderCB): INode {
         },
         children(tagName, count, builder) {
             for (let i = 0; i < count; i++) {
-                ctx.children.push(buildNode(tagType, builder));
+                ctx.children.push(buildNode(tagType, _ => builder(_, i)));
             }
             return this;
         },
