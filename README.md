@@ -41,6 +41,22 @@ Paramus('url', {
 ));
 
 ```
+---
+
+```ts
+import { Paramus } from 'paramus';
+import { render } from 'paramus-render';
+
+Paramus('url', {
+  tags: ['a', 'b', 'c'] 
+}, state => render('root', _=>_
+  .while(i => i < 4, (_, i) =>_
+    .child(state.tags[i])
+    .value(state.tags[i].toUpperCase()) 
+  )
+));
+
+```
 
 WIP: https://jsfiddle.net/6g41kqLc/10/
 
@@ -57,4 +73,5 @@ Context methods:
 .prop(key, value)
 .on(eventName, callback)
 .when(predicat, then_ctx, else_ctx?)
+.while(predicat, ctx) 
 ```
