@@ -78,7 +78,7 @@ Context methods:
 // --- Control flow ops ---
 .when(predicat, then_ctx, else_ctx?)
 .while(predicat, ctx) 
+.deligate(ctx) // name is TBD, mixin / call / hook / use / deligate / run 
 // ---- Effect free ops ---
 .peek(callback)
-.deligate(ctx) // name is TBD, mixin / call / hook / use / deligate / run 
 ```
