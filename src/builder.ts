@@ -1,6 +1,6 @@
 export interface INode {
     tag: string;
-    value: any;
+    value: string | number | null;
     events: { [key: string]: ((event: object) => void)[] };
     props: { [key: string]: string };
     children: INode[];
@@ -10,14 +10,16 @@ export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
     children(tagName: string, count: number, builder: BuilderCB): BuilderCTX;
-    when(predicat: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
+    when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
+    while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
+    do(builder: BuilderCB): BuilderCTX;
     on(eventName: string, handler: (event: object) => void): BuilderCTX;
     value(value: any): BuilderCTX;
     prop(key: string, value: string): BuilderCTX;
     id(value: string): BuilderCTX;
     class(valuesArr: string[]): BuilderCTX;
     name(value: string): BuilderCTX;
-    peek(callback: (ctx: INode) => void): void;
+    peek(callback: (ctx: INode) => void): BuilderCTX;
 }
 
 export function buildNode(tagType: string, builder: BuilderCB): INode {
@@ -39,12 +41,22 @@ export function buildNode(tagType: string, builder: BuilderCB): INode {
             }
             return this;
         },
-        when(predicat: () => boolean, then_builder, else_builder = undefined) {
-            if (predicat()) {
+        when(predicate: () => boolean, then_builder, else_builder = undefined) {
+            if (predicate()) {
                 then_builder(this);
             } else if (else_builder) {
                 else_builder(this);
             }
+            return this;
+        },
+        while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void) {
+            for (let i = 0; predicate(i); i++) {
+                builder(this, i);
+            }
+            return this;
+        },
+        do(builder: BuilderCB) {
+            builder(this);
             return this;
         },
         on(eventName: string, handler: (event: object) => void) {
@@ -69,9 +81,10 @@ export function buildNode(tagType: string, builder: BuilderCB): INode {
         },
         class(valuesArr: string[]) {
             if (!('class' in ctx.props)) {
-                ctx.props['class'] = '';
+                ctx.props['class'] = valuesArr.join(' ');
+            } else {
+                ctx.props['class'] = [...ctx.props['class'].split(' '), ...valuesArr].join(' ');
             }
-            ctx.props['class'] = [...ctx.props['class'].split(' '), ...valuesArr].join(' ');
             return this;
         },
         name(value: string) {
