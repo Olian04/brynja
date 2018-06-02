@@ -1,3 +1,1 @@
 export { render } from './index';
-
-
