@@ -80,4 +80,5 @@ Context methods:
 .while(predicat, ctx) 
 // ---- Effect free ops ---
 .peek(callback)
+.mixin(ctx) 
 ```
