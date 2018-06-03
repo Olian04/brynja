@@ -25,7 +25,7 @@ export interface BuilderCTX {
     name(value: string): BuilderCTX;
     text(value: string): BuilderCTX;
     peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
-    on(eventName: string, handler: (event: Event) => void): BuilderCTX;
+    on(eventName: string, handler: (event: any) => void): BuilderCTX;
     on(eventName: MouseEvents, handler: (event: MouseEvent) => void): BuilderCTX;
     on(eventName: WheelEvents, handler: (event: WheelEvent) => void): BuilderCTX;
     on(eventName: KeyboardEvents, handler: (event: KeyboardEvent) => void): BuilderCTX;
