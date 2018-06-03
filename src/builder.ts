@@ -13,6 +13,7 @@ export interface BuilderCTX {
     id(value: string): BuilderCTX;
     class(valuesArr: string[]): BuilderCTX;
     name(value: string): BuilderCTX;
+    text(value: string): BuilderCTX;
     peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
 }
 
@@ -20,6 +21,7 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
     const ctx: NodeDTO = {
         tag: tagType,
         value: null,
+        text: '',
         events: {},
         props: {},
         children: []
@@ -65,6 +67,10 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             ctx.value = value;
             return this;
         },
+        text(value: string) {
+            ctx.text = value;
+            return this;
+        },
         prop(key: string, value: string) {
             ctx.props[key] = value;
             return this;
@@ -86,7 +92,7 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             return this;
         },
         peek(callback) {
-            callback({...ctx});
+            callback( {...ctx} );
             return this;
         }
     });

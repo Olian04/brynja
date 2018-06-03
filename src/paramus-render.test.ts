@@ -13,7 +13,8 @@ describe('paramus-render', () => {
             'child', 'children', 
             'id', 'name', 'class',
             'value', 'prop', 'when',
-            'on'
+            'on', 'peek', 'text', 'while',
+            'do'
         ];
         let i = 0;
         expect(ctx).to.not.be.undefined;
@@ -103,6 +104,22 @@ describe('paramus-render', () => {
                     })
                 );
             });
+            it('text', () => {
+                render(root, _=>_ 
+                    .peek(ctx => {
+                        expect(ctx.text).to.deep.equal('');
+                    })
+                    .text('hello')
+                    .peek(ctx => {
+                        expect(ctx.text).to.deep.equal('hello');
+                    })
+                    .text('world')
+                    .peek(ctx => {
+                        expect(ctx.text).to.equal('world');
+                    })
+                );
+            });
+            
             it('value', () => {
                 render(root, _=>_ 
                     .peek(ctx => {
@@ -209,12 +226,12 @@ describe('paramus-render', () => {
             it('peek', () => {
                 render(root, _=>_ 
                     .peek(ctx => {
-                        const expected = { tag: null, value: null, events: {}, props: {}, children: [] };
+                        const expected = { tag: null, value: null,  text: '', events: {}, props: {}, children: [] };
                         expect(ctx).to.deep.equal(expected);
                     })
                     .child('foobar', _=>_ 
                         .peek(ctx => {
-                            const expected = { tag: 'foobar', value: null, events: {}, props: {}, children: [] };
+                            const expected = { tag: 'foobar', value: null,  text: '', events: {},  props: {}, children: [] };
                             expect(ctx).to.deep.equal(expected);
                         })
                     )

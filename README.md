@@ -73,6 +73,7 @@ Context methods:
 .class(valuesArr)
 .name(value) 
 .value(value)
+.text(value)
 .prop(key, value)
 .on(eventName, callback)
 // --- Control flow ops ---
