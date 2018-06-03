@@ -1,5 +1,16 @@
 import { NodeDTO } from './node';
 
+// Events: https://www.w3schools.com/tags/ref_eventattributes.asp
+export type MouseEvents = 'click' | 'dblclick' 
+    | 'mousedown' | 'mouseup' | 'mousemove' 
+    | 'mouseout' | 'mouseover';
+export type WheelEvents = 'wheel' | 'mousewheel';
+export type KeyboardEvents = 'keydown' | 'keyup' | 'keypress';
+export type DragEvents = 'drag' | 'dragend' 
+    | 'dragenter' | 'dragleave' | 'dragover' 
+    | 'dragstart' | 'drop' | 'scroll';
+export type ClipboardEvents = 'copy' | 'cut' | 'paste';
+
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
@@ -7,7 +18,6 @@ export interface BuilderCTX {
     when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
     while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     do(builder: BuilderCB): BuilderCTX;
-    on(eventName: string, handler: (event: object) => void): BuilderCTX;
     value(value: any): BuilderCTX;
     prop(key: string, value: string): BuilderCTX;
     id(value: string): BuilderCTX;
@@ -15,6 +25,12 @@ export interface BuilderCTX {
     name(value: string): BuilderCTX;
     text(value: string): BuilderCTX;
     peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
+    on(eventName: string, handler: (event: Event) => void): BuilderCTX;
+    on(eventName: MouseEvents, handler: (event: MouseEvent) => void): BuilderCTX;
+    on(eventName: WheelEvents, handler: (event: WheelEvent) => void): BuilderCTX;
+    on(eventName: KeyboardEvents, handler: (event: KeyboardEvent) => void): BuilderCTX;
+    on(eventName: DragEvents, handler: (event: DragEvent) => void): BuilderCTX;
+    on(eventName: ClipboardEvents, handler: (event: ClipboardEvent) => void): BuilderCTX;
 }
 
 export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
@@ -27,6 +43,14 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
         children: []
     };
     builder({
+        on(eventName: string, handler: (e: any) => void) {
+            if (eventName in ctx.events) {
+                ctx.events[eventName].push(handler);
+            } else {
+                ctx.events[eventName] = [handler];
+            }
+            return this;
+        },
         child(tagType: string, builder: BuilderCB) {
             ctx.children.push(buildNode(tagType, builder));
             return this;
@@ -53,14 +77,6 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
         },
         do(builder: BuilderCB) {
             builder(this);
-            return this;
-        },
-        on(eventName: string, handler: (event: object) => void) {
-            if (eventName in ctx.events) {
-                ctx.events[eventName].push(handler);
-            } else {
-                ctx.events[eventName] = [handler];
-            }
             return this;
         },
         value(value: any) {
