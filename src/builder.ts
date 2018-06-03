@@ -3,7 +3,7 @@ import { NodeDTO } from './node';
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
-    children(tagName: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
+    children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
     while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     do(builder: BuilderCB): BuilderCTX;
@@ -29,7 +29,7 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             ctx.children.push(buildNode(tagType, builder));
             return this;
         },
-        children(tagName, count, builder) {
+        children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
             for (let i = 0; i < count; i++) {
                 ctx.children.push(buildNode(tagType, _ => builder(_, i)));
             }
