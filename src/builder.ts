@@ -33,7 +33,7 @@ export interface BuilderCTX {
     on(eventName: ClipboardEvents, handler: (event: ClipboardEvent) => void): BuilderCTX;
 }
 
-export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
+export function buildNode(tagType: string | null, builder: BuilderCB): NodeDTO {
     const ctx: NodeDTO = {
         tag: tagType,
         value: null,
