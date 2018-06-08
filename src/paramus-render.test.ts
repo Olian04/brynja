@@ -1,9 +1,9 @@
 import { expect } from 'chai';
+import { describe } from 'mocha';
 import jsdom from 'mocha-jsdom';
 
 import { BuilderCTX } from './builder';
 import { render } from './paramus-render';
-import { describe } from 'mocha';
 
 describe('paramus-render', () => {
     jsdom();
@@ -239,5 +239,4 @@ describe('paramus-render', () => {
             });
         });
     });
-
 });
