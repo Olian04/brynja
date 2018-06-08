@@ -16,14 +16,6 @@ describe('render', () => {
     });
 
     describe('Root init', () => {
-        it('Provided root elem', () => {
-            const div =  renderNode(
-                { tag: null, text: '', value: null, events: {}, props: {}, children: [] },
-                document.createElement('div')
-            );
-            expect(div.tagName).to.equal('DIV');
-        });
-    
         it('Generated root elem', () => {
             const div =  renderNode({ 
                 tag: 'div', text: '', value: null, events: {}, props: {}, children: [] 
@@ -92,6 +84,37 @@ describe('render', () => {
             ));
             div.dispatchEvent(new Event('click'));
             expect(res).to.equal('helloworld');
+        });
+    });
+
+    describe('Updating', () => {
+        it('Single update', () => {
+            let div =  renderNode(buildNode('h1', _=>_
+                    .text('Hello World')
+                )
+            );
+            expect(div.tagName).to.equal('H1');
+            expect(div.children.length).to.equal(0);
+            expect(div.innerText).to.equal('Hello World');
+            div =  renderNode(buildNode('h1', _=>_
+                    .text('Hello')
+                    .child('div', _=>_
+                        .text('World')
+                    )
+                )
+            );
+            expect(div.tagName).to.equal('H1');
+            expect(div.children.length).to.equal(1);
+            expect(div.innerText).to.equal('Hello');
+            expect((<HTMLElement>div.children[0]).tagName).to.equal('DIV');
+            expect((<HTMLElement>div.children[0]).innerText).to.equal('World');
+            div =  renderNode(buildNode('h1', _=>_
+                    .text('Hello World')
+                )
+            );
+            expect(div.tagName).to.equal('H1');
+            expect(div.children.length).to.equal(0);
+            expect(div.innerText).to.equal('Hello World');
         });
     });
 });

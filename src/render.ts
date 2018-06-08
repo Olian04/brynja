@@ -1,10 +1,8 @@
 import { NodeDTO } from "./node";
 import { create } from "domain";
 
-export function renderNode(nodeTree: NodeDTO, elem?: HTMLElement): HTMLElement {
-    if (!elem) {
-        elem = document.createElement(nodeTree.tag);
-    }
+export function renderNode(nodeTree: NodeDTO): HTMLElement {
+    const elem = document.createElement(nodeTree.tag);
     if (nodeTree.value) {
         elem['value'] = nodeTree.value;
     }
