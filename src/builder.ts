@@ -1,15 +1,38 @@
 import { NodeDTO } from './node';
 
 // Events: https://www.w3schools.com/tags/ref_eventattributes.asp
-export type MouseEvents = 'click' | 'dblclick' 
-    | 'mousedown' | 'mouseup' | 'mousemove' 
-    | 'mouseout' | 'mouseover';
-export type WheelEvents = 'wheel' | 'mousewheel';
-export type KeyboardEvents = 'keydown' | 'keyup' | 'keypress';
-export type DragEvents = 'drag' | 'dragend' 
-    | 'dragenter' | 'dragleave' | 'dragover' 
-    | 'dragstart' | 'drop' | 'scroll';
-export type ClipboardEvents = 'copy' | 'cut' | 'paste';
+export namespace Events {
+    export enum Mouse {
+        Click = 'click',
+        DoubleClick = 'dblclick',
+        Down = 'mousedown',
+        Up = 'mouseup',
+        Move = 'mousemove',
+        Out = 'mouseout',
+        Over = 'mouseover',
+        Wheel = 'wheel'
+    }
+    export enum Keyboard {
+        Down = 'keydown',
+        Up = 'keyup',
+        Press = 'keypress'
+    }
+    export enum Drag {
+        Drag = 'drag',
+        End = 'dragend',
+        Enter = 'dragenter',
+        Leave = 'dragleave',
+        Over = 'dragover',
+        Start = 'dragstart',
+        Drop = 'drop',
+        Scroll = 'scroll'
+    }
+    export enum Clipboard {
+        Copy = 'copy',
+        Cut = 'cut',
+        Paste = 'paste'
+    }
+}
 
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
@@ -25,12 +48,12 @@ export interface BuilderCTX {
     name(value: string): BuilderCTX;
     text(value: string): BuilderCTX;
     peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
+    on(eventName: Events.Mouse.Wheel, handler: (event: WheelEvent) => void): BuilderCTX;
+    on(eventName: Events.Mouse, handler: (event: MouseEvent) => void): BuilderCTX;
+    on(eventName: Events.Keyboard, handler: (event: KeyboardEvent) => void): BuilderCTX;
+    on(eventName: Events.Drag, handler: (event: DragEvent) => void): BuilderCTX;
+    on(eventName: Events.Clipboard, handler: (event: ClipboardEvent) => void): BuilderCTX;
     on(eventName: string, handler: (event: any) => void): BuilderCTX;
-    on(eventName: MouseEvents, handler: (event: MouseEvent) => void): BuilderCTX;
-    on(eventName: WheelEvents, handler: (event: WheelEvent) => void): BuilderCTX;
-    on(eventName: KeyboardEvents, handler: (event: KeyboardEvent) => void): BuilderCTX;
-    on(eventName: DragEvents, handler: (event: DragEvent) => void): BuilderCTX;
-    on(eventName: ClipboardEvents, handler: (event: ClipboardEvent) => void): BuilderCTX;
 }
 
 export function buildNode(tagType: string | null, builder: BuilderCB): NodeDTO {

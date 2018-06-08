@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import jsdom from 'mocha-jsdom';
 
 import { renderNode } from './render';
-import { buildNode } from './builder';
+import { buildNode, Events } from './builder';
 
 describe('render', () => {
     jsdom();
@@ -79,10 +79,10 @@ describe('render', () => {
         it('on', () => {
             let res = '';
             const div =  renderNode(buildNode('div', _=>_
-                .on('click', () => res += 'hello')
-                .on('click', () => res += 'world')
+                .on(Events.Mouse.Click, () => res += 'hello')
+                .on(Events.Mouse.Click, () => res += 'world')
             ));
-            div.dispatchEvent(new Event('click'));
+            div.dispatchEvent(new Event(Events.Mouse.Click));
             expect(res).to.equal('helloworld');
         });
     });
