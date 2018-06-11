@@ -302,7 +302,7 @@ import { render } from 'paramus-render';
 
 Paramus('url', {
   value: 0
-}, state => render('root', _=>_
+}, state => render(_=>_
   .child('p', _=>_
     .text(state.value)
   )
@@ -320,16 +320,22 @@ Paramus('url', {
 ---
 
 ```ts
+// Hello world!
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
 Paramus('url', {
-  arr: [1, 2, 3, 4]
-}, state => render('root', _=>_
-  .child('ul', _=>_
-    .children('li', state.arr.length(), (_, i) =>_
-      .value(`Value #${state.arr[i]}!`)
-      .on('click', () => state.arr[i]++)
+  who: 'world'
+}, state => render(_=>_
+  .child('p', _=>_ 
+    .text(`Hello ${state.who}!`)
+  )
+  .child('input', _=>_
+    .prop('type', 'text')
+    .prop('placeholder', '')
+    .on('change', e => state.who = e.target.value)
+    .when(() => state.who !== null, _=>_
+      .value(state.who)
     )
   )
 ));
@@ -338,16 +344,29 @@ Paramus('url', {
 ---
 
 ```ts
+// Inputs
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
-Paramus('url', {
-  tags: ['a', 'b', 'c'] 
-}, state => render('root', _=>_
-  .while(i => i < 4, (_, i) =>_
-    .child(state.tags[i], _=>_
-       .value(state.tags[i].toUpperCase())
+const input = (text, value, onChange) => _=>_
+  .child('input', _=>_
+    .when(() => value !== null, _=>_
+      .value(value)
     )
-  )
+    .prop('type', 'text')
+    .prop('placeholder', text)
+    .on('change', e => onChange(e.target.value))
+  );
+
+Paramus('url', {
+  firstName: null,
+  lastName: null
+}, state => render(_=>_
+  .do(input('Firstname', state.firstName, 
+    firstName => state.firstName = firstName
+  ))
+  .do(input('Lastname', state.lastName,
+    lastName => state.lastName = lastName
+  ))
 ));
 ```
