@@ -344,7 +344,7 @@ Paramus('url', {
 ---
 
 ```ts
-// Inputs
+// Resquests
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
