@@ -51,38 +51,249 @@ render(_=>_
 ```
 
 # Operations
-In Paramus-render, method on the are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories.
-* Nesting operations
-  * Nesting operations are used to append children to the current node.
-* Mutating operations
-  * Mutating operations are used to add and modify the data of the current node. 
-  * For example assigning an ID or adding an event listener.
-* Control flow operations
-  * Control flow operations are used apply conditional rendering. 
-  * For example only adding the "selected" class to an element if its index matches the selected element in the state.
-* Effect free operations
-  * When using Effect free operations you can be sure that no changes will be made in either the dom nor the vdom.
-  * For example you can use effect free operations when debugging or logging.
+In Paramus-render, method on the are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
+## Nesting operations
+Nesting operations are used to append children to the current node.
+
+### .child(tagName, ctx)
 ```ts
-// --- Nesting ops ---
-.child(tagName, ctx)
-.children(tagName, count, ctx) 
-// --- Mutation ops ---
-.id(value)
-.class(valuesArr)
-.name(value) 
-.value(value)
-.text(value)
-.prop(key, value)
-.on(eventName, callback)
-.style(style_obj)
-// --- Control flow ops ---
-.when(predicat, then_ctx, else_ctx?)
-.while(predicat, ctx) 
-.do(ctx) 
-// ---- Effect free ops ---
-.peek(callback)
+render(_=>_
+  .child('div', _=>_
+    .text('Hello World!')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div>
+    Hello World!
+  </div>
+</div>
+```
+
+### .children(tagName, count, ctx) 
+```ts
+render(_=>_
+  .children('div', 3, (_, i)=>_
+    .text(i)
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div>0</div>
+  <div>1</div>
+  <div>2</div>
+</div>
+```
+
+## Mutating operations
+Mutating operations are used to add and modify the data of the current node. 
+For example assigning an ID or adding an event listener.
+
+### .id(value)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .id('foo')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div id="foo"></div>
+</div>
+```
+
+### .class(valuesArr)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .class([ 'foo', 'bar' ])
+    .class([ 'biz' ])
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div class="foo bar biz"></div>
+</div>
+```
+
+### .name(value) 
+```ts
+render(_=>_
+  .child('div', _=>_
+    .name('foo')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div name="foo"></div>
+</div>
+```
+
+### .value(value)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .value('foo')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div value="foo"></div>
+</div>
+```
+
+
+### .text(value)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .text('Foo')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div>Foo</div>
+</div>
+```
+
+### .prop(key, value)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .prop('foo', 'bar')
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div foo="bar"></div>
+</div>
+```
+
+### .on(eventName, callback)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .on('click', e => console.log(e))
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div><!-- The dom element has the onClick event registered --></div>
+</div>
+```
+
+### .style(style_obj)
+_WIP: Not yet implemented_
+```ts
+render(_=>_
+  .child('div', _=>_
+    .style({
+      border: { // Either like this 
+        color: 'black',
+        style: 'solid',
+        width: '2px'
+      },
+      border: 'black solid 2px' // Or like this
+    })
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div style="border: black solid 2px;"></div>
+</div>
+```
+
+## Control flow operations
+Control flow operations are used apply conditional rendering. 
+For example only adding the "selected" class to an element if its index matches the selected element in the state.
+
+### .when(predicat, then_ctx, else_ctx?)
+```ts
+render(_=>_
+  .child('div', _=>_
+    .when(() => true, _=>_
+      .class([ 'foo' ])
+    )
+  )
+  .child('div', _=>_
+    .when(() => false, _=>_
+      .class([ 'foo' ])
+    ,_=>_
+      .class([ 'bar' ])
+    )
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div class="foo"></div>
+  <div class="bar"></div>
+</div>
+```
+
+### .while(predicat, ctx) 
+```ts
+render(_=>_
+  .while(i => i < 3, _=>_
+    .child('div', _=>_
+      .text(i)
+    )
+  )
+);
+```
+```html
+<div><!--Root-->
+  <div>0</div>
+  <div>1</div>
+  <div>2</div>
+</div>
+```
+
+### .do(ctx) 
+```ts
+const input = text => _=>_
+  .child('input', _=>_
+    .prop('type', 'text')
+    .name(text.toLowerCase())
+    .prop('placeholder', text)
+  );
+
+render(_=>_
+  .do(input('Firstname'))
+  .do(input('Lastname'))
+);
+```
+```html
+<div><!--Root-->
+  <input type="text" name="firstname" placeholder="Firstname">
+  <input type="text" name="lastname" placeholder="Lastname">
+</div>
+```
+
+## Effect free operations
+When using Effect free operations you can be sure that no changes will be made in either the dom nor the vdom.
+For example you can use effect free operations when debugging or logging.
+
+### .peek(callback)
+Peek at the current vdom node.
+```ts
+render(_=>_
+  .peek(console.log)
+);
+```
+```js
+> { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] }
 ```
 
 # Demos
