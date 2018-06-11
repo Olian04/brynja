@@ -89,8 +89,7 @@ render(_=>_
 ```
 
 ## Mutating operations
-Mutating operations are used to add and modify the data of the current node. 
-For example assigning an ID or adding an event listener.
+Mutating operations are used to add and modify the current vdom node. 
 
 ### .id(value)
 ```ts
@@ -215,8 +214,7 @@ render(_=>_
 ```
 
 ## Control flow operations
-Control flow operations are used apply conditional rendering. 
-For example only adding the "selected" class to an element if its index matches the selected element in the state.
+Control flow operations are used for conditional rendering. 
 
 ### .when(predicat, then_ctx, else_ctx?)
 ```ts
