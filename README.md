@@ -89,7 +89,7 @@ render(_=>_
 ```
 
 ## Mutating operations
-Mutating operations are used to add and modify the current vdom node. 
+Mutating operations are used for adding and modifying data on the current vdom node. 
 
 ### .id(value)
 ```ts
