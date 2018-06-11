@@ -360,7 +360,8 @@ const input = (text, value, onChange) => _=>_
 
 Paramus('url', {
   firstName: null,
-  lastName: null
+  lastName: null,
+  responseCode: null
 }, state => render(_=>_
   .do(input('Firstname', state.firstName, 
     firstName => state.firstName = firstName
@@ -368,5 +369,12 @@ Paramus('url', {
   .do(input('Lastname', state.lastName,
     lastName => state.lastName = lastName
   ))
+  .child('button', _=>_
+    .text('Submit')
+    .on('click', () => 
+      fetch('/api/submit')
+        .then(res => state.responseCode = res.status)
+    )
+  )
 ));
 ```
