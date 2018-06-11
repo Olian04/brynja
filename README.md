@@ -39,8 +39,7 @@ import { Renderer } from 'paramus-render';
 
 const { render } = Renderer({
   rootElement: document.getElementById('root'),
-  vdomRootType: 'div',
-  allowRecursiveMutations: true
+  vdomRootType: 'div'
 });
 
 render(_=>_
