@@ -216,7 +216,7 @@ render(_=>_
 ## Control flow operations
 Control flow operations are used for conditional rendering. 
 
-### .when(predicat, then_ctx, else_ctx?)
+### .when(predicate, then_ctx, else_ctx?)
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -240,7 +240,7 @@ render(_=>_
 </div>
 ```
 
-### .while(predicat, ctx) 
+### .while(predicate, ctx) 
 ```ts
 render(_=>_
   .while(i => i < 3, _=>_
