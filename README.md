@@ -281,7 +281,6 @@ render(_=>_
 
 ## Effect free operations
 When using Effect free operations you can be sure that no changes will be made in either the dom nor the vdom.
-For example you can use effect free operations when debugging or logging.
 
 ### .peek(callback)
 Peek at the current vdom node.
