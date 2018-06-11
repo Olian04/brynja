@@ -58,6 +58,24 @@ Paramus('url', {
 ));
 
 ```
+---
+
+```ts
+import { Paramus } from 'paramus';
+import { render } from 'paramus-render';
+
+render('root', _=>_
+  .style({
+    border: { // Either way is ok
+      style: 'solid',
+      color: 'black',
+      width: '2px'
+    },
+    border: 'solid black 2px' // Either way is ok
+  })
+);
+
+```
 
 WIP: https://jsfiddle.net/6g41kqLc/10/
 
@@ -76,6 +94,7 @@ Context methods:
 .text(value)
 .prop(key, value)
 .on(eventName, callback)
+.style(style_obj)
 // --- Control flow ops ---
 .when(predicat, then_ctx, else_ctx?)
 .while(predicat, ctx) 
