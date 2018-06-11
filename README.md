@@ -246,7 +246,7 @@ render(_=>_
 ```ts
 render(_=>_
   .while(i => i < 3, _=>_
-    .child('div', _=>_
+    .child('div', (_, i)=>_
       .text(i)
     )
   )
