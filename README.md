@@ -64,16 +64,18 @@ Paramus('url', {
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
-render('root', _=>_
+Paramus('url', {
+  isTarget: true 
+}, state => render('root', _=>_
   .style({
     border: { // Either way is ok
       style: 'solid',
-      color: 'black',
+      color: state.isTarget ? 'red' : 'black',
       width: '2px'
     },
     border: 'solid black 2px' // Either way is ok
   })
-);
+));
 
 ```
 
