@@ -39,7 +39,8 @@ import { Renderer } from 'paramus-render';
 
 const { render } = Renderer({
   rootElement: document.getElementById('root'),
-  vdomRootType: 'div'
+  vdomRootType: 'div', // will be ignored if vdomRootIsFragment is true. 
+  vdomRootIsFragment: false // Note: root level "mutating operations" will be turned off while true  
 });
 
 render(_=>_
