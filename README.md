@@ -296,25 +296,25 @@ render(_=>_
 # Demos
 
 ```ts
+// Counter
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
 Paramus('url', {
-  who: 'world'
+  value: 0
 }, state => render('root', _=>_
-  .child('div', _=>_
-    .id('foo')
-    .class([ 'bar' ])
-    .child('p', _=>_
-      .prop('bar', 'biz')
-      .value(`Hello ${state.who}!`)
-      .on('click', () => {
-        state.who = state.who.reverse();
-      })
-    )
+  .child('p', _=>_
+    .text(state.value)
+  )
+  .child('button', _=>_
+    .text('Increment')
+    .on('click', () => state.value++)
+  )
+  .child('button', _=>_
+    .text('Decrement')
+    .on('click', () => state.value--)
   )
 ));
-
 ```
 
 ---
@@ -333,8 +333,8 @@ Paramus('url', {
     )
   )
 ));
-
 ```
+
 ---
 
 ```ts
@@ -350,25 +350,4 @@ Paramus('url', {
     )
   )
 ));
-
-```
----
-
-```ts
-import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
-
-Paramus('url', {
-  isTarget: true 
-}, state => render('root', _=>_
-  .style({
-    border: { // Either way is ok
-      style: 'solid',
-      color: state.isTarget ? 'red' : 'black',
-      width: '2px'
-    },
-    border: 'solid black 2px' // Either way is ok
-  })
-));
-
 ```
