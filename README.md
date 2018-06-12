@@ -260,22 +260,23 @@ render(_=>_
 
 ### .do(ctx) 
 ```ts
-const input = text => _=>_
-  .child('input', _=>_
-    .prop('type', 'text')
-    .name(text.toLowerCase())
-    .prop('placeholder', text)
+const img = ([width, height], src) => _=>_
+  .child('img', _=>_
+    .prop('width', width)
+    .prop('height', heigh)
+    .prop('src', src)
+    .prop('alt', src.substring(src.lastIndexOf('/')))
   );
 
 render(_=>_
-  .do(input('Firstname'))
-  .do(input('Lastname'))
+  .do(img([42 42], '/assets/logo/small.png'))
+  .do(img([180 180], '/assets/logo/medium.png'))
 );
 ```
 ```html
 <div><!--Root-->
-  <input type="text" name="firstname" placeholder="Firstname">
-  <input type="text" name="lastname" placeholder="Lastname">
+  <img src="smiley.gif" height="42" width="42">
+  <img src="smiley.gif" height="42" width="42">
 </div>
 ```
 
