@@ -269,14 +269,14 @@ const img = ([width, height], src) => _=>_
   );
 
 render(_=>_
-  .do(img([42 42], '/assets/logo/small.png'))
-  .do(img([180 180], '/assets/logo/medium.png'))
+  .do(img([64 64], '/assets/logo/small.png'))
+  .do(img([192 192], '/assets/logo/medium.png'))
 );
 ```
 ```html
 <div><!--Root-->
-  <img src="smiley.gif" height="42" width="42">
-  <img src="smiley.gif" height="42" width="42">
+  <img src="/assets/logo/small.png" height="64" width="64">
+  <img src="/assets/logo/medium.png" height="192" width="192">
 </div>
 ```
 
