@@ -351,12 +351,12 @@ import { render } from 'paramus-render';
 
 const input = (text, value, onChange) => _=>_
   .child('input', _=>_
-    .when(() => value !== null, _=>_
-      .value(value)
-    )
     .prop('type', 'text')
     .prop('placeholder', text)
     .on('change', e => onChange(e.target.value))
+    .when(() => value !== null, _=>_
+      .value(value)
+    )
   );
 
 Paramus('url', {
