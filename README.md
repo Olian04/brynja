@@ -373,7 +373,7 @@ Paramus('url', {
   .child('button', _=>_
     .text('Submit')
     .on('click', () => 
-      fetch('/api/submit')
+      fetch(`/api/submit?firstname=${state.firstName}&lastname=${state.lastName}`)
         .then(res => state.responseCode = res.status)
     )
   )
