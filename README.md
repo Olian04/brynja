@@ -267,15 +267,15 @@ const img = (width, height, src) => _=>_
 
 render(_=>_
   .do(
-    img(64, 64, '/assets/logo/small.png'),
-    img(192, 192, '/assets/logo/medium.png')
+    img(64, 64, '/assets/logo_small.png'),
+    img(192, 192, '/assets/logo_medium.png')
   )
 );
 ```
 ```html
 <div><!--Root-->
-  <img src="/assets/logo/small.png" height="64" width="64" alt="small">
-  <img src="/assets/logo/medium.png" height="192" width="192" alt="medium">
+  <img src="/assets/logo/small.png" height="64" width="64" alt="logo_small">
+  <img src="/assets/logo/medium.png" height="192" width="192" alt="logo_medium">
 </div>
 ```
 
