@@ -258,7 +258,7 @@ render(_=>_
 </div>
 ```
 
-### .do(ctx) 
+### .do(ctx, ....) 
 ```ts
 const img = ([width, height], src) => _=>_
   .child('img', _=>_
@@ -269,8 +269,10 @@ const img = ([width, height], src) => _=>_
   );
 
 render(_=>_
-  .do(img([64 64], '/assets/logo/small.png'))
-  .do(img([192 192], '/assets/logo/medium.png'))
+  .do(
+    img([64 64], '/assets/logo/small.png')
+    img([192 192], '/assets/logo/medium.png')
+  )
 );
 ```
 ```html
@@ -364,12 +366,12 @@ Paramus('url', {
   lastName: null,
   responseCode: null
 }, state => render(_=>_
-  .do(input('Firstname', state.firstName, 
-    firstName => state.firstName = firstName
-  ))
-  .do(input('Lastname', state.lastName,
-    lastName => state.lastName = lastName
-  ))
+  .do(
+    input('Firstname', state.firstName, 
+      firstName => state.firstName = firstName)
+    input('Lastname', state.lastName,
+      lastName => state.lastName = lastName)
+  )
   .child('button', _=>_
     .text('Submit')
     .on('click', () => 
