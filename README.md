@@ -343,6 +343,39 @@ Paramus('url', {
   )
 ));
 ```
+---
+
+```ts
+// ToTable
+import { Paramus } from 'paramus';
+import { render } from 'paramus-render';
+
+const ToTable = (columns, data) => _=>_
+  .child('table', _=>_
+    .child('tr', _=>_
+      .children('th', columns.length, (_, i)=>_
+        .text(columns[i])
+      )
+    )
+    .children('tr', data.length, (_, i)=>_
+      .children('td', columns.length, (_, j)=>_
+        .text(data[i][columns[j]])
+      )
+    )
+  );
+
+Paramus('url', {
+  data: [
+    { name: 'Bob', age: 20, weight: 75, height: 170 }
+    { name: 'Lisa', age: 24, weight: 62, height: 168 }
+    { name: 'Mattias', age: 33, weight: 94, height: 185 }
+  ]
+}, state => render(_=>_
+  .do(
+    ToTable(['name', 'age'], state.data)
+  )
+));
+```
 
 ---
 
@@ -378,40 +411,6 @@ Paramus('url', {
       fetch(`/api/submit?firstname=${state.firstName}&lastname=${state.lastName}`)
         .then(res => state.responseCode = res.status)
     )
-  )
-));
-```
-
----
-
-```ts
-// ToTable
-import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
-
-const ToTable = (columns, data) => _=>_
-  .child('table', _=>_
-    .child('tr', _=>_
-      .children('th', columns.length, (_, i)=>_
-        .text(columns[i])
-      )
-    )
-    .children('tr', data.length, (_, i)=>_
-      .children('td', columns.length, (_, j)=>_
-        .text(data[i][columns[j]])
-      )
-    )
-  );
-
-Paramus('url', {
-  data: [
-    { name: 'Bob', age: 20, weight: 75, height: 170 }
-    { name: 'Lisa', age: 24, weight: 62, height: 168 }
-    { name: 'Mattias', age: 33, weight: 94, height: 185 }
-  ]
-}, state => render(_=>_
-  .do(
-    ToTable(['name', 'age'], state.data)
   )
 ));
 ```
