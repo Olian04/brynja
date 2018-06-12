@@ -270,7 +270,7 @@ const img = ([width, height], src) => _=>_
 
 render(_=>_
   .do(
-    img([64 64], '/assets/logo/small.png')
+    img([64 64], '/assets/logo/small.png'),
     img([192 192], '/assets/logo/medium.png')
   )
 );
@@ -368,7 +368,7 @@ Paramus('url', {
 }, state => render(_=>_
   .do(
     input('Firstname', state.firstName, 
-      firstName => state.firstName = firstName)
+      firstName => state.firstName = firstName),
     input('Lastname', state.lastName,
       lastName => state.lastName = lastName)
   )
