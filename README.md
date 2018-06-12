@@ -219,24 +219,21 @@ Control flow operations are used for conditional rendering.
 ### .when(predicate, then_ctx, else_ctx?)
 ```ts
 render(_=>_
-  .child('div', _=>_
-    .when(() => true, _=>_
-      .class([ 'foo' ])
-    )
+  .when(() => true, _=>_
+    .child('h1', _=>_)
   )
-  .child('div', _=>_
-    .when(() => false, _=>_
-      .class([ 'foo' ])
-    ,_=>_
-      .class([ 'bar' ])
-    )
+  .when(() => false, _=>_
+    .child('h1', _=>_)
+  ,_=>_
+    .child('h2', _=>_)
   )
+  
 );
 ```
 ```html
 <div><!--Root-->
-  <div class="foo"></div>
-  <div class="bar"></div>
+  <h1><!-- First when: true --></h1>
+  <h2><!-- Second when: false --></h2>
 </div>
 ```
 
