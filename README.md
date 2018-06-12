@@ -54,7 +54,7 @@ render(_=>_
 In Paramus-render, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
 ## Nesting operations
-Nesting operations are used to append children to the current node.
+Nesting operations are used to append children to the current vdom node.
 
 ### .child(tagName, ctx)
 ```ts
