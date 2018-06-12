@@ -335,7 +335,7 @@ Paramus('url', {
   )
   .child('input', _=>_
     .prop('type', 'text')
-    .prop('placeholder', '')
+    .prop('value', state.who)
     .on('change', e => state.who = e.target.value)
     .when(() => state.who !== null, _=>_
       .value(state.who)
