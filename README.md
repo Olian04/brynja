@@ -380,7 +380,7 @@ Paramus('url', {
 ---
 
 ```ts
-// Resquests
+// Making a resquest
 import { Paramus } from 'paramus';
 import { render } from 'paramus-render';
 
