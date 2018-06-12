@@ -262,7 +262,7 @@ const img = (width, height, src) => _=>_
     .prop('width', width)
     .prop('height', heigh)
     .prop('src', src)
-    .prop('alt', src.substring(src.lastIndexOf('/')))
+    .prop('alt', src.substring(src.lastIndexOf('/'), src.lastIndexOf('.')))
   );
 
 render(_=>_
@@ -274,8 +274,8 @@ render(_=>_
 ```
 ```html
 <div><!--Root-->
-  <img src="/assets/logo/small.png" height="64" width="64">
-  <img src="/assets/logo/medium.png" height="192" width="192">
+  <img src="/assets/logo/small.png" height="64" width="64" alt="small">
+  <img src="/assets/logo/medium.png" height="192" width="192" alt="medium">
 </div>
 ```
 
