@@ -40,7 +40,7 @@ export interface BuilderCTX {
     children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
     while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
-    do(builder: BuilderCB): BuilderCTX;
+    do(...builders: BuilderCB[]): BuilderCTX;
     value(value: any): BuilderCTX;
     prop(key: string, value: string): BuilderCTX;
     id(value: string): BuilderCTX;
@@ -98,8 +98,8 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             }
             return this;
         },
-        do(builder: BuilderCB) {
-            builder(this);
+        do(...builders: BuilderCB[]) {
+            builders.forEach(builder => builder(this));
             return this;
         },
         value(value: any) {

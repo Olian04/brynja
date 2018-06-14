@@ -3,19 +3,17 @@ import { renderNode } from "./renderNode";
 
 export { Events } from './builder';
 
-export interface RendererSettings {
+export function Renderer(settings: {
     rootElement: HTMLElement;
     vdomRootType: string;
-}
-
-export function Renderer(settings: RendererSettings) {
+}) {
     return {
         render(rootBuilder: BuilderCB) {
             const rootNode = buildNode(settings.vdomRootType, rootBuilder);
             const rootElement = renderNode(rootNode);
             settings.rootElement.innerHTML = '';
             settings.rootElement.appendChild(rootElement);
-          }
+        }
     }
 }
 

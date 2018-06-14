@@ -199,8 +199,10 @@ describe('paramus-render', () => {
                     _.id('world')
                 }
                 render(_=>_ 
-                    .do(testBuilder)
-                    .do(test1)
+                    .do(
+                        testBuilder,
+                        test1
+                    )
                     .peek(ctx => {
                         expect(ctx.value).to.equal('hello');
                     })
