@@ -1,4 +1,4 @@
-import { NodeDTO } from "./node";
+import { NodeDTO } from "./util/node";
 
 export function renderNode(nodeTree: NodeDTO): HTMLElement {
     const elem = document.createElement(nodeTree.tag);

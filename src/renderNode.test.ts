@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import jsdom from 'mocha-jsdom';
 
 import { renderNode } from './renderNode';
-import { buildNode, Events } from './builder';
+import { buildNode } from './builder';
+import { Events } from './util/events';
 
 describe('render', () => {
     jsdom();

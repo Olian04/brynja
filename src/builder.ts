@@ -1,38 +1,5 @@
-import { NodeDTO } from './node';
-
-// Events: https://www.w3schools.com/tags/ref_eventattributes.asp
-export namespace Events {
-    export enum Mouse {
-        Click = 'click',
-        DoubleClick = 'dblclick',
-        Down = 'mousedown',
-        Up = 'mouseup',
-        Move = 'mousemove',
-        Out = 'mouseout',
-        Over = 'mouseover',
-        Wheel = 'wheel'
-    }
-    export enum Keyboard {
-        Down = 'keydown',
-        Up = 'keyup',
-        Press = 'keypress'
-    }
-    export enum Drag {
-        Drag = 'drag',
-        End = 'dragend',
-        Enter = 'dragenter',
-        Leave = 'dragleave',
-        Over = 'dragover',
-        Start = 'dragstart',
-        Drop = 'drop',
-        Scroll = 'scroll'
-    }
-    export enum Clipboard {
-        Copy = 'copy',
-        Cut = 'cut',
-        Paste = 'paste'
-    }
-}
+import { NodeDTO } from './util/node';
+import { Events } from './util/events';
 
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
@@ -131,7 +98,27 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             return this;
         },
         peek(callback) {
-            callback( {...ctx} );
+            function ctxProxy(ctx: NodeDTO) {
+                return {
+                    tag: ctx.tag,
+                    text: ctx.text,
+                    value: ctx.value,
+                    props: ctx.props,
+                    events: ctx.events,
+                    children: new Proxy([], {
+                        get: (arr, key) => {
+                            if (key === 'length') {
+                                return ctx.children.length;
+                            } else if (!isNaN(parseFloat(key.toString()))) {
+                                return ctxProxy(ctx.children[key]);
+                            } else {
+                                return arr[key];
+                            }
+                        }
+                    })
+                }
+            }
+            callback( ctxProxy(ctx) );
             return this;
         }
     });

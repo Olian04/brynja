@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import jsdom from 'mocha-jsdom';
 
 import { buildNode } from './builder';
 

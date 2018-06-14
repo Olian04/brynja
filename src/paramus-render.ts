@@ -1,7 +1,7 @@
 import { buildNode, BuilderCB } from "./builder";
 import { renderNode } from "./renderNode";
 
-export { Events } from './builder';
+export { Events } from './util/events';
 
 export function Renderer(settings: {
     rootElement: HTMLElement;
