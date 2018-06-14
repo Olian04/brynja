@@ -189,28 +189,6 @@ render(_=>_
 </div>
 ```
 
-### .style(style_obj)
-_WIP: Not yet implemented_
-```ts
-render(_=>_
-  .child('div', _=>_
-    .style({
-      border: { // Either like this 
-        color: 'black',
-        style: 'solid',
-        width: '2px'
-      },
-      border: 'black solid 2px' // Or like this
-    })
-  )
-);
-```
-```html
-<div><!--Root-->
-  <div style="border: black solid 2px;"></div>
-</div>
-```
-
 ## Control flow operations
 Control flow operations are used for conditional rendering. 
 
