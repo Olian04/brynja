@@ -8,6 +8,10 @@ import { render } from './paramus-render';
 describe('paramus-render', () => {
     jsdom();
 
+    beforeEach(() => {
+        document.body.innerHTML = '<div id="root"></div>';
+    });
+
     function testBuilder(ctx) {
         const funcs = [
             'child', 'children', 
@@ -27,27 +31,22 @@ describe('paramus-render', () => {
         expect(i).to.equal(funcs.length);
     }
 
-    let root: HTMLElement;
-    before(() => {
-        root = document.createElement('div')
-    });
-
     it('typecheck', () => {
         expect(typeof render).to.equal('function');
-        render(root, testBuilder);
+        render(testBuilder);
     });
 
     describe('operations', () => {
         describe('Nesting ops', () => {
             it('child', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .child('div', testBuilder)
                 );
             });
             it('children', () => {
                 const targetCount = 3;
                 let counter = 0;
-                render(root, _=>_ 
+                render(_=>_ 
                     .children('li', targetCount, (_, i) => {
                         testBuilder(_);
                         expect(i).to.equal(counter);
@@ -60,7 +59,7 @@ describe('paramus-render', () => {
 
         describe('Mutation ops', ()  => {
             it('id', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.props['id']).to.be.undefined;
                     })
@@ -75,7 +74,7 @@ describe('paramus-render', () => {
                 );
             });
             it('class', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.props['class']).to.be.undefined;
                     })
@@ -90,7 +89,7 @@ describe('paramus-render', () => {
                 );
             });
             it('name', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.props['name']).to.be.undefined;
                     })
@@ -105,7 +104,7 @@ describe('paramus-render', () => {
                 );
             });
             it('text', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.text).to.deep.equal('');
                     })
@@ -121,7 +120,7 @@ describe('paramus-render', () => {
             });
             
             it('value', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.value).to.be.null;
                     })
@@ -136,7 +135,7 @@ describe('paramus-render', () => {
                 );
             });
             it('prop', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.props['foobar']).to.be.undefined;
                     })
@@ -151,7 +150,7 @@ describe('paramus-render', () => {
                 );
             });
             it('on', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
                         expect(ctx.events['foobar']).to.be.undefined;
                     })
@@ -172,7 +171,7 @@ describe('paramus-render', () => {
 
         describe('Control flow ops', ()  => {
             it('when', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .when(() => true, testBuilder, () => expect.fail())
                     .when(() => false,  () => expect.fail(), testBuilder)
                 );
@@ -180,7 +179,7 @@ describe('paramus-render', () => {
             it('while', () => {
                 let targetCount = 3;
                 let counter = 0;
-                render(root, _=>_ 
+                render(_=>_ 
                     .while(i => i < targetCount, (_, i) => {
                         testBuilder(_);
                         expect(i).to.equal(counter);
@@ -199,7 +198,7 @@ describe('paramus-render', () => {
                 function test3(_: BuilderCTX) {
                     _.id('world')
                 }
-                render(root, _=>_ 
+                render(_=>_ 
                     .do(testBuilder)
                     .do(test1)
                     .peek(ctx => {
@@ -224,9 +223,9 @@ describe('paramus-render', () => {
 
         describe('Effect free ops', ()  => {
             it('peek', () => {
-                render(root, _=>_ 
+                render(_=>_ 
                     .peek(ctx => {
-                        const expected = { tag: null, value: null,  text: '', events: {}, props: {}, children: [] };
+                        const expected = { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] };
                         expect(ctx).to.deep.equal(expected);
                     })
                     .child('foobar', _=>_ 

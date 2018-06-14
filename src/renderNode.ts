@@ -1,10 +1,10 @@
 import { NodeDTO } from "./node";
-import { create } from "domain";
 
 export function renderNode(nodeTree: NodeDTO): HTMLElement {
     const elem = document.createElement(nodeTree.tag);
     if (nodeTree.value) {
         elem['value'] = nodeTree.value;
+        elem.setAttribute('value', '' + nodeTree.value);
     }
     elem.innerText = nodeTree.text;
     Object.keys(nodeTree.props).forEach(prop => {

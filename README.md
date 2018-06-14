@@ -17,7 +17,6 @@ __CDN:__
 ```
 
 # Setup - Hello World
-_WIP: This is not yet implemented!_
 
 You can setup paramus-render in one of two ways.
 
@@ -39,8 +38,7 @@ import { Renderer } from 'paramus-render';
 
 const { render } = Renderer({
   rootElement: document.getElementById('root'),
-  vdomRootType: 'div', // will be ignored if vdomRootIsFragment is true. 
-  vdomRootIsFragment: false // Note: root level "mutating operations" will be turned off while true  
+  vdomRootType: 'div'
 });
 
 render(_=>_

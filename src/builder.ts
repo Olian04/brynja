@@ -56,7 +56,7 @@ export interface BuilderCTX {
     on(eventName: string, handler: (event: any) => void): BuilderCTX;
 }
 
-export function buildNode(tagType: string | null, builder: BuilderCB): NodeDTO {
+export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
     const ctx: NodeDTO = {
         tag: tagType,
         value: null,

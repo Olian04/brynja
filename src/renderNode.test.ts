@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import jsdom from 'mocha-jsdom';
 
-import { renderNode } from './render';
+import { renderNode } from './renderNode';
 import { buildNode, Events } from './builder';
 
 describe('render', () => {
@@ -82,7 +82,10 @@ describe('render', () => {
                 .on(Events.Mouse.Click, () => res += 'hello')
                 .on(Events.Mouse.Click, () => res += 'world')
             ));
-            div.dispatchEvent(new Event(Events.Mouse.Click));
+
+            //@ts-ignore
+            div.dispatchEvent(new window.Event(Events.Mouse.Click));
+
             expect(res).to.equal('helloworld');
         });
     });
