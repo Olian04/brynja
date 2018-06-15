@@ -345,7 +345,7 @@ Paramus('url', {
   ]
 }, state => render(_=>_
   .do(
-    ToTable(['name', 'age'], state.data)
+    ToTable(['name', 'age'], state.data),
     ToTable(['weight', 'height'], state.data)
   )
 ));
