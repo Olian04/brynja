@@ -250,8 +250,8 @@ render(_=>_
 ```
 ```html
 <div><!--Root-->
-  <img src="/assets/logo/small.png" height="64" width="64" alt="logo_small">
-  <img src="/assets/logo/medium.png" height="192" width="192" alt="logo_medium">
+  <img src="/assets/logo_small.png" height="64" width="64" alt="logo_small">
+  <img src="/assets/logo_medium.png" height="192" width="192" alt="logo_medium">
 </div>
 ```
 
