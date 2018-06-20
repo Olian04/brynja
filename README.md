@@ -4,6 +4,12 @@
 * Paramus-render aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
 * Paramus-render is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
 
+# Why paramus-render? 
+* It's small but still extensive!
+* It requires NO transpilation, everything runs as is in the browser.
+* It's fully extendable!
+* Everything is 100% typed and ready for Typescript!
+
 # Installation
 __NPM:__
 ```
