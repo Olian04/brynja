@@ -3,7 +3,7 @@ import { describe } from 'mocha';
 import jsdom from 'mocha-jsdom';
 
 import { BuilderCTX } from './builder';
-import { render } from './paramus-render';
+import { render, Renderer } from './paramus-render';
 
 describe('paramus-render', () => {
     jsdom();
@@ -236,6 +236,31 @@ describe('paramus-render', () => {
                             expect(ctx).to.deep.equal(expected);
                         })
                     )
+                );
+            });
+        });
+
+        describe('extension operations', () => {
+            it('hello world', () => {
+                const { render, extend } = Renderer({
+                    rootElement: document.getElementById('root'),
+                    vdomRootType: 'div'
+                });
+                extend('hello', (name: string) => _=>_
+                    .child('p', _=>_
+                        .text(`Hello ${name}!`)
+                    )
+                );
+                render(_=>_
+                    .hello('Oliver')
+                    .hello('world')
+                    .peek(ctx => {
+                        expect(ctx.children[0].tag).to.equal('p');
+                        expect(ctx.children[0].text).to.equal('Hello Oliver!');
+
+                        expect(ctx.children[1].tag).to.equal('p');
+                        expect(ctx.children[1].text).to.equal('Hello world!');
+                    })
                 );
             });
         });

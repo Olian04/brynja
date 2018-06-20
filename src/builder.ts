@@ -1,6 +1,11 @@
 import { NodeDTO } from './util/node';
 import { Events } from './util/events';
 
+export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
+export interface CustomOperations {
+    [operationName: string]: CustomOperation;
+}
+
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
@@ -21,9 +26,10 @@ export interface BuilderCTX {
     on(eventName: Events.Drag, handler: (event: DragEvent) => void): BuilderCTX;
     on(eventName: Events.Clipboard, handler: (event: ClipboardEvent) => void): BuilderCTX;
     on(eventName: string, handler: (event: any) => void): BuilderCTX;
-}
+    [operationName: string]:  (...args) => BuilderCTX; // Needed for integration with customOperations
+} 
 
-export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
+export function buildNode(tagType: string, builder: BuilderCB, customOperations: CustomOperations): NodeDTO {
     const ctx: NodeDTO = {
         tag: tagType,
         value: null,
@@ -32,7 +38,7 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
         props: {},
         children: []
     };
-    builder({
+    const builderCtx: BuilderCTX = {
         on(eventName: string, handler: (e: any) => void) {
             if (eventName in ctx.events) {
                 ctx.events[eventName].push(handler);
@@ -42,12 +48,12 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             return this;
         },
         child(tagType: string, builder: BuilderCB) {
-            ctx.children.push(buildNode(tagType, builder));
+            ctx.children.push(buildNode(tagType, builder, customOperations));
             return this;
         },
         children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
             for (let i = 0; i < count; i++) {
-                ctx.children.push(buildNode(tagType, _ => builder(_, i)));
+                ctx.children.push(buildNode(tagType, _ => builder(_, i), customOperations));
             }
             return this;
         },
@@ -120,7 +126,14 @@ export function buildNode(tagType: string, builder: BuilderCB): NodeDTO {
             }
             callback( ctxProxy(ctx) );
             return this;
-        }
-    });
+        },
+        ...Object.keys(customOperations).reduce((res, k) => ({...res,
+            [k]:  (...args) => {
+                customOperations[k](...args)(builderCtx);
+                return builderCtx;
+            }
+        }), {})
+    };
+    builder(builderCtx);
     return ctx;
 }
