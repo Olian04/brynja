@@ -203,7 +203,6 @@ render(_=>_
   ,_=>_
     .child('h2', _=>_)
   )
-  
 );
 ```
 ```html
@@ -216,8 +215,8 @@ render(_=>_
 ### .while(predicate, ctx) 
 ```ts
 render(_=>_
-  .while(i => i < 3, _=>_
-    .child('div', (_, i)=>_
+  .while(i => i < 3, (_, i)=>_
+    .child('div', _=>_
       .text(i)
     )
   )
