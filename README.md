@@ -209,7 +209,6 @@ render(_=>_
   ,_=>_
     .child('h2', _=>_)
   )
-  
 );
 ```
 ```html
@@ -222,8 +221,8 @@ render(_=>_
 ### .while(predicate, ctx) 
 ```ts
 render(_=>_
-  .while(i => i < 3, _=>_
-    .child('div', (_, i)=>_
+  .while(i => i < 3, (_, i)=>_
+    .child('div', _=>_
       .text(i)
     )
   )
@@ -256,8 +255,8 @@ render(_=>_
 ```
 ```html
 <div><!--Root-->
-  <img src="/assets/logo/small.png" height="64" width="64" alt="logo_small">
-  <img src="/assets/logo/medium.png" height="192" width="192" alt="logo_medium">
+  <img src="/assets/logo_small.png" height="64" width="64" alt="logo_small">
+  <img src="/assets/logo_medium.png" height="192" width="192" alt="logo_medium">
 </div>
 ```
 
@@ -351,7 +350,8 @@ Paramus('url', {
   ]
 }, state => render(_=>_
   .do(
-    ToTable(['name', 'age'], state.data)
+    ToTable(['name', 'age'], state.data),
+    ToTable(['weight', 'height'], state.data)
   )
 ));
 ```
