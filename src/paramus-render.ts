@@ -21,3 +21,8 @@ export const extend = (operationName: string, constructor: CustomOperation) =>
     defaultRenderer().extend(operationName, constructor);
 export const render = (rootBuilder: BuilderCB) => 
     defaultRenderer().render(rootBuilder);
+
+export namespace Types {
+    export type Renderer = IRenderer;
+    export type ChainingCTX = BuilderCB;
+}
