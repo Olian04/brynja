@@ -1,17 +1,21 @@
 # What is and isn't paramus-render: 
+
 * Paramus-render is a rendering engine designed to be used in conjunction with its sister library [Paramus](https://github.com/Olian04/Paramus).
 * Paramus-render exposes a chaining based api that is ment to provide a stateless representation of the dom.
 * Paramus-render aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
 * Paramus-render is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
 
 # Why paramus-render? 
+
 * It's small but still extensive!
 * It requires NO transpilation, everything runs as is in the browser.
 * It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
 
 # Installation
+
 __NPM:__
+
 ```
 npm i --save paramus-render
 ```
@@ -26,8 +30,10 @@ __CDN:__
 
 You can setup paramus-render in one of two ways.
 
-### Using the default "render" method
+## Using the default "render" method
+
 The default render method expects a dom element with id 'root' to exsist.
+
 ```ts
 import { render } from 'paramus-render';
 
@@ -38,7 +44,8 @@ render(_=>_
 );
 ```
 
-### Setting up your own Renderer instance
+## Setting up your own Renderer instance
+
 ```ts
 import { Renderer } from 'paramus-render';
 
@@ -55,12 +62,15 @@ render(_=>_
 ```
 
 # Operations
+
 In Paramus-render, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
 ## Nesting operations
+
 Nesting operations are used to append children to the current vdom node.
 
 ### .child(tagName, ctx)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -68,6 +78,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div>
@@ -77,6 +88,7 @@ render(_=>_
 ```
 
 ### .children(tagName, count, ctx) 
+
 ```ts
 render(_=>_
   .children('div', 3, (_, i)=>_
@@ -84,6 +96,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div>0</div>
@@ -93,9 +106,11 @@ render(_=>_
 ```
 
 ## Mutating operations
+
 Mutating operations are used for adding and modifying data on the current vdom node. 
 
 ### .id(value)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -103,6 +118,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div id="foo"></div>
@@ -110,6 +126,7 @@ render(_=>_
 ```
 
 ### .class(valuesArr)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -118,6 +135,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div class="foo bar biz"></div>
@@ -125,6 +143,7 @@ render(_=>_
 ```
 
 ### .name(value) 
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -132,6 +151,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div name="foo"></div>
@@ -139,6 +159,7 @@ render(_=>_
 ```
 
 ### .value(value)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -146,14 +167,15 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div value="foo"></div>
 </div>
 ```
 
-
 ### .text(value)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -161,6 +183,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div>Foo</div>
@@ -168,6 +191,7 @@ render(_=>_
 ```
 
 ### .prop(key, value)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -175,6 +199,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div foo="bar"></div>
@@ -182,6 +207,7 @@ render(_=>_
 ```
 
 ### .on(eventName, callback)
+
 ```ts
 render(_=>_
   .child('div', _=>_
@@ -189,6 +215,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div><!-- The dom element has the onClick event registered --></div>
@@ -196,9 +223,11 @@ render(_=>_
 ```
 
 ## Control flow operations
+
 Control flow operations are used for conditional rendering. 
 
 ### .when(predicate, then_ctx, else_ctx?)
+
 ```ts
 render(_=>_
   .when(() => true, _=>_
@@ -211,6 +240,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <h1><!-- First when: true --></h1>
@@ -219,6 +249,7 @@ render(_=>_
 ```
 
 ### .while(predicate, ctx) 
+
 ```ts
 render(_=>_
   .while(i => i < 3, (_, i)=>_
@@ -228,6 +259,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <div>0</div>
@@ -237,6 +269,7 @@ render(_=>_
 ```
 
 ### .do(ctx, ....) 
+
 ```ts
 const img = (width, height, src) => _=>_
   .child('img', _=>_
@@ -253,6 +286,7 @@ render(_=>_
   )
 );
 ```
+
 ```html
 <div><!--Root-->
   <img src="/assets/logo_small.png" height="64" width="64" alt="logo_small">
@@ -261,15 +295,19 @@ render(_=>_
 ```
 
 ## Effect free operations
+
 When using Effect free operations you can be sure that no changes will be made in either the dom nor the vdom.
 
 ### .peek(callback)
+
 Peek at the current vdom node.
+
 ```ts
 render(_=>_
   .peek(console.log)
 );
 ```
+
 ```js
 > { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] }
 ```
@@ -326,9 +364,7 @@ render(_=>_
   .img(64, 64, '/assets/logo_small.png')
   .img(192, 192, '/assets/logo_medium.png')
 )
-```   
-
-
+```
 
 # Demos
 
@@ -377,14 +413,15 @@ Paramus('url', {
   )
 ));
 ```
+
 ---
 
 ```ts
-// ToTable
+// Tabulation
 import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
+import { render, extend } from 'paramus-render';
 
-const ToTable = (columns, data) => _=>_
+extend('table', (columns, data) => _=>_
   .child('table', _=>_
     .child('tr', _=>_
       .children('th', columns.length, (_, i)=>_
@@ -396,7 +433,8 @@ const ToTable = (columns, data) => _=>_
         .text(data[i][columns[j]])
       )
     )
-  );
+  )
+);
 
 Paramus('url', {
   data: [
@@ -405,10 +443,8 @@ Paramus('url', {
     { name: 'Mattias', age: 33, weight: 94, height: 185 }
   ]
 }, state => render(_=>_
-  .do(
-    ToTable(['name', 'age'], state.data),
-    ToTable(['weight', 'height'], state.data)
-  )
+  .table(['name', 'age'], state.data)
+  .table(['weight', 'height'], state.data)
 ));
 ```
 
@@ -417,7 +453,7 @@ Paramus('url', {
 ```ts
 // Making a resquest
 import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
+import { render, extend } from 'paramus-render';
 
 const input = (text, value, onChange) => _=>_
   .child('input', _=>_
@@ -435,9 +471,11 @@ Paramus('url', {
   responseCode: null
 }, state => render(_=>_
   .do(
-    input('Firstname', state.firstName, 
+    input('Firstname', 
+      state.firstName, 
       firstName => state.firstName = firstName),
-    input('Lastname', state.lastName,
+    input('Lastname', 
+      state.lastName,
       lastName => state.lastName = lastName)
   )
   .child('button', _=>_
