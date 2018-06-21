@@ -1,6 +1,6 @@
-import { NodeDTO } from "./util/node";
+import { VNode } from "./util/vnode";
 
-export function renderNode(nodeTree: NodeDTO): HTMLElement {
+export function renderNode(nodeTree: VNode): HTMLElement {
     const elem = document.createElement(nodeTree.tag);
     if (nodeTree.value) {
         elem['value'] = nodeTree.value;

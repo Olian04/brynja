@@ -1,4 +1,4 @@
-import { NodeDTO } from './util/node';
+import { VNode } from './util/vnode';
 import { Events } from './util/events';
 
 export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
@@ -19,7 +19,7 @@ export interface BuilderCTX {
     class(valuesArr: string[]): BuilderCTX;
     name(value: string): BuilderCTX;
     text(value: string): BuilderCTX;
-    peek(callback: (ctx: NodeDTO) => void): BuilderCTX;
+    peek(callback: (ctx: VNode) => void): BuilderCTX;
     on(eventName: Events.Mouse.Wheel, handler: (event: WheelEvent) => void): BuilderCTX;
     on(eventName: Events.Mouse, handler: (event: MouseEvent) => void): BuilderCTX;
     on(eventName: Events.Keyboard, handler: (event: KeyboardEvent) => void): BuilderCTX;
@@ -29,8 +29,8 @@ export interface BuilderCTX {
     [operationName: string]:  (...args) => BuilderCTX; // Needed for integration with customOperations
 } 
 
-export function buildNode(tagType: string, builder: BuilderCB, customOperations: CustomOperations): NodeDTO {
-    const ctx: NodeDTO = {
+export function buildNode(tagType: string, builder: BuilderCB, customOperations: CustomOperations): VNode {
+    const ctx: VNode = {
         tag: tagType,
         value: null,
         text: '',
@@ -104,7 +104,7 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             return this;
         },
         peek(callback) {
-            function ctxProxy(ctx: NodeDTO) {
+            function ctxProxy(ctx: VNode) {
                 return {
                     tag: ctx.tag,
                     text: ctx.text,
