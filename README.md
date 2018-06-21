@@ -274,6 +274,62 @@ render(_=>_
 > { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] }
 ```
 
+# Custom operations
+On top of the pre defined operations you can also extend the renderer with your own custom operations. 
+
+## Extend the default render method
+
+```ts
+import { render, extend } from 'paramus-render';
+
+extend('img', (width, height, src) => _=>_
+  .child('img', _=>_
+    .prop('width', width)
+    .prop('height', heigh)
+    .prop('src', src)
+    .prop('alt', src.substring(
+       src.lastIndexOf('/')+1,
+       src.lastIndexOf('.')
+    ))
+  )
+)
+
+render(_=>_
+  .img(64, 64, '/assets/logo_small.png')
+  .img(192, 192, '/assets/logo_medium.png')
+)
+```   
+
+## Extend a custom renderer instance
+
+```ts
+import { Renderer } from 'paramus-render';
+
+const { render, extend } = Renderer({
+  rootElement: document.getElementById('root'),
+  vdomRootType: 'div'
+});
+
+extend('img', (width, height, src) => _=>_
+  .child('img', _=>_
+    .prop('width', width)
+    .prop('height', heigh)
+    .prop('src', src)
+    .prop('alt', src.substring(
+       src.lastIndexOf('/')+1,
+       src.lastIndexOf('.')
+    ))
+  )
+)
+
+render(_=>_
+  .img(64, 64, '/assets/logo_small.png')
+  .img(192, 192, '/assets/logo_medium.png')
+)
+```   
+
+
+
 # Demos
 
 ```ts
