@@ -1,13 +1,10 @@
-__Name change:__ Brynja
+# What is and isn't Brynja: 
 
-# What is and isn't paramus-render: 
+* brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.
+* brynja aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
+* brynja is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
 
-* Paramus-render is a rendering engine designed to be used in conjunction with its sister library [Paramus](https://github.com/Olian04/Paramus).
-* Paramus-render exposes a chaining based api that is ment to provide a stateless representation of the dom.
-* Paramus-render aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
-* Paramus-render is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
-
-# Why paramus-render? 
+# Why Brynja? 
 
 * It's small but still extensive!
 * It requires NO transpilation, everything runs as is in the browser.
@@ -19,25 +16,25 @@ __Name change:__ Brynja
 __NPM:__
 
 ```
-npm i --save paramus-render
+npm i --save brynja
 ```
 
 __CDN:__
 
 ```html
-<script src="https://unpkg.com/paramus-render"></script>
+<script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
 ```
 
 # Setup - Hello World
 
-You can setup paramus-render in one of two ways.
+You can setup brynja in one of two ways.
 
 ## Using the default "render" method
 
 The default render method expects a dom element with id 'root' to exsist.
 
 ```ts
-import { render } from 'paramus-render';
+import { render } from 'brynja';
 
 render(_=>_
   .child('p', _=>_
@@ -49,7 +46,7 @@ render(_=>_
 ## Setting up your own Renderer instance
 
 ```ts
-import { Renderer } from 'paramus-render';
+import { Renderer } from 'brynja';
 
 const { render } = Renderer({
   rootElement: document.getElementById('root'),
@@ -65,7 +62,7 @@ render(_=>_
 
 # Operations
 
-In Paramus-render, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
+In brynja, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
 ## Nesting operations
 
@@ -320,7 +317,7 @@ On top of the pre defined operations you can also extend the renderer with your 
 ## Extend the default render method
 
 ```ts
-import { render, extend } from 'paramus-render';
+import { render, extend } from 'brynja';
 
 extend('img', (width, height, src) => _=>_
   .child('img', _=>_
@@ -343,7 +340,7 @@ render(_=>_
 ## Extend a custom renderer instance
 
 ```ts
-import { Renderer } from 'paramus-render';
+import { Renderer } from 'brynja';
 
 const { render, extend } = Renderer({
   rootElement: document.getElementById('root'),
@@ -373,7 +370,7 @@ render(_=>_
 ```ts
 // Counter
 import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
+import { render } from 'brynja';
 
 Paramus('url', {
   value: 0
@@ -397,7 +394,7 @@ Paramus('url', {
 ```ts
 // Hello world!
 import { Paramus } from 'paramus';
-import { render } from 'paramus-render';
+import { render } from 'brynja';
 
 Paramus('url', {
   who: 'world'
@@ -421,7 +418,7 @@ Paramus('url', {
 ```ts
 // Tabulation
 import { Paramus } from 'paramus';
-import { render, extend } from 'paramus-render';
+import { render, extend } from 'brynja';
 
 extend('table', (columns, data) => _=>_
   .child('table', _=>_
@@ -455,7 +452,7 @@ Paramus('url', {
 ```ts
 // Making a resquest
 import { Paramus } from 'paramus';
-import { render, extend } from 'paramus-render';
+import { render, extend } from 'brynja';
 
 const input = (text, value, onChange) => _=>_
   .child('input', _=>_

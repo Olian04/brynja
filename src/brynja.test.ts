@@ -3,9 +3,9 @@ import { describe } from 'mocha';
 import jsdom from 'mocha-jsdom';
 
 import { BuilderCTX } from './builder';
-import { render, Renderer } from './paramus-render';
+import { render, Renderer } from './brynja';
 
-describe('paramus-render', () => {
+describe('brynja', () => {
     jsdom();
 
     beforeEach(() => {
