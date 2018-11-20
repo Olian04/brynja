@@ -1,37 +1,33 @@
 {
-  "name": "paramus-render",
+  "name": "brynja",
   "version": "0.1.0",
-  "description": "V-dom implementation designed to be used with Paramus",
-  "main": "dist/paramus-render.js",
-  "types": "dist/paramus-render.d.ts",
+  "description": "Chaining api for interacting with the DOM",
+  "main": "dist/brynja.js",
+  "types": "dist/brynja.d.ts",
   "scripts": {
     "prepublishOnly": "npm run build",
     "test": "mocha --recursive -r ts-node/register 'src/**/*.test.ts' ",
     "prebuild": "npm run test",
     "postbuild": "npm run doc",
-    "build": "tsc",
-    "doc": "typedoc --mode file --out docs/ src/paramus-render.ts"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Olian04/paramus-render.git"
+    "url": "git+https://github.com/Olian04/brynja.git"
   },
   "keywords": [
     "renderer",
     "vdom",
     "dom",
     "virtual dom",
-    "render",
-    "functional",
-    "PWA",
-    "SPA"
+    "render"
   ],
   "author": "olian04",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Olian04/Paramus/issues"
+    "url": "https://github.com/Olian04/brynja/issues"
   },
-  "homepage": "https://github.com/Olian04/Paramus#readme",
+  "homepage": "https://github.com/Olian04/brynja#readme",
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/es6-promise": "3.3.0",

@@ -133,7 +133,7 @@ const constructChangeList = (newNode: VNode, oldNode: VNode): VNodeChange[] => {
         });
     }
 
-    if ()
+    // TODO: Implement the rest of the changelist, then use it to implement a new version of updateNode()
     return changeList;
 } 
 
