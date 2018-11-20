@@ -1,6 +1,6 @@
 {
   "name": "brynja",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Chaining api for interacting with the DOM",
   "main": "dist/brynja.js",
   "types": "dist/brynja.d.ts",
@@ -8,7 +8,9 @@
     "prepublishOnly": "npm run build",
     "test": "mocha --recursive -r ts-node/register 'src/**/*.test.ts' ",
     "prebuild": "npm run test",
-    "build": "tsc"
+    "build": "npm run build:node & npm run build:web",
+    "build:node": "tsc",
+    "build:web": "rollup --config"
   },
   "repository": {
     "type": "git",
@@ -34,12 +36,15 @@
     "@types/chai": "^4.1.4",
     "@types/es6-promise": "3.3.0",
     "@types/mocha": "^5.2.2",
+    "@types/rollup": "^0.54.0",
     "@types/typescript": "^2.0.0",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "mocha-jsdom": "^2.0.0",
+    "rollup": "^0.67.3",
+    "rollup-plugin-typescript": "^1.0.0",
     "ts-node": "^6.1.1",
-    "typedoc": "^0.11.1",
+    "tslib": "^1.9.3",
     "typescript": "^2.9.2"
   }
 }
