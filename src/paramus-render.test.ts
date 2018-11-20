@@ -4,6 +4,7 @@ import jsdom from 'mocha-jsdom';
 
 import { BuilderCTX } from './builder';
 import { render, Renderer } from './paramus-render';
+import { Events } from './util/events';
 
 describe('paramus-render', () => {
     jsdom();
@@ -262,6 +263,86 @@ describe('paramus-render', () => {
                         expect(ctx.children[1].text).to.equal('Hello world!');
                     })
                 );
+            });
+        });
+        describe('updating a render', ()=> {
+            it('child update', () => {
+                const root = document.createElement('div');
+                const { render } = Renderer({
+                    rootElement: root,
+                    vdomRootType: 'div'
+                });
+
+                render(_=>_
+                    .child('h1', _=>_)
+                );
+                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('H1');
+                
+                render(_=>_
+                    .child('p', _=>_)
+                );
+                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('P'); 
+            });
+
+            it('prop update', () => {
+                const root = document.createElement('div');
+                const { render } = Renderer({
+                    rootElement: root,
+                    vdomRootType: 'div'
+                });
+
+                render(_=>_
+                    .child('div', _=>_
+                        .prop('bar', 'foo')
+                    )
+                );
+                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('DIV');
+                expect(root.firstElementChild.firstElementChild.hasAttribute('bar'), 'rootElement should contain attribute "bar"').to.be.true; // TODO: This fails, why? I can't see why it would fail? Does it have to do with something like "requestAnimationFrame"?
+                expect(root.firstElementChild.firstElementChild.getAttribute('bar'), 'Attribute "bar" should have value "foo"').to.equal('foo');
+
+                render(_=>_
+                    .child('div', _=>_
+                        .prop('foo', 'bar')
+                    )
+                );
+                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('DIV');
+                expect(root.firstElementChild.firstElementChild.hasAttribute('bar'), 'rootElement should not contain attribute "bar"').to.be.false;
+                expect(root.firstElementChild.firstElementChild.hasAttribute('foo'), 'rootElement should contain attribute "foo"').to.be.true;
+                expect(root.firstElementChild.firstElementChild.getAttribute('foo'), 'Attribute "foo" should have value "bar"').to.equal('bar');
+            });
+
+            it('event update', () => {
+                const root = document.createElement('div');
+                const { render } = Renderer({
+                    rootElement: root,
+                    vdomRootType: 'div'
+                });
+
+                let counter = 0;
+
+                render(_=>_
+                    .child('div', _=>_
+                        .on(Events.Mouse.Click, () => {
+                            if (counter > 0) {
+                                expect.fail('Should fail');
+                            }
+                            counter++;
+                        })
+                    )
+                );
+                //@ts-ignore
+                root.firstElementChild.firstElementChild.dispatchEvent(new window.Event('click'));
+                
+                render(_=>_
+                    .child('div', _=>_
+                        .on(Events.Mouse.Click, () => {
+                            counter += 100;
+                        })
+                    )
+                );
+                //@ts-ignore
+                root.firstElementChild.firstElementChild.dispatchEvent(new window.Event('click'));
+                expect(counter).to.equal(100);
             });
         });
     });

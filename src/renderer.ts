@@ -1,5 +1,6 @@
 import { buildNode, BuilderCB, CustomOperation, CustomOperations } from './builder';
-import { renderNode } from './renderNode';
+import { renderNode, updateNode } from './renderNode';
+import { VNode } from './util/vnode';
 
 export interface IRenderer {
     render(rootBuilder: BuilderCB): void;
@@ -10,13 +11,20 @@ export function Renderer(settings: {
     rootElement: HTMLElement;
     vdomRootType: string;
 }): IRenderer {
+    let rootElement: HTMLElement =  null;
+    let oldRootNode: VNode = null;
     const customOperations: CustomOperations = {};
     return {
         render(rootBuilder: BuilderCB) {
             const rootNode = buildNode(settings.vdomRootType, rootBuilder, customOperations);
-            const rootElement = renderNode(rootNode);
-            settings.rootElement.innerHTML = '';
-            settings.rootElement.appendChild(rootElement);
+            if (rootElement === null) {
+                rootElement = renderNode(rootNode);
+                settings.rootElement.innerHTML = '';
+                settings.rootElement.appendChild(rootElement);
+            } else {
+                updateNode(rootNode, oldRootNode, rootElement);
+            }
+            oldRootNode = rootNode;
         },
         extend(operationName: string, constructor: CustomOperation) {
             customOperations[operationName] = constructor;

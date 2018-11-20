@@ -127,7 +127,7 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             callback( ctxProxy(ctx) );
             return this;
         },
-        ...Object.keys(customOperations).reduce((res, k) => ({...res,
+        ...Object.keys(customOperations).reduce((res: object, k) => ({...res,
             [k]:  (...args) => {
                 customOperations[k](...args)(builderCtx);
                 return builderCtx;
