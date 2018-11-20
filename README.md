@@ -1,3 +1,5 @@
+__Name change:__ Brynja
+
 # What is and isn't paramus-render: 
 
 * Paramus-render is a rendering engine designed to be used in conjunction with its sister library [Paramus](https://github.com/Olian04/Paramus).
