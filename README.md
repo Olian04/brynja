@@ -23,9 +23,12 @@ __CDN:__
 <script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
 ```
 
-# Setup - Hello World
+# Demos
 
-Fiddle demo: [Hello World](https://jsfiddle.net/b9L27xsv/2/)
+[Hello World](https://jsfiddle.net/b9L27xsv/2/)
+
+
+# Setup - Hello World
 
 You can setup brynja in one of two ways.
 
