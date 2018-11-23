@@ -25,6 +25,8 @@ __CDN:__
 
 # Setup - Hello World
 
+Fiddle demo: [Hello World](https://jsfiddle.net/b9L27xsv/2/)
+
 You can setup brynja in one of two ways.
 
 ## Using the default "render" method
