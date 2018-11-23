@@ -25,7 +25,7 @@ __CDN:__
 
 # Demos
 
-[Hello World](https://jsfiddle.net/b9L27xsv/2/), [Table generation](https://jsfiddle.net/b9L27xsv/17/)
+[Hello World](https://jsfiddle.net/b9L27xsv/2/), [Table generation](https://jsfiddle.net/b9L27xsv/17/), [Updates](https://jsfiddle.net/b9L27xsv/58/)
 
 
 # Setup - Hello World
