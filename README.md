@@ -1,7 +1,7 @@
 # What is and isn't Brynja: 
 
 * brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.
-* brynja aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
+* brynja aims to be an alternative to excessive use of `document.createElement`. Especially when generating dynamic UIs for small to medium applications.
 * brynja is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
 
 # Why Brynja? 
