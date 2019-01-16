@@ -15,7 +15,7 @@
 
 __NPM:__
 
-[`npm i --save brynja`](https://www.npmjs.com/package/brynja)
+[`npm install brynja`](https://www.npmjs.com/package/brynja)
 
 __CDN:__
 
