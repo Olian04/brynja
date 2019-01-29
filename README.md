@@ -67,6 +67,27 @@ render(_=>_
 
 In brynja, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
+  - [Nesting operations](#nesting-operations)
+    - [.child(tagName, ctx)](#childtagname-ctx)
+    - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
+  - [Mutating operations](#mutating-operations)
+    - [.id(value)](#idvalue)
+    - [.class(valuesArr)](#classvaluesarr)
+    - [.name(value)](#namevalue)
+    - [.value(value)](#valuevalue)
+    - [.text(value)](#textvalue)
+    - [.prop(key, value)](#propkey-value)
+    - [.on(eventName, callback)](#oneventname-callback)
+  - [Control flow operations](#control-flow-operations)
+    - [.when(predicate, then_ctx, else_ctx?)](#whenpredicate-thenctx-elsectx)
+    - [.while(predicate, ctx)](#whilepredicate-ctx)
+    - [.do(ctx, ....)](#doctx)
+  - [Effect free operations](#effect-free-operations)
+    - [.peek(callback)](#peekcallback)
+- [Custom operations](#custom-operations)
+  - [Extend the default render method](#extend-the-default-render-method)
+  - [Extend a custom renderer instance](#extend-a-custom-renderer-instance)
+
 ## Nesting operations
 
 Nesting operations are used to append children to the current vdom node.
