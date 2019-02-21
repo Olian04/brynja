@@ -23,6 +23,10 @@ __CDN:__
 <script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
 ```
 
+# Help me help you 
+
+<a href="https://www.buymeacoffee.com/fEvx1NCoS" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 # Demos
 
 [Hello World](https://jsfiddle.net/b9L27xsv/73/), [Table generation](https://jsfiddle.net/b9L27xsv/74/), [Updates](https://jsfiddle.net/b9L27xsv/72/), [User input](https://jsfiddle.net/b9L27xsv/101/)
