@@ -33,7 +33,7 @@ __CDN:__
 * Table generation: https://jsfiddle.net/b9L27xsv/74 
 * Updates: https://jsfiddle.net/b9L27xsv/72
 * User input: https://jsfiddle.net/b9L27xsv/101
-* Probebalistics Propegation: https://jsfiddle.net/62hutcpa
+* Probebalistics Propegation: https://jsfiddle.net/aw0nkdrm/9/
 
 
 # Setup - Hello World
