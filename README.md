@@ -1,7 +1,7 @@
 # What is and isn't Brynja: 
 
-* brynja exposes a chaining based api that is meant to provide a stateless representation of the dom.
-* brynja aims to be an alternative to excessive use of "document.createElement"´. Especially when generating dynamic UIs for small to medium applications.
+* brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.
+* brynja aims to be an alternative to excessive use of `document.createElement`. Especially when generating dynamic UIs for small to medium applications.
 * brynja is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
 
 # Why Brynja? 
@@ -15,15 +15,26 @@
 
 __NPM:__
 
-```
-npm i --save brynja
-```
+[`npm install brynja`](https://www.npmjs.com/package/brynja)
 
 __CDN:__
 
 ```html
-<script src="https://unpkg.com/brynja"></script>
+<script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
 ```
+
+# Help me help you 
+
+<a href="https://www.buymeacoffee.com/olian04" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+# Demos
+
+* Hello World: https://jsfiddle.net/b9L27xsv/73
+* Table generation: https://jsfiddle.net/b9L27xsv/74 
+* Updates: https://jsfiddle.net/b9L27xsv/72
+* User input: https://jsfiddle.net/b9L27xsv/101
+* Probebalistics Propegation: https://jsfiddle.net/aw0nkdrm/9/
+
 
 # Setup - Hello World
 
@@ -63,6 +74,27 @@ render(_=>_
 # Operations
 
 In brynja, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
+
+  - [Nesting operations](#nesting-operations)
+    - [.child(tagName, ctx)](#childtagname-ctx)
+    - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
+  - [Mutating operations](#mutating-operations)
+    - [.id(value)](#idvalue)
+    - [.class(valuesArr)](#classvaluesarr)
+    - [.name(value)](#namevalue)
+    - [.value(value)](#valuevalue)
+    - [.text(value)](#textvalue)
+    - [.prop(key, value)](#propkey-value)
+    - [.on(eventName, callback)](#oneventname-callback)
+  - [Control flow operations](#control-flow-operations)
+    - [.when(predicate, then_ctx, else_ctx?)](#whenpredicate-thenctx-elsectx)
+    - [.while(predicate, ctx)](#whilepredicate-ctx)
+    - [.do(ctx, ....)](#doctx)
+  - [Effect free operations](#effect-free-operations)
+    - [.peek(callback)](#peekcallback)
+- [Custom operations](#custom-operations)
+  - [Extend the default render method](#extend-the-default-render-method)
+  - [Extend a custom renderer instance](#extend-a-custom-renderer-instance)
 
 ## Nesting operations
 
