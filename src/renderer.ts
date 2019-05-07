@@ -1,5 +1,6 @@
 import { buildNode, BuilderCB, CustomOperation, CustomOperations } from './builder';
-import { renderNode, updateNode } from './renderNode';
+import { renderNode } from './renderNode';
+import { updateNode } from './updateNode';
 import { VNode } from './util/vnode';
 
 export interface IRenderer {
@@ -7,22 +8,22 @@ export interface IRenderer {
     extend(operationName: string, constructor: CustomOperation): void;
 }
 
-export function Renderer(settings: {
+export function Renderer(config: {
     rootElement: HTMLElement;
-    vdomRootType: string;
 }): IRenderer {
-    let rootElement: HTMLElement =  null;
+    let initialRender = true;
     let oldRootNode: VNode = null;
     const customOperations: CustomOperations = {};
     return {
         render(rootBuilder: BuilderCB) {
-            const rootNode = buildNode(settings.vdomRootType, rootBuilder, customOperations);
-            if (rootElement === null) {
-                rootElement = renderNode(rootNode);
-                settings.rootElement.innerHTML = '';
-                settings.rootElement.appendChild(rootElement);
+            const rootNode = buildNode(config.rootElement.tagName.toLowerCase(), rootBuilder, customOperations);
+            if (initialRender) {
+                initialRender = false;
+                const newRoot = renderNode(rootNode);
+                config.rootElement.replaceWith(newRoot);
+                config.rootElement = newRoot;
             } else {
-                updateNode(rootNode, oldRootNode, rootElement);
+                updateNode(rootNode, oldRootNode, config.rootElement);
             }
             oldRootNode = rootNode;
         },

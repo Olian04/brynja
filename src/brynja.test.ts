@@ -6,7 +6,7 @@ import { BuilderCTX } from './builder';
 import { render, Renderer } from './brynja';
 import { Events } from './util/events';
 
-describe('paramus-render', () => {
+describe('brynja', () => {
     jsdom();
 
     beforeEach(() => {
@@ -244,8 +244,7 @@ describe('paramus-render', () => {
         describe('extension operations', () => {
             it('hello world', () => {
                 const { render, extend } = Renderer({
-                    rootElement: document.getElementById('root'),
-                    vdomRootType: 'div'
+                    rootElement: document.getElementById('root')
                 });
                 extend('hello', (name: string) => _=>_
                     .child('p', _=>_
@@ -267,71 +266,72 @@ describe('paramus-render', () => {
         });
         describe('updating a render', ()=> {
             it('child update', () => {
-                const root = document.createElement('div');
-                const { render } = Renderer({
-                    rootElement: root,
-                    vdomRootType: 'div'
-                });
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
 
                 render(_=>_
                     .child('h1', _=>_)
                 );
-                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('H1');
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('H1');
                 
                 render(_=>_
                     .child('p', _=>_)
                 );
-                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('P'); 
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('P'); 
             });
 
             it('prop update', () => {
-                const root = document.createElement('div');
-                const { render } = Renderer({
-                    rootElement: root,
-                    vdomRootType: 'div'
-                });
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
 
                 render(_=>_
                     .child('div', _=>_
                         .prop('bar', 'foo')
                     )
                 );
-                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('DIV');
-                expect(root.firstElementChild.firstElementChild.hasAttribute('bar'), 'rootElement should contain attribute "bar"').to.be.true; // TODO: This fails, why? I can't see why it would fail? Does it have to do with something like "requestAnimationFrame"?
-                expect(root.firstElementChild.firstElementChild.getAttribute('bar'), 'Attribute "bar" should have value "foo"').to.equal('foo');
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                expect(config.rootElement.firstElementChild.hasAttribute('bar'), 'rootElement should contain attribute "bar"').to.be.true; 
+                expect(config.rootElement.firstElementChild.getAttribute('bar'), 'Attribute "bar" should have value "foo"').to.equal('foo');
 
                 render(_=>_
                     .child('div', _=>_
                         .prop('foo', 'bar')
                     )
                 );
-                expect(root.firstElementChild.firstElementChild.nodeName).to.equal('DIV');
-                expect(root.firstElementChild.firstElementChild.hasAttribute('bar'), 'rootElement should not contain attribute "bar"').to.be.false;
-                expect(root.firstElementChild.firstElementChild.hasAttribute('foo'), 'rootElement should contain attribute "foo"').to.be.true;
-                expect(root.firstElementChild.firstElementChild.getAttribute('foo'), 'Attribute "foo" should have value "bar"').to.equal('bar');
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                expect(config.rootElement.firstElementChild.hasAttribute('bar'), 'rootElement should not contain attribute "bar"').to.be.false;
+                expect(config.rootElement.firstElementChild.hasAttribute('foo'), 'rootElement should contain attribute "foo"').to.be.true;
+                expect(config.rootElement.firstElementChild.getAttribute('foo'), 'Attribute "foo" should have value "bar"').to.equal('bar');
             });
 
             it('event update', () => {
-                const root = document.createElement('div');
-                const { render } = Renderer({
-                    rootElement: root,
-                    vdomRootType: 'div'
-                });
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
 
                 let counter = 0;
 
                 render(_=>_
                     .child('div', _=>_
                         .on(Events.Mouse.Click, () => {
-                            if (counter > 0) {
+                            if (counter === 1) {
                                 expect.fail('Should fail');
                             }
-                            counter++;
+                            counter = 1;
                         })
                     )
                 );
-                //@ts-ignore
-                root.firstElementChild.firstElementChild.dispatchEvent(new window.Event('click'));
+
+                config.rootElement.firstElementChild.dispatchEvent(
+                    //@ts-ignore
+                    new window.Event('click')
+                );
+                expect(counter).to.equal(1);
                 
                 render(_=>_
                     .child('div', _=>_
@@ -340,9 +340,12 @@ describe('paramus-render', () => {
                         })
                     )
                 );
-                //@ts-ignore
-                root.firstElementChild.firstElementChild.dispatchEvent(new window.Event('click'));
-                expect(counter).to.equal(100);
+
+                config.rootElement.firstElementChild.dispatchEvent(
+                    //@ts-ignore
+                    new window.Event('click')
+                );
+                expect(counter).to.equal(101);
             });
         });
     });
