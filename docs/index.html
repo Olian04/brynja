@@ -32,6 +32,7 @@
 </head>
 
 <body>
+  <br><br><br>
   <div id="root"></div>
 
   <script>
@@ -60,7 +61,11 @@
       intervalID = setInterval(foo, intervalSpeed);
       foo();
     }
-    run(1000);
+    run(33);
+  </script>
+  <script>
+    // Performance
+    (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
   </script>
 </body>
 
