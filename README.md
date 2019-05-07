@@ -60,8 +60,7 @@ render(_=>_
 import { Renderer } from 'brynja';
 
 const { render } = Renderer({
-  rootElement: document.getElementById('root'),
-  vdomRootType: 'div'
+  rootElement: document.getElementById('root')
 });
 
 render(_=>_
