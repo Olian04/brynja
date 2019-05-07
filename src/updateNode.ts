@@ -43,10 +43,10 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   // #endregion
   
   // #region Update props
-  [ // TODO: Remove duplicate props
+  new Set([
     ...Object.keys(oldNode.props),
     ...Object.keys(newNode.props)
-  ].forEach(prop => {
+  ]).forEach(prop => {
     if (prop in oldNode.props && !(prop in newNode.props)) {
       // Remove prop
       elem.removeAttribute(prop);
@@ -61,10 +61,10 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   // #endregion
   
   // #region Update events
-  [ // TODO: Remove duplicate events
+  new Set([
     ...Object.keys(oldNode.events),
     ...Object.keys(newNode.events)
-  ].forEach(event => {
+  ]).forEach(event => {
     if (event in oldNode.events && !(event in newNode.events)) {
       // Remove all listeners
       oldNode.events[event].forEach(cb => {
@@ -77,14 +77,16 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
       });
     } else if (event in newNode.events && event in oldNode.events) {
       // Some listeners might have changed
-
-      // TODO: Compare function signatures between oldNode and newNode to limit nr of assignments each render
-      oldNode.events[event].forEach(cb => {
-        elem.removeEventListener(event, cb)
-      });
-      newNode.events[event].forEach(cb => {
-        elem.addEventListener(event, cb)
-      });
+      for (let i = 0; i < Math.max(oldNode.events[event].length, newNode.events[event].length); i++) {
+        const oldHandler = oldNode.events[event][i];
+        const newHandler = newNode.events[event][i];
+        
+        // Naively compare function signatures between oldNode and newNode to limit nr of assignments each render
+        if (oldHandler.toString() !== newHandler.toString()) {
+          elem.removeEventListener(event, oldHandler)
+          elem.addEventListener(event, newHandler)
+        }
+      }
     }
   });
   // #endregion
@@ -94,11 +96,9 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     if (i < oldNode.children.length) {
       // Updated elements compared to previous nodeTree
       updateNode(newNode.children[i], oldNode.children[i], <HTMLElement>elem.children.item(i));
-      console.log('updated:', elem.children.item(i).textContent);
     } else {
       // Create new elements
       elem.appendChild(renderNode(newNode.children[i]));
-      console.log('added:', elem.children.item(i).textContent);
     }
   }
 
@@ -106,8 +106,6 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   const elementsToRemove = elem.children.length - firstInvalidIndex;
   for (let i = 0; i < elementsToRemove; i++) {
     // Remove extra elements
-    
-    console.log('removed:', elem.children.item(firstInvalidIndex).textContent);
     elem.children.item(firstInvalidIndex).remove();
   }
 
