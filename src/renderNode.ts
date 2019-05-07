@@ -6,7 +6,12 @@ export function renderNode(node: VNode): HTMLElement {
         elem['value'] = node.value;
         elem.setAttribute('value', '' + node.value);
     }
-    elem.innerText = node.text;
+
+    if (node.text !== '') {
+        const $text = document.createTextNode(node.text);
+        elem.appendChild($text);
+    }
+    
     Object.keys(node.props).forEach(prop => {
         elem.setAttribute(prop, node.props[prop]);
     });

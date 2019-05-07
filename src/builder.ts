@@ -52,8 +52,8 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             return this;
         },
         children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
-            for (let i = 0; i < count; i++) {
-                ctx.children.push(buildNode(tagType, _ => builder(_, i), customOperations));
+            for (let __i = 0; __i < count; __i++) {
+                ctx.children.push(buildNode(tagType, _ => builder(_, __i), customOperations));
             }
             return this;
         },
@@ -127,7 +127,7 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             callback( ctxProxy(ctx) );
             return this;
         },
-        ...Object.keys(customOperations).reduce((res: HTMLElement, k) => ({...res,
+        ...Object.keys(customOperations).reduce((res: object, k) => ({...res,
             [k]:  (...args) => {
                 customOperations[k](...args)(builderCtx);
                 return builderCtx;

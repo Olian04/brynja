@@ -63,7 +63,7 @@ describe('render', () => {
             const div =  renderNode(buildNode('div', _=>_
                 .text('foo')
             , {}));
-            expect(div.innerText).to.equal('foo');
+            expect(div.firstChild.textContent).to.equal('foo');
         });
 
         it('prop', () => {
@@ -88,34 +88,6 @@ describe('render', () => {
             div.dispatchEvent(new window.Event(Events.Mouse.Click));
 
             expect(res).to.equal('helloworld');
-        });
-    });
-
-    describe('Updating', () => {
-        it('Single update', () => {
-            let div =  renderNode(buildNode('h1', _=>_
-                .text('Hello World')
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(0);
-            expect(div.innerText).to.equal('Hello World');
-            div =  renderNode(buildNode('h1', _=>_
-                .text('Hello')
-                .child('div', _=>_
-                    .text('World')
-                )
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(1);
-            expect(div.innerText).to.equal('Hello');
-            expect((<HTMLElement>div.children[0]).tagName).to.equal('DIV');
-            expect((<HTMLElement>div.children[0]).innerText).to.equal('World');
-            div =  renderNode(buildNode('h1', _=>_
-                .text('Hello World')
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(0);
-            expect(div.innerText).to.equal('Hello World');
         });
     });
 });

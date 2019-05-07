@@ -2,6 +2,10 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
+        "lib": [
+            "esnext",
+            "dom"
+        ],
         "outDir": "dist/",
         "declaration": true,
         "allowSyntheticDefaultImports": true,

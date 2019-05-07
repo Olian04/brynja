@@ -4,6 +4,7 @@ import jsdom from 'mocha-jsdom';
 
 import { BuilderCTX } from './builder';
 import { render, Renderer } from './brynja';
+import { Events } from './util/events';
 
 describe('brynja', () => {
     jsdom();
@@ -243,8 +244,7 @@ describe('brynja', () => {
         describe('extension operations', () => {
             it('hello world', () => {
                 const { render, extend } = Renderer({
-                    rootElement: document.getElementById('root'),
-                    vdomRootType: 'div'
+                    rootElement: document.getElementById('root')
                 });
                 extend('hello', (name: string) => _=>_
                     .child('p', _=>_
@@ -262,6 +262,90 @@ describe('brynja', () => {
                         expect(ctx.children[1].text).to.equal('Hello world!');
                     })
                 );
+            });
+        });
+        describe('updating a render', ()=> {
+            it('child update', () => {
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
+
+                render(_=>_
+                    .child('h1', _=>_)
+                );
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('H1');
+                
+                render(_=>_
+                    .child('p', _=>_)
+                );
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('P'); 
+            });
+
+            it('prop update', () => {
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
+
+                render(_=>_
+                    .child('div', _=>_
+                        .prop('bar', 'foo')
+                    )
+                );
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                expect(config.rootElement.firstElementChild.hasAttribute('bar'), 'rootElement should contain attribute "bar"').to.be.true; 
+                expect(config.rootElement.firstElementChild.getAttribute('bar'), 'Attribute "bar" should have value "foo"').to.equal('foo');
+
+                render(_=>_
+                    .child('div', _=>_
+                        .prop('foo', 'bar')
+                    )
+                );
+                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                expect(config.rootElement.firstElementChild.hasAttribute('bar'), 'rootElement should not contain attribute "bar"').to.be.false;
+                expect(config.rootElement.firstElementChild.hasAttribute('foo'), 'rootElement should contain attribute "foo"').to.be.true;
+                expect(config.rootElement.firstElementChild.getAttribute('foo'), 'Attribute "foo" should have value "bar"').to.equal('bar');
+            });
+
+            it('event update', () => {
+                const config = {
+                    rootElement: document.getElementById('root')
+                };
+                const { render } = Renderer(config);
+
+                let counter = 0;
+
+                render(_=>_
+                    .child('div', _=>_
+                        .on(Events.Mouse.Click, () => {
+                            if (counter === 1) {
+                                expect.fail('Should fail');
+                            }
+                            counter = 1;
+                        })
+                    )
+                );
+
+                config.rootElement.firstElementChild.dispatchEvent(
+                    //@ts-ignore
+                    new window.Event('click')
+                );
+                expect(counter).to.equal(1);
+                
+                render(_=>_
+                    .child('div', _=>_
+                        .on(Events.Mouse.Click, () => {
+                            counter += 100;
+                        })
+                    )
+                );
+
+                config.rootElement.firstElementChild.dispatchEvent(
+                    //@ts-ignore
+                    new window.Event('click')
+                );
+                expect(counter).to.equal(101);
             });
         });
     });

@@ -21,10 +21,7 @@
     "vdom",
     "dom",
     "virtual dom",
-    "render",
-    "functional",
-    "PWA",
-    "SPA"
+    "render"
   ],
   "author": "olian04",
   "license": "MIT",
@@ -33,18 +30,19 @@
   },
   "homepage": "https://github.com/Olian04/brynja#readme",
   "devDependencies": {
-    "@types/chai": "^4.1.4",
+    "@types/chai": "^4.1.7",
     "@types/es6-promise": "3.3.0",
-    "@types/mocha": "^5.2.2",
+    "@types/mocha": "^5.2.6",
     "@types/rollup": "^0.54.0",
     "@types/typescript": "^2.0.0",
-    "chai": "^4.1.2",
-    "mocha": "^5.2.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
     "mocha-jsdom": "^2.0.0",
-    "rollup": "^0.67.3",
-    "rollup-plugin-typescript": "^1.0.0",
-    "ts-node": "^6.1.1",
+    "rollup": "^1.11.3",
+    "rollup-plugin-typescript": "^1.0.1",
+    "ts-node": "^8.1.0",
     "tslib": "^1.9.3",
-    "typescript": "^2.9.2"
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.5"
   }
 }
