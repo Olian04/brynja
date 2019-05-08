@@ -374,8 +374,7 @@ render(_=>_
 import { Renderer } from 'brynja';
 
 const { render, extend } = Renderer({
-  rootElement: document.getElementById('root'),
-  vdomRootType: 'div'
+  rootElement: document.getElementById('root')
 });
 
 extend('img', (width, height, src) => _=>_
