@@ -3,6 +3,7 @@ import { VNode } from './util/vnode';
 export function renderNode(node: VNode): HTMLElement {
     const elem = document.createElement(node.tag);
     if (node.value) {
+        // @ts-ignore
         elem.value = node.value;
         elem.setAttribute('value', '' + node.value);
     }

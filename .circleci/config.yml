@@ -28,6 +28,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+
+      # run linting no fix
+      - run: npm run lint:nofix
+
       # run tests
       - run: npm test
 
@@ -36,5 +40,8 @@ jobs:
 
       # build web
       - run: npm run build:web
+
+      # upload coverage
+      - run: npm run coverage
 
 
