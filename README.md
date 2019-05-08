@@ -86,7 +86,7 @@ In brynja, method that are exposed on the chaining api is refered to as _operati
     - [.prop(key, value)](#propkey-value)
     - [.on(eventName, callback)](#oneventname-callback)
   - [Control flow operations](#control-flow-operations)
-    - [.when(predicate, then_ctx, else_ctx?)](#whenpredicate-thenctx-elsectx)
+    - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
     - [.while(predicate, ctx)](#whilepredicate-ctx)
     - [.do(ctx, ....)](#doctx)
   - [Effect free operations](#effect-free-operations)
@@ -256,14 +256,14 @@ render(_=>_
 
 Control flow operations are used for conditional rendering. 
 
-### .when(predicate, then_ctx, else_ctx?)
+### .when(booleanExpression, then_ctx, else_ctx?)
 
 ```ts
 render(_=>_
-  .when(() => true, _=>_
+  .when(true, _=>_
     .child('h1', _=>_)
   )
-  .when(() => false, _=>_
+  .when(false, _=>_
     .child('h1', _=>_)
   ,_=>_
     .child('h2', _=>_)

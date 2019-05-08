@@ -173,8 +173,8 @@ describe('brynja', () => {
         describe('Control flow ops', ()  => {
             it('when', () => {
                 render(_=>_ 
-                    .when(() => true, testBuilder, () => expect.fail())
-                    .when(() => false,  () => expect.fail(), testBuilder)
+                    .when(true, testBuilder, () => expect.fail())
+                    .when(false,  () => expect.fail(), testBuilder)
                 );
             });
             it('while', () => {

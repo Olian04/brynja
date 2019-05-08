@@ -1,6 +1,6 @@
 {
   "name": "brynja",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Chaining api for interacting with the DOM",
   "main": "dist/brynja.js",
   "types": "dist/brynja.d.ts",

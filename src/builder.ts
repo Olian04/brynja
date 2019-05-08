@@ -10,7 +10,7 @@ export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
     child(tagType: string, builder: BuilderCB): BuilderCTX;
     children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
-    when(predicate: () => boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
+    when(booleanExpression: boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
     while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
     do(...builders: BuilderCB[]): BuilderCTX;
     value(value: any): BuilderCTX;
@@ -57,8 +57,8 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             }
             return this;
         },
-        when(predicate: () => boolean, then_builder, else_builder = undefined) {
-            if (predicate()) {
+        when(booleanExpression, then_builder, else_builder = undefined) {
+            if (booleanExpression) {
                 then_builder(this);
             } else if (else_builder) {
                 else_builder(this);
