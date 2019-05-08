@@ -1,5 +1,5 @@
-import { VNode } from "./util/vnode";
 import { renderNode } from './renderNode';
+import { VNode } from './util/vnode';
 
 const TEXT_NODE = 3; // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
 
@@ -12,10 +12,10 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
 
   // #region Update value
   if (newNode.value && newNode.value !== oldNode.value) {
-      elem['value'] = newNode.value;
+      elem.value = newNode.value;
       elem.setAttribute('value', '' + newNode.value);
   } else if (newNode.value !== oldNode.value) {
-      elem['value'] = undefined;
+      elem.value = undefined;
       elem.removeAttribute('value');
   }
   // #endregion
@@ -41,12 +41,12 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     }
   }
   // #endregion
-  
+
   // #region Update props
   new Set([
     ...Object.keys(oldNode.props),
-    ...Object.keys(newNode.props)
-  ]).forEach(prop => {
+    ...Object.keys(newNode.props),
+  ]).forEach((prop) => {
     if (prop in oldNode.props && !(prop in newNode.props)) {
       // Remove prop
       elem.removeAttribute(prop);
@@ -59,32 +59,32 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     }
   });
   // #endregion
-  
+
   // #region Update events
   new Set([
     ...Object.keys(oldNode.events),
-    ...Object.keys(newNode.events)
-  ]).forEach(event => {
+    ...Object.keys(newNode.events),
+  ]).forEach((event) => {
     if (event in oldNode.events && !(event in newNode.events)) {
       // Remove all listeners
-      oldNode.events[event].forEach(cb => {
-          elem.removeEventListener(event, cb)
+      oldNode.events[event].forEach((cb) => {
+          elem.removeEventListener(event, cb);
       });
     } else if (event in newNode.events && !(event in oldNode.events)) {
       // Add new listeners
-      newNode.events[event].forEach(cb => {
-        elem.addEventListener(event, cb)
+      newNode.events[event].forEach((cb) => {
+        elem.addEventListener(event, cb);
       });
     } else if (event in newNode.events && event in oldNode.events) {
       // Some listeners might have changed
       for (let i = 0; i < Math.max(oldNode.events[event].length, newNode.events[event].length); i++) {
         const oldHandler = oldNode.events[event][i];
         const newHandler = newNode.events[event][i];
-        
+
         // Naively compare function signatures between oldNode and newNode to limit nr of assignments each render
         if (oldHandler.toString() !== newHandler.toString()) {
-          elem.removeEventListener(event, oldHandler)
-          elem.addEventListener(event, newHandler)
+          elem.removeEventListener(event, oldHandler);
+          elem.addEventListener(event, newHandler);
         }
       }
     }
@@ -95,7 +95,7 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   for (let i = 0; i < newNode.children.length; i++) {
     if (i < oldNode.children.length) {
       // Updated elements compared to previous nodeTree
-      updateNode(newNode.children[i], oldNode.children[i], <HTMLElement>elem.children.item(i));
+      updateNode(newNode.children[i], oldNode.children[i], elem.children.item(i) as HTMLElement);
     } else {
       // Create new elements
       elem.appendChild(renderNode(newNode.children[i]));

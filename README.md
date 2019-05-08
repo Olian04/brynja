@@ -1,3 +1,9 @@
+[![CircleCI](https://img.shields.io/circleci/project/github/Olian04/brynja.svg?label=tests&logo=circleci)](https://circleci.com/gh/Olian04/brynja)
+[![NPM Version](https://img.shields.io/npm/v/brynja.svg)](https://www.npmjs.com/package/brynja)
+![License](https://img.shields.io/npm/l/brynja.svg)
+![Available types](https://img.shields.io/npm/types/brynja.svg)
+[![Size](https://img.shields.io/bundlephobia/min/brynja.svg)](https://bundlephobia.com/result?p=brynja)
+
 # What is and isn't Brynja: 
 
 * brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.

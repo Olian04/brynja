@@ -1,5 +1,5 @@
-import { VNode } from './util/vnode';
 import { Events } from './util/events';
+import { VNode } from './util/vnode';
 
 export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
 export interface CustomOperations {
@@ -26,8 +26,8 @@ export interface BuilderCTX {
     on(eventName: Events.Drag, handler: (event: DragEvent) => void): BuilderCTX;
     on(eventName: Events.Clipboard, handler: (event: ClipboardEvent) => void): BuilderCTX;
     on(eventName: string, handler: (event: any) => void): BuilderCTX;
-    [operationName: string]:  (...args) => BuilderCTX; // Needed for integration with customOperations
-} 
+    [operationName: string]: (...args) => BuilderCTX; // Needed for integration with customOperations
+}
 
 export function buildNode(tagType: string, builder: BuilderCB, customOperations: CustomOperations): VNode {
     const ctx: VNode = {
@@ -36,7 +36,7 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
         text: '',
         events: {},
         props: {},
-        children: []
+        children: [],
     };
     const builderCtx: BuilderCTX = {
         on(eventName: string, handler: (e: any) => void) {
@@ -53,11 +53,11 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
         },
         children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
             for (let __i = 0; __i < count; __i++) {
-                ctx.children.push(buildNode(tagType, _ => builder(_, __i), customOperations));
+                ctx.children.push(buildNode(tagType, (_) => builder(_, __i), customOperations));
             }
             return this;
         },
-        when(booleanExpression, then_builder, else_builder = undefined) {
+        when(booleanExpression, then_builder, else_builder?) {
             if (booleanExpression) {
                 then_builder(this);
             } else if (else_builder) {
@@ -72,7 +72,7 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             return this;
         },
         do(...builders: BuilderCB[]) {
-            builders.forEach(builder => builder(this));
+            builders.forEach((builder) => builder(this));
             return this;
         },
         value(value: any) {
@@ -88,19 +88,19 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             return this;
         },
         id(value: string) {
-            ctx.props['id'] = value;
+            ctx.props.id = value;
             return this;
         },
         class(valuesArr: string[]) {
             if (!('class' in ctx.props)) {
-                ctx.props['class'] = valuesArr.join(' ');
+                ctx.props.class = valuesArr.join(' ');
             } else {
-                ctx.props['class'] = [...ctx.props['class'].split(' '), ...valuesArr].join(' ');
+                ctx.props.class = [...ctx.props.class.split(' '), ...valuesArr].join(' ');
             }
             return this;
         },
         name(value: string) {
-            ctx.props['name'] = value;
+            ctx.props.name = value;
             return this;
         },
         peek(callback) {
@@ -120,9 +120,9 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
                             } else {
                                 return arr[key];
                             }
-                        }
-                    })
-                }
+                        },
+                    }),
+                };
             }
             callback( ctxProxy(ctx) );
             return this;
@@ -131,8 +131,8 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             [k]:  (...args) => {
                 customOperations[k](...args)(builderCtx);
                 return builderCtx;
-            }
-        }), {})
+            },
+        }), {}),
     };
     builder(builderCtx);
     return ctx;

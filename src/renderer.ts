@@ -1,4 +1,4 @@
-import { buildNode, BuilderCB, CustomOperation, CustomOperations } from './builder';
+import { BuilderCB, buildNode, CustomOperation, CustomOperations } from './builder';
 import { renderNode } from './renderNode';
 import { updateNode } from './updateNode';
 import { VNode } from './util/vnode';
@@ -29,6 +29,6 @@ export function Renderer(config: {
         },
         extend(operationName: string, constructor: CustomOperation) {
             customOperations[operationName] = constructor;
-        }
-    }
+        },
+    };
 }

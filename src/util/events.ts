@@ -1,4 +1,6 @@
 // Events: https://www.w3schools.com/tags/ref_eventattributes.asp
+
+// tslint:disable-next-line no-namespace
 export namespace Events {
     export enum Mouse {
         Click = 'click',
@@ -8,12 +10,12 @@ export namespace Events {
         Move = 'mousemove',
         Out = 'mouseout',
         Over = 'mouseover',
-        Wheel = 'wheel'
+        Wheel = 'wheel',
     }
     export enum Keyboard {
         Down = 'keydown',
         Up = 'keyup',
-        Press = 'keypress'
+        Press = 'keypress',
     }
     export enum Drag {
         Drag = 'drag',
@@ -23,11 +25,11 @@ export namespace Events {
         Over = 'dragover',
         Start = 'dragstart',
         Drop = 'drop',
-        Scroll = 'scroll'
+        Scroll = 'scroll',
     }
     export enum Clipboard {
         Copy = 'copy',
         Cut = 'cut',
-        Paste = 'paste'
+        Paste = 'paste',
     }
 }
