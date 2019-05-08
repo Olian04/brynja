@@ -44,11 +44,13 @@ describe('render', () => {
             const button =  renderNode(buildNode('button', (_) => _
                 .value('foo')
             , {}));
+            // @ts-ignore
             expect(button.value).to.equal('foo');
 
             const div =  renderNode(buildNode('div', (_) => _
                 .value('foo')
             , {}));
+            // @ts-ignore
             expect(div.value).to.equal('foo');
         });
 

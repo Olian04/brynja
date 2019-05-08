@@ -12,9 +12,11 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
 
   // #region Update value
   if (newNode.value && newNode.value !== oldNode.value) {
+      // @ts-ignore
       elem.value = newNode.value;
       elem.setAttribute('value', '' + newNode.value);
   } else if (newNode.value !== oldNode.value) {
+      // @ts-ignore
       elem.value = undefined;
       elem.removeAttribute('value');
   }

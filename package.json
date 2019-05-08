@@ -6,7 +6,7 @@
   "types": "dist/brynja.d.ts",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "test": "nyc --check-coverage --functions 100 --reporter=lcov --reporter=text --extension .ts mocha --recursive -r ts-node/register 'src/**/*.spec.ts' ",
+    "test": "nyc --check-coverage --reporter=lcov --reporter=text --extension .ts mocha --recursive -r ts-node/register 'src/**/*.spec.ts' ",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "prebuild": "npm run test & npm run lint:nofix",
     "build": "npm run build:node & npm run build:web",
