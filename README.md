@@ -1,6 +1,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/Olian04/brynja.svg?label=tests&logo=circleci)](https://circleci.com/gh/Olian04/brynja)
-[![NPM Version](https://img.shields.io/npm/v/brynja.svg)](https://www.npmjs.com/package/brynja)
-![License](https://img.shields.io/npm/l/brynja.svg)
+[![Test coverage](https://img.shields.io/codecov/c/gh/Olian04/brynja.svg?logo=codecov)](https://codecov.io/gh/Olian04/brynja)
+[![NPM Version](https://img.shields.io/npm/v/brynja.svg?logo=npm)](https://www.npmjs.com/package/brynja)
+[![License](https://img.shields.io/npm/l/brynja.svg)](LICENSE)
 ![Available types](https://img.shields.io/npm/types/brynja.svg)
 [![Size](https://img.shields.io/bundlephobia/min/brynja.svg)](https://bundlephobia.com/result?p=brynja)
 
