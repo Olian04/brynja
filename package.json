@@ -1,6 +1,6 @@
 {
   "name": "brynja",
-  "version": "2.1.0",
+  "version": "2.2.1",
   "description": "Chaining api for interacting with the DOM",
   "main": "dist/brynja.js",
   "types": "dist/brynja.d.ts",
@@ -8,8 +8,8 @@
     "prepublishOnly": "npm run build",
     "test": "nyc --check-coverage --reporter=lcov --reporter=text --extension .ts mocha --recursive -r ts-node/register 'src/**/*.spec.ts' ",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "prebuild": "npm run test & npm run lint:nofix",
-    "build": "npm run build:node & npm run build:web",
+    "prebuild": "npm run test && npm run lint:nofix",
+    "build": "npm run build:node && npm run build:web",
     "build:node": "tsc",
     "build:web": "rollup --config",
     "lint": "tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
