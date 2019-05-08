@@ -5,6 +5,8 @@
 ![Available types](https://img.shields.io/npm/types/brynja.svg)
 [![Size](https://img.shields.io/bundlephobia/min/brynja.svg)](https://bundlephobia.com/result?p=brynja)
 
+![Logo](./assets/brynja_logo.png)
+
 # What is and isn't Brynja: 
 
 * brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.
@@ -401,3 +403,9 @@ render(_=>_
   .img(192, 192, '/assets/logo_medium.png')
 )
 ```
+
+## Legal
+
+Licensed under MIT. See [LICENSE](LICENSE).
+
+<div>Logo made by <a href="https://www.freepik.com/?__hstc=57440181.05b687f541f472b41b82875365d361dd.1557313741285.1557313741285.1557313741285.1&__hssc=57440181.3.1557313741288&__hsfp=1938472413" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
