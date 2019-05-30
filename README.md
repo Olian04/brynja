@@ -43,7 +43,7 @@ __CDN:__
 * Updates: https://jsfiddle.net/b9L27xsv/72
 * User input: https://jsfiddle.net/b9L27xsv/101
 * Probebalistics Propegation: https://jsfiddle.net/aw0nkdrm/9/
-* Interpolation animation: https://jsfiddle.net/83thykap/98/
+* Interpolation animation: https://jsfiddle.net/83thykap/98/ (https://jsfiddle.net/83thykap/106/)
 
 
 # Setup - Hello World
