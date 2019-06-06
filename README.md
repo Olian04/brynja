@@ -1,5 +1,3 @@
-<center>
-
 [![CircleCI](https://img.shields.io/circleci/project/github/Olian04/brynja.svg?label=tests&logo=circleci)](https://circleci.com/gh/Olian04/brynja)
 [![Test coverage](https://img.shields.io/codecov/c/gh/Olian04/brynja.svg?logo=codecov)](https://codecov.io/gh/Olian04/brynja)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0f31d9a1d3596ee82859/maintainability)](https://codeclimate.com/github/Olian04/brynja/maintainability)
@@ -15,8 +13,6 @@
 
 ![Logo](./assets/brynja_logo.png)
 
- </center>
- 
 > Brynja is a virtual DOM implementation with a declarative chaining based javascript API.
 
 # Why Brynja?
