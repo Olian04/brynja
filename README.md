@@ -7,15 +7,11 @@
 
 ![Logo](./assets/brynja_logo.png)
 
-# What is and isn't Brynja: 
+> Brynja is a virtual DOM implementation with a declarative chaining based javascript API.
 
-* brynja exposes a chaining based api that is ment to provide a stateless representation of the dom.
-* brynja aims to be an alternative to excessive use of `document.createElement`. Especially when generating dynamic UIs for small to medium applications.
-* brynja is NOT designed to be used in large scale applications and will therefore not be designed nor optimized with large applications in mind.
+# Why Brynja?
 
-# Why Brynja? 
-
-* It's small but still extensive!
+* It's small with no dependencies.
 * It requires NO transpilation, everything runs as is in the browser.
 * It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
@@ -32,7 +28,7 @@ __CDN:__
 <script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
 ```
 
-# Help me help you 
+# Help me help you
 
 <a href="https://www.buymeacoffee.com/olian04" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
@@ -42,9 +38,8 @@ __CDN:__
 * Table generation: https://jsfiddle.net/b9L27xsv/74 
 * Updates: https://jsfiddle.net/b9L27xsv/72
 * User input: https://jsfiddle.net/b9L27xsv/101
-* Probebalistics Propegation: https://jsfiddle.net/aw0nkdrm/9/
+* Probabilistic Propagation: https://jsfiddle.net/aw0nkdrm/9/
 * Interpolation animation: https://jsfiddle.net/83thykap/98/ (https://jsfiddle.net/83thykap/106/)
-
 
 # Setup - Hello World
 

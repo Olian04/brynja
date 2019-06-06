@@ -1,7 +1,7 @@
 {
   "name": "brynja",
-  "version": "2.2.3",
-  "description": "Chaining api for interacting with the DOM",
+  "version": "2.2.4",
+  "description": "Brynja is a virtual DOM implementation with a declarative chaining based javascript API.",
   "main": "dist/brynja.js",
   "types": "dist/brynja.d.ts",
   "scripts": {
