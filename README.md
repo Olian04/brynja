@@ -1,9 +1,16 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/Olian04/brynja.svg?label=tests&logo=circleci)](https://circleci.com/gh/Olian04/brynja)
 [![Test coverage](https://img.shields.io/codecov/c/gh/Olian04/brynja.svg?logo=codecov)](https://codecov.io/gh/Olian04/brynja)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0f31d9a1d3596ee82859/maintainability)](https://codeclimate.com/github/Olian04/brynja/maintainability)
+[![Known Vulnerabilities](https://snyk.io/test/github/Olian04/brynja/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Olian04/brynja?targetFile=package.json)
+
 [![NPM Version](https://img.shields.io/npm/v/brynja.svg?logo=npm)](https://www.npmjs.com/package/brynja)
 [![License](https://img.shields.io/npm/l/brynja.svg)](LICENSE)
 ![Available types](https://img.shields.io/npm/types/brynja.svg)
 [![Size](https://img.shields.io/bundlephobia/min/brynja.svg)](https://bundlephobia.com/result?p=brynja)
+
+ [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/olian04/brynja/issues)
+ [![# of contributors](https://img.shields.io/github/contributors/olian04/brynja.svg)](https://github.com/Olian04/brynja/graphs/contributors)
+
 
 ![Logo](./assets/brynja_logo.png)
 
