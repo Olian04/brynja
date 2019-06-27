@@ -31,7 +31,7 @@ __NPM:__
 __CDN:__
 
 ```html
-<script src="https://unpkg.com/brynja/cdn/brynja.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/brynja/cdn/brynja.js"></script>
 ```
 
 # Help me help you
