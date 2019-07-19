@@ -43,7 +43,7 @@ __CDN:__
 * Hello World: https://jsfiddle.net/olian04/kcfserx5/
 * Table generation: https://jsfiddle.net/olian04/4feazykx/
 * Updates: https://jsfiddle.net/olian04/6tnLbvaz/
-* User input: https://jsfiddle.net/olian04/jwqa6Le1/
+* User input: https://jsfiddle.net/olian04/jwqa6Le1/20/
 * Probabilistic Propagation: https://jsfiddle.net/olian04/bL0hjrd5/
 * Interpolation animation: https://jsfiddle.net/olian04/7ub58xj4/ (https://jsfiddle.net/olian04/9cnjofv1/)
 * With [html-router](https://github.com/Olian04/html-router): https://jsfiddle.net/olian04/mu5sz029/
