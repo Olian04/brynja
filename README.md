@@ -40,12 +40,12 @@ __CDN:__
 
 # Demos
 
-* Hello World: https://jsfiddle.net/b9L27xsv/73
-* Table generation: https://jsfiddle.net/b9L27xsv/74 
-* Updates: https://jsfiddle.net/b9L27xsv/72
-* User input: https://jsfiddle.net/b9L27xsv/101
-* Probabilistic Propagation: https://jsfiddle.net/aw0nkdrm/9/
-* Interpolation animation: https://jsfiddle.net/83thykap/98/ (https://jsfiddle.net/83thykap/106/)
+* Hello World: https://jsfiddle.net/olian04/kcfserx5/
+* Table generation: https://jsfiddle.net/olian04/4feazykx/
+* Updates: https://jsfiddle.net/olian04/6tnLbvaz/
+* User input: https://jsfiddle.net/olian04/jwqa6Le1/
+* Probabilistic Propagation: https://jsfiddle.net/olian04/bL0hjrd5/
+* Interpolation animation: https://jsfiddle.net/olian04/7ub58xj4/ (https://jsfiddle.net/olian04/9cnjofv1/)
 * With [html-router](https://github.com/Olian04/html-router): https://jsfiddle.net/olian04/j4zfwn98/30/
 
 # Setup - Hello World
