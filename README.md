@@ -46,7 +46,7 @@ __CDN:__
 * User input: https://jsfiddle.net/b9L27xsv/101
 * Probabilistic Propagation: https://jsfiddle.net/aw0nkdrm/9/
 * Interpolation animation: https://jsfiddle.net/83thykap/98/ (https://jsfiddle.net/83thykap/106/)
-* With [html-router](https://github.com/Olian04/html-router): https://jsfiddle.net/L65xqw7t/5/
+* With [html-router](https://github.com/Olian04/html-router): https://jsfiddle.net/olian04/j4zfwn98/30/
 
 # Setup - Hello World
 
