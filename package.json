@@ -1,6 +1,6 @@
 {
   "name": "brynja",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "description": "Brynja is a virtual DOM implementation with a declarative chaining based javascript API.",
   "main": "dist/brynja.js",
   "types": "dist/brynja.d.ts",
