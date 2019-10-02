@@ -38,21 +38,21 @@
   },
   "homepage": "https://github.com/Olian04/brynja#readme",
   "devDependencies": {
-    "@types/chai": "^4.1.7",
+    "@types/chai": "^4.2.3",
     "@types/es6-promise": "3.3.0",
     "@types/mocha": "^5.2.7",
     "@types/typescript": "^2.0.0",
     "chai": "^4.2.0",
-    "codecov": "^3.5.0",
-    "mocha": "^6.1.4",
+    "codecov": "^3.6.1",
+    "mocha": "^6.2.1",
     "mocha-jsdom": "^2.0.0",
     "nyc": "^14.1.1",
-    "rollup": "^1.14.3",
+    "rollup": "^1.22.0",
     "rollup-plugin-typescript": "^1.0.1",
-    "ts-node": "^8.2.0",
-    "tslib": "^1.9.3",
-    "tslint": "^5.17.0",
-    "typescript": "^3.5.1"
+    "ts-node": "^8.4.1",
+    "tslib": "^1.10.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
   },
   "dependencies": {}
 }
