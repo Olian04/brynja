@@ -19,7 +19,7 @@ describe('updateNode', () => {
             , {});
             const $div =  renderNode(vdiv1);
             expect($div.textContent).to.equal('');
-    
+
             const vdiv2 = buildNode('h1', (_) => _
                 .text('Hello World')
             , {});
@@ -32,7 +32,7 @@ describe('updateNode', () => {
             , {});
             const $div =  renderNode(vdiv1);
             expect($div.textContent).to.equal('Hello World');
-    
+
             const vdiv2 = buildNode('h1', (_) => _
                 .text('')
             , {});
@@ -45,21 +45,21 @@ describe('updateNode', () => {
             , {});
             const $div =  renderNode(vdiv1);
             expect($div.textContent).to.equal('Hello World');
-    
+
             const vdiv2 = buildNode('h1', (_) => _
                 .text('Hello You!')
             , {});
             updateNode(vdiv2, vdiv1, $div);
             expect($div.textContent).to.equal('Hello You!');
         });
-        
+
         it('prop to other', () => {
             const vdiv1 = buildNode('h1', (_) => _
                 .prop('foo', 'foo')
             , {});
             const $div =  renderNode(vdiv1);
             expect($div.getAttribute('foo')).to.equal('foo');
-    
+
             const vdiv2 = buildNode('h1', (_) => _
                 .prop('foo', 'bar')
             , {});
