@@ -3,43 +3,106 @@ import jsdom from 'mocha-jsdom';
 
 import { buildNode } from './builder';
 import { renderNode } from './renderNode';
-import { Events } from './util/events';
+import { updateNode } from './updateNode';
 
-describe('render', () => {
+describe('updateNode', () => {
     jsdom();
 
-    describe('Updating', () => {
-        it('Single update', () => {
-            let div =  renderNode(buildNode('h1', (_) => _
-                .text('Hello World')
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(0);
-            expect(div.firstChild.textContent).to.equal('Hello World');
-            div =  renderNode(buildNode('h1', (_) => _
-                .text('Hello')
-                .child('div', (_) => _
-                    .text('World'),
-                )
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(1);
-            expect(div.firstChild.textContent).to.equal('Hello');
-            expect((div.children[0] as HTMLElement).tagName).to.equal('DIV');
-            expect((div.children[0] as HTMLElement).firstChild.textContent).to.equal('World');
-            div =  renderNode(buildNode('h1', (_) => _
-                .text('Hello World')
-            , {}));
-            expect(div.tagName).to.equal('H1');
-            expect(div.children.length).to.equal(0);
-            expect(div.firstChild.textContent).to.equal('Hello World');
+    it('typecheck', () => {
+        expect(typeof updateNode).to.equal('function');
+    });
 
-            div =  renderNode(buildNode('div', (_) => _
-                .children('div', 5, (_, i) => _
-                    .text('' + i),
-                )
-            , {}));
-            expect(div.children.length).to.equal(5);
+    describe('Single update', () => {
+        it('text from empty', () => {
+            const vdiv1 = buildNode('h1', (_) => _
+                .text('')
+            , {});
+            const $div =  renderNode(vdiv1);
+            expect($div.textContent).to.equal('');
+    
+            const vdiv2 = buildNode('h1', (_) => _
+                .text('Hello World')
+            , {});
+            updateNode(vdiv2, vdiv1, $div);
+            expect($div.textContent).to.equal('Hello World');
         });
+        it('text to empty', () => {
+            const vdiv1 = buildNode('h1', (_) => _
+                .text('Hello World')
+            , {});
+            const $div =  renderNode(vdiv1);
+            expect($div.textContent).to.equal('Hello World');
+    
+            const vdiv2 = buildNode('h1', (_) => _
+                .text('')
+            , {});
+            updateNode(vdiv2, vdiv1, $div);
+            expect($div.textContent).to.equal('');
+        });
+        it('text to other', () => {
+            const vdiv1 = buildNode('h1', (_) => _
+                .text('Hello World')
+            , {});
+            const $div =  renderNode(vdiv1);
+            expect($div.textContent).to.equal('Hello World');
+    
+            const vdiv2 = buildNode('h1', (_) => _
+                .text('Hello You!')
+            , {});
+            updateNode(vdiv2, vdiv1, $div);
+            expect($div.textContent).to.equal('Hello You!');
+        });
+        
+        it('prop to other', () => {
+            const vdiv1 = buildNode('h1', (_) => _
+                .prop('foo', 'foo')
+            , {});
+            const $div =  renderNode(vdiv1);
+            expect($div.getAttribute('foo')).to.equal('foo');
+    
+            const vdiv2 = buildNode('h1', (_) => _
+                .prop('foo', 'bar')
+            , {});
+            updateNode(vdiv2, vdiv1, $div);
+            expect($div.getAttribute('foo')).to.equal('bar');
+        });
+    });
+    it('Multiple sequential updates', () => {
+        const vElem1 = buildNode('h1', (_) => _
+            .text('Hello World')
+        , {});
+        const $elem = renderNode(vElem1);
+        expect($elem.tagName).to.equal('H1');
+        expect($elem.children.length).to.equal(0);
+        expect($elem.firstChild.textContent).to.equal('Hello World');
+
+        const vElem2 = buildNode('h1', (_) => _
+            .text('Hello')
+            .child('div', (_) => _
+                .text('World'),
+            )
+        , {});
+        updateNode(vElem2, vElem1, $elem);
+        expect($elem.tagName).to.equal('H1');
+        expect($elem.children.length).to.equal(1);
+        expect($elem.firstChild.textContent).to.equal('Hello');
+        expect(($elem.children[0] as HTMLElement).tagName).to.equal('DIV');
+        expect(($elem.children[0] as HTMLElement).firstChild.textContent).to.equal('World');
+
+        const vElem3 = buildNode('h1', (_) => _
+            .text('Hello World')
+        , {});
+        updateNode(vElem3, vElem2, $elem);
+        expect($elem.tagName).to.equal('H1');
+        expect($elem.children.length).to.equal(0);
+        expect($elem.firstChild.textContent).to.equal('Hello World');
+
+        const vElem4 = buildNode('h1', (_) => _
+            .children('div', 5, (_, i) => _
+                .text('' + i),
+            )
+        , {});
+        updateNode(vElem4, vElem3, $elem);
+        expect($elem.children.length).to.equal(5);
     });
 });

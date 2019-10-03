@@ -16,6 +16,9 @@ const defaultRenderer: (() =>  IRenderer) = (() => {
         return default_renderer;
     };
 })();
+
+// Because the tests run asynchronous its typically unreliable to test the extend functionality of the default renderer.
+/* istanbul ignore next */
 export const extend = (operationName: string, constructor: CustomOperation) =>
     defaultRenderer().extend(operationName, constructor);
 export const render = (rootBuilder: BuilderCB) =>

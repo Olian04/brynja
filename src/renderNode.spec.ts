@@ -5,7 +5,7 @@ import { buildNode } from './builder';
 import { renderNode } from './renderNode';
 import { Events } from './util/events';
 
-describe('render', () => {
+describe('renderNode', () => {
     jsdom();
 
     it('typecheck', () => {

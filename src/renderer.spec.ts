@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import { Renderer } from './renderer';
 
-describe('builder', () => {
+describe('renderer', () => {
     it('typecheck', () => {
         expect(typeof Renderer).to.equal('function');
     });

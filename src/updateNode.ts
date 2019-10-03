@@ -31,6 +31,8 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     elem.appendChild($text);
   } else if (oldNode.text !== '') {
     if (elem.firstChild.nodeType !== TEXT_NODE) {
+      // This should never happen. So no need to test for it?
+      /* istanbul ignore next */
       throw new Error('Unexpected "none text node" as first child of element: ' + elem);
     }
 
