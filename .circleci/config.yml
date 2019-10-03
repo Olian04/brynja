@@ -36,6 +36,7 @@ jobs:
       - run: npm test
 
       # store test result artifacts
+      # NOTE: path can NOT be a hidden directory, aka starting with a dot, ex: .mocha_output
       - store_test_results:
           path: mocha_output
       - store_artifacts:
