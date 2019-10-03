@@ -40,7 +40,6 @@ jobs:
           path: mocha_output
       - store_artifacts:
           path: mocha_output
-          destination: mocha_output
 
       # build node
       - run: npm run build:node
