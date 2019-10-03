@@ -37,9 +37,9 @@ jobs:
 
       # store test result artifacts
       - store_test_results:
-          path: ~/.mocha_output
+          path: mocha_output
       - store_artifacts:
-          path: ~/.mocha_output
+          path: mocha_output
           destination: mocha_output
 
       # build node
