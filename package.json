@@ -6,7 +6,7 @@
   "types": "dist/brynja.d.ts",
   "scripts": {
     "prepublishOnly": "npm run build",
-    "test": "nyc --check-coverage --reporter=lcov --reporter=text --extension .ts mocha --recursive -r ts-node/register 'src/**/*.spec.ts' ",
+    "test": "nyc --check-coverage --reporter=lcov --reporter=text --extension .ts mocha --reporter mocha-multi-reporters --reporter-options configFile=mocha.reporters.config.json  --recursive -r ts-node/register 'src/**/*.spec.ts' ",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "prebuild": "npm run test && npm run lint:nofix",
     "build": "npm run build:node && npm run build:web",
@@ -46,6 +46,8 @@
     "codecov": "^3.6.1",
     "mocha": "^6.2.1",
     "mocha-jsdom": "^2.0.0",
+    "mocha-junit-reporter": "^1.23.1",
+    "mocha-multi-reporters": "^1.1.7",
     "nyc": "^14.1.1",
     "rollup": "^1.22.0",
     "rollup-plugin-typescript": "^1.0.1",

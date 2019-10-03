@@ -35,6 +35,12 @@ jobs:
       # run tests
       - run: npm test
 
+      # store test result artifacts
+      - store_test_results:
+        path: .mocha_output
+      - store_artifacts:
+        path: .mocha_output
+
       # build node
       - run: npm run build:node
 
