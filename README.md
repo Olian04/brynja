@@ -17,7 +17,7 @@
 
 # Why Brynja?
 
-* It's small with no dependencies.
+* It's small.
 * It requires NO transpilation, everything runs as is in the browser.
 * It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
