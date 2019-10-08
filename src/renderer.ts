@@ -16,7 +16,11 @@ export function Renderer(config: {
     const customOperations: CustomOperations = {};
     return {
         render(rootBuilder: BuilderCB) {
-            const rootNode = buildNode(config.rootElement.tagName.toLowerCase(), rootBuilder, customOperations);
+            const [rootNode, styles] = buildNode(
+                config.rootElement.tagName.toLowerCase(),
+                rootBuilder,
+                customOperations,
+            );
             if (initialRender) {
                 initialRender = false;
                 const newRoot = renderNode(rootNode);
