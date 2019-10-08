@@ -267,6 +267,35 @@ render(_=>_
 </div>
 ```
 
+### .style(styleObject)
+
+```ts
+render(_=>_
+  .child('div', _=>_
+    .style({
+      background: 'blue',
+      ':hover': {
+        background: 'red'
+      }
+    })
+  )
+);
+```
+
+```html
+<div><!--Root-->
+  <div class="d047bd7b6186cdc860a6348471743d9f76adfafa"></div>
+  <style>
+    .d047bd7b6186cdc860a6348471743d9f76adfafa {
+      background:  blue;
+    }
+    .d047bd7b6186cdc860a6348471743d9f76adfafa:hover {
+      background:  red;
+    }
+  </style>
+</div>
+```
+
 ## Control flow operations
 
 Control flow operations are used for conditional rendering. 
