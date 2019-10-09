@@ -1,7 +1,6 @@
 import { BuilderCB, CustomOperation } from './builder';
 import { IRenderer, Renderer } from './renderer';
 
-export { StyleObject } from './util/style-object';
 export { Events } from './util/events';
 export { Renderer } from './renderer';
 
