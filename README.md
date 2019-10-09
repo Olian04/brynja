@@ -284,12 +284,12 @@ render(_=>_
 
 ```html
 <div><!--Root-->
-  <div class="d047bd7b6186cdc860a6348471743d9f76adfafa"></div>
+  <div class="brynja-d047bd7b6186cdc860a6348471743d9f76adfafa">Hello</div>
   <style>
-    .d047bd7b6186cdc860a6348471743d9f76adfafa {
+    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa {
       background:  blue;
     }
-    .d047bd7b6186cdc860a6348471743d9f76adfafa:hover {
+    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa:hover {
       background:  red;
     }
   </style>
