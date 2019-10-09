@@ -17,8 +17,7 @@ describe('renderStyle', () => {
       },
     };
 
-    const $styles = renderStyle(inputStyle);
-    const styles = $styles.textContent.replace(/\s/g, '');
+    const styles = renderStyle(inputStyle).replace(/\s/g, '');
     expect(styles).to.equal('.some-class{background:orangered;}');
   });
 
@@ -31,8 +30,7 @@ describe('renderStyle', () => {
       },
     };
 
-    const $styles = renderStyle(inputStyle);
-    const styles = $styles.textContent.replace(/\s/g, '');
+    const styles = renderStyle(inputStyle).replace(/\s/g, '');
     expect(styles).to.equal('.some-class:hover{background:orangered;}');
   });
 });

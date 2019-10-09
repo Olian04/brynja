@@ -1,7 +1,7 @@
 import { StyleObject } from './util/style-object';
 
 interface Styles { [key: string]: StyleObject; }
-export function renderStyle(styles: Styles): HTMLStyleElement {
+export function renderStyle(styles: Styles): string {
 
   const renderedStyles = Object.keys(styles).reduce((res, className) => {
     const allSelectors: Styles =
@@ -30,8 +30,5 @@ export function renderStyle(styles: Styles): HTMLStyleElement {
     return res;
   }, '');
 
-  const $elem = document.createElement('style');
-  $elem.textContent = renderedStyles;
-
-  return $elem;
+  return renderedStyles;
 }
