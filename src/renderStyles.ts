@@ -20,7 +20,7 @@ export function renderStyle(styles: Styles): string {
       }, {});
 
     const renderStyleObject = (className: string, styleObj: StyleObject): string => {
-      return `.${className}{${Object.keys(styleObj).map((k) => `${k}: ${styleObj[k]};`)}}`;
+      return `.${className}{${Object.keys(styleObj).map((k) => `${k}: ${styleObj[k]};`).join('')}}`;
     };
 
     // Render all styles for the current className (including pseudo selectors)

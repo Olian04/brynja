@@ -188,6 +188,7 @@ describe('brynja', () => {
                 expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
                 expect(conf.rootElement.lastChild.textContent).to.equal('');
 
+                // One style
                 render((_) => _
                     .id('style-root')
                     .style({
@@ -196,6 +197,17 @@ describe('brynja', () => {
                 );
                 expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
                 expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-0aaeba391250c07deb384c0a7b7285604d53946e{background: red;}');
+
+                // Multiple styles
+                render((_) => _
+                    .id('style-root')
+                    .style({
+                        background: 'red',
+                        color: 'blue',
+                    }),
+                );
+                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-e5faf53cd44644de5df0522498cb9302b9db722e{background: red;color: blue;}');
             });
         });
 
