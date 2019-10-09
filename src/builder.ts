@@ -1,5 +1,5 @@
-import { sha1 as objHash } from 'object-hash';
 import { Events } from './util/events';
+import { objHash } from './util/hash';
 import { StyleObject } from './util/style-object';
 import { VNode } from './util/vnode';
 
@@ -7,6 +7,16 @@ export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
 export interface CustomOperations {
     [operationName: string]: CustomOperation;
 }
+
+export const newVNode = (ctx: Partial<VNode> = {}) => ({
+    tag: '',
+    value: null,
+    text: '',
+    events: {},
+    props: {},
+    children: [],
+    ...ctx, // Replace defaults in present in ctx argument
+});
 
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
@@ -38,14 +48,10 @@ export function buildNode(
     builder: BuilderCB,
     customOperations: CustomOperations,
 ): [VNode, Styles] {
-    const ctx: VNode = {
+    const ctx: VNode = newVNode({
         tag: tagType,
-        value: null,
-        text: '',
-        events: {},
-        props: {},
-        children: [],
-    };
+    });
+
     let styles: Styles = {};
     const builderCtx: BuilderCTX = {
         style(styleObject: StyleObject) {
