@@ -1,10 +1,29 @@
 import { expect } from 'chai';
 
-import { buildNode } from './builder';
+import { BuilderCB, buildNode } from './builder';
 
 describe('builder', () => {
+    // TODO: Move operation tests from brynja.test.ts to here
+
     it('typecheck', () => {
         expect(typeof buildNode).to.equal('function');
-        // TODO: Move operation tests from brynja.test.ts to here
+    });
+
+    describe('style', ()  => {
+        it('single property applied once', () => {
+            const inputStyle = {
+                background: 'orangered',
+            };
+            const builder: BuilderCB = (_) => _
+                .style(inputStyle);
+            const [vdom, styles] = buildNode('div', builder, {});
+
+            const styleClasses = Object.keys(styles);
+            expect(styleClasses.length).to.equal(1);
+            expect(vdom.props.class).to.deep.equal(styleClasses[0]);
+
+            const styleObj = styles[styleClasses[0]];
+            expect(styleObj).to.deep.equal(inputStyle);
+        });
     });
 });

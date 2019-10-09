@@ -19,7 +19,7 @@ describe('brynja', () => {
             'id', 'name', 'class',
             'value', 'prop', 'when',
             'on', 'peek', 'text', 'while',
-            'do',
+            'do', 'style',
         ];
         let i = 0;
         expect(ctx).to.not.be.undefined;
@@ -167,6 +167,35 @@ describe('brynja', () => {
                         expect(ctx.events.foobar[1]({})).to.equal('world');
                     }),
                 );
+            });
+            it('style', () => {
+                const conf = {
+                    rootElement: document.createElement('div'),
+                };
+                const { render } = Renderer(conf);
+
+                // Initial empty render
+                render((_) => _
+                    .id('style-root'),
+                );
+                expect(conf.rootElement.lastChild).to.equal(null);
+
+                // Empty style
+                render((_) => _
+                    .id('style-root')
+                    .style({}),
+                );
+                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                expect(conf.rootElement.lastChild.textContent).to.equal('');
+
+                render((_) => _
+                    .id('style-root')
+                    .style({
+                        background: 'red',
+                    }),
+                );
+                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-0aaeba391250c07deb384c0a7b7285604d53946e{background: red;}');
             });
         });
 

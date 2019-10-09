@@ -17,7 +17,7 @@
 
 # Why Brynja?
 
-* It's small with no dependencies.
+* It's small.
 * It requires NO transpilation, everything runs as is in the browser.
 * It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
@@ -264,6 +264,35 @@ render(_=>_
 ```html
 <div><!--Root-->
   <div><!-- The dom element has the onClick event registered --></div>
+</div>
+```
+
+### .style(styleObject)
+
+```ts
+render(_=>_
+  .child('div', _=>_
+    .style({
+      background: 'blue',
+      ':hover': {
+        background: 'red'
+      }
+    })
+  )
+);
+```
+
+```html
+<div><!--Root-->
+  <div class="brynja-d047bd7b6186cdc860a6348471743d9f76adfafa">Hello</div>
+  <style>
+    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa {
+      background:  blue;
+    }
+    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa:hover {
+      background:  red;
+    }
+  </style>
 </div>
 ```
 

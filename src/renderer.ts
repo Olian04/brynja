@@ -1,5 +1,6 @@
-import { BuilderCB, buildNode, CustomOperation, CustomOperations } from './builder';
+import { BuilderCB, buildNode, CustomOperation, CustomOperations, newVNode } from './builder';
 import { renderNode } from './renderNode';
+import { renderStyle } from './renderStyles';
 import { updateNode } from './updateNode';
 import { VNode } from './util/vnode';
 
@@ -16,7 +17,24 @@ export function Renderer(config: {
     const customOperations: CustomOperations = {};
     return {
         render(rootBuilder: BuilderCB) {
-            const rootNode = buildNode(config.rootElement.tagName.toLowerCase(), rootBuilder, customOperations);
+            const [rootNode, styles] = buildNode(
+                config.rootElement.tagName.toLowerCase(),
+                rootBuilder,
+                customOperations,
+            );
+
+            // Append styles if needed
+            if (Object.keys(styles).length > 0) {
+                rootNode.children.push(newVNode({
+                    tag: 'style',
+                    text: renderStyle(styles),
+                    props: {
+                        type: 'text/css',
+                    },
+                }));
+            }
+
+            // Render / Update HTML
             if (initialRender) {
                 initialRender = false;
                 const newRoot = renderNode(rootNode);
@@ -25,6 +43,8 @@ export function Renderer(config: {
             } else {
                 updateNode(rootNode, oldRootNode, config.rootElement);
             }
+
+            // Update refs for next render
             oldRootNode = rootNode;
         },
         extend(operationName: string, constructor: CustomOperation) {

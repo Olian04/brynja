@@ -1,10 +1,22 @@
 import { Events } from './util/events';
+import { objHash } from './util/hash';
+import { StyleObject } from './util/style-object';
 import { VNode } from './util/vnode';
 
 export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
 export interface CustomOperations {
     [operationName: string]: CustomOperation;
 }
+
+export const newVNode = (ctx: Partial<VNode> = {}) => ({
+    tag: '',
+    value: null,
+    text: '',
+    events: {},
+    props: {},
+    children: [],
+    ...ctx, // Replace defaults in present in ctx argument
+});
 
 export type BuilderCB = (ctx: BuilderCTX) => void;
 export interface BuilderCTX {
@@ -26,19 +38,28 @@ export interface BuilderCTX {
     on(eventName: Events.Drag, handler: (event: DragEvent) => void): BuilderCTX;
     on(eventName: Events.Clipboard, handler: (event: ClipboardEvent) => void): BuilderCTX;
     on(eventName: string, handler: (event: any) => void): BuilderCTX;
+    style(styleObject: StyleObject): BuilderCTX;
     [operationName: string]: (...args) => BuilderCTX; // Needed for integration with customOperations
 }
 
-export function buildNode(tagType: string, builder: BuilderCB, customOperations: CustomOperations): VNode {
-    const ctx: VNode = {
+interface Styles { [key: string]: StyleObject; }
+export function buildNode(
+    tagType: string,
+    builder: BuilderCB,
+    customOperations: CustomOperations,
+): [VNode, Styles] {
+    const ctx: VNode = newVNode({
         tag: tagType,
-        value: null,
-        text: '',
-        events: {},
-        props: {},
-        children: [],
-    };
+    });
+
+    let styles: Styles = {};
     const builderCtx: BuilderCTX = {
+        style(styleObject: StyleObject) {
+            const styleHash = objHash(styleObject);
+            styles[styleHash] = styleObject;
+            this.class([ styleHash ]);
+            return this;
+        },
         on(eventName: string, handler: (e: any) => void) {
             if (eventName in ctx.events) {
                 ctx.events[eventName].push(handler);
@@ -48,12 +69,16 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
             return this;
         },
         child(tagType: string, builder: BuilderCB) {
-            ctx.children.push(buildNode(tagType, builder, customOperations));
+            const [child, childStyles] = buildNode(tagType, builder, customOperations);
+            ctx.children.push(child);
+            styles = {...styles, ...childStyles};
             return this;
         },
         children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
             for (let __i = 0; __i < count; __i++) {
-                ctx.children.push(buildNode(tagType, (_) => builder(_, __i), customOperations));
+                const [child, childStyles] = buildNode(tagType, (_) => builder(_, __i), customOperations);
+                ctx.children.push(child);
+                styles = {...styles, ...childStyles};
             }
             return this;
         },
@@ -135,5 +160,5 @@ export function buildNode(tagType: string, builder: BuilderCB, customOperations:
         }), {}),
     };
     builder(builderCtx);
-    return ctx;
+    return [ctx, styles];
 }
