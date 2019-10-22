@@ -67,7 +67,7 @@ const run = (intervalSpeed) => {
     i += 1;
     render(_ => _
       .child('button', _=>_
-        .text('Restart')
+        .text('Restart: ' + i)
         .on('click', () => {
           i = 0;
           foo();
