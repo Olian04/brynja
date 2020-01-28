@@ -273,6 +273,7 @@ render(_=>_
 ```ts
 render(_=>_
   .child('div', _=>_
+    .text('Hello')
     .style({
       background: 'blue',
       ':hover': {
