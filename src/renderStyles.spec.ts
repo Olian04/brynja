@@ -21,6 +21,17 @@ describe('renderStyle', () => {
     expect(styles).to.equal('.some-class{background:orangered;}');
   });
 
+  it('camel cased property transformed to kebab case', () => {
+    const inputStyle = {
+      'some-class': {
+        borderTopColor: 'orangered',
+      },
+    };
+
+    const styles = renderStyle(inputStyle).replace(/\s/g, '');
+    expect(styles).to.equal('.some-class{border-top-color:orangered;}');
+  });
+
   it('single pseudo selector applied once', () => {
     const inputStyle = {
       'some-class': {

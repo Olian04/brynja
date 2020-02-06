@@ -1,3 +1,4 @@
+import { paramCase } from 'param-case';
 import { StyleObject } from './util/style-object';
 
 interface Styles { [key: string]: StyleObject; }
@@ -20,7 +21,10 @@ export function renderStyle(styles: Styles): string {
       }, {});
 
     const renderStyleObject = (className: string, styleObj: StyleObject): string => {
-      return `.${className}{${Object.keys(styleObj).map((k) => `${k}: ${styleObj[k]};`).join('')}}`;
+      const properties = Object.keys(styleObj)
+        .map((k) => `${paramCase(k)}: ${styleObj[k]};`);
+
+      return `.${className}{${properties.join('')}}`;
     };
 
     // Render all styles for the current className (including pseudo selectors)
