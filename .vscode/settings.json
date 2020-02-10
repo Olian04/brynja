@@ -1,3 +1,13 @@
 {
-  "tslint.autoFixOnSave": true
+  "tslint.autoFixOnSave": true,
+  "markdown.extension.toc.omittedFromToc": {
+    "README.md": [
+      "# Why Brynja",
+      "# Installation",
+      "# Help me help you",
+      "# Demos",
+      "# Setup - Hello World",
+      "## Legal"
+    ]
+  }
 }
