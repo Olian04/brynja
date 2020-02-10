@@ -28,7 +28,7 @@ export function buildNode(
         style(styleObject: IStyleObject) {
             const styleHash = objHash(styleObject);
             styles[styleHash] = styleObject;
-            this.class([ styleHash ]);
+            this.class(styleHash);
             return this;
         },
         on(eventName: string, handler: (e: any) => void) {
@@ -92,7 +92,7 @@ export function buildNode(
             ctx.props.id = value;
             return this;
         },
-        class(valuesArr: string[]) {
+        class(...valuesArr: string[]) {
             if (!('class' in ctx.props)) {
                 ctx.props.class = valuesArr.join(' ');
             } else {

@@ -182,8 +182,8 @@ render(_=>_
 ```ts
 render(_=>_
   .child('div', _=>_
-    .class([ 'foo', 'bar' ])
-    .class([ 'biz' ])
+    .class('foo', 'bar')
+    .class('biz')
   )
 );
 ```

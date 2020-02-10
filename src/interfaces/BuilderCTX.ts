@@ -13,7 +13,7 @@ export interface IBuilderCTX {
     value(value: any): this;
     prop(key: string, value: string): this;
     id(value: string): this;
-    class(valuesArr: string[]): this;
+    class(...valuesArr: string[]): this;
     name(value: string): this;
     text(value: string): this;
     peek(callback: (ctx: VNode) => void): this;

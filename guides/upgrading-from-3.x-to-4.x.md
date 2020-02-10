@@ -1,5 +1,23 @@
 # Upgrading from major version 3 to major version 4
 
+## Class Operation
+
+In version 4.x the call signature of the class operation have been changed to better alight with other operations (ex: id & do).
+
+```ts
+// IN 3.x
+render(_=>_
+  .class([ 'foo', 'bar' ])
+  .class([ 'biz' ])
+);
+
+// IN 4.x
+render(_=>_
+  .class('foo', 'bar')
+  .class('biz')
+);
+```
+
 ## Custom Operations
 
 In version 4.x custom operations have been dropped in favor of functional builders and the "do" syntax.

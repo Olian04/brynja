@@ -35,7 +35,7 @@ describe('renderNode', () => {
 
         it('class', () => {
             const div =  renderNode(buildNode('div', (_) => _
-                .class(['foo', 'bar']),
+                .class('foo', 'bar'),
              )[0]);
             expect(div.className).to.equal('foo bar');
         });

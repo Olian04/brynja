@@ -91,11 +91,11 @@ describe('brynja', () => {
                     .peek((ctx) => {
                         expect(ctx.props.class).to.be.undefined;
                     })
-                    .class([ 'hello' ])
+                    .class('hello')
                     .peek((ctx) => {
                         expect(ctx.props.class).to.equal('hello');
                     })
-                    .class([ 'world' ])
+                    .class('world')
                     .peek((ctx) => {
                         expect(ctx.props.class).to.equal('hello world');
                     }),
