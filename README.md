@@ -100,6 +100,7 @@ In brynja, method that are exposed on the chaining api is refered to as _operati
     - [.text(value)](#textvalue)
     - [.prop(key, value)](#propkey-value)
     - [.on(eventName, callback)](#oneventname-callback)
+    - [.style(styleObject)](#stylestyleobject)
   - [Control flow operations](#control-flow-operations)
     - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
     - [.while(predicate, ctx)](#whilepredicate-ctx)
@@ -272,6 +273,7 @@ render(_=>_
 ```ts
 render(_=>_
   .child('div', _=>_
+    .text('Hello')
     .style({
       background: 'blue',
       ':hover': {

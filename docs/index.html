@@ -5,66 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://cdn.jsdelivr.net/npm/brynja/cdn/brynja.js"></script>
+  <script src="https://unpkg.com/@olian/github-readme"></script>
   <style>
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-    }
+github-readme {
+  --top: 50px;
+  --left: 5%;
+  --bottom: 10px;
+  position: absolute;
+  z-index: 100;
+  top: var(--top);
+  background: white;
+  left: var(--left);
+  width: calc(100% - 2*var(--left));
+  height: calc(100% - var(--top) - var(--bottom));
+  box-shadow: 2px 2px 2px 0px rgba(158, 158, 158, 1);
+  border: 1px solid rgba(158, 158, 158, 1);
+  padding: 5px;
+}
 
-    span {
-      animation: updated 0.5s;
-    }
+button {
+  position: relative;
+  width: 200px;
+  left: calc(50% - 100px);
+}
 
-    @keyframes updated {
-      0% {
-        background-color: orangered;
-      }
-
-      100% {
-        background-color: inherit;
-      }
-    }
+.container {
+  z-index: -100;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+span {
+  animation: updated 0.5s;
+}
+@keyframes updated {
+  0% {
+    background-color: orangered;
+  }
+  100% {
+    background-color: inherit;
+  }
+}
   </style>
 
   <title>Brynja | Demo</title>
 </head>
 
 <body>
-  <br><br><br>
   <div id="root"></div>
+  <github-readme
+      user="olian04"
+      repository="brynja"
+      bookmarks="[Readme](/README.md);[Source for this](/docs/index.html)"
+      ></github-readme>
 
   <script>
-    const { render } = brynja;
-
-    let i = 0;
-    let intervalID;
-
-    const run = (intervalSpeed) => {
-      const foo = () => {
-        i += 1;
-        render(_ => _
-          .child('button', _=>_
-            .text('Restart')
-            .on('click', () => {
-              i = 0;
-              foo();
-            })
-          )
-          .class(['container'])
-          .children('span', i, (_, k) => _
-            .text(k % 10)
-          )
-        );
-      }
-      intervalID = setInterval(foo, intervalSpeed);
-      foo();
-    }
-    run(33);
-  </script>
-  <script>
-    // Performance
-    (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+const { render } = brynja;
+let i = 0;
+let intervalID;
+const run = (intervalSpeed) => {
+  const foo = () => {
+    i += 1;
+    render(_ => _
+      .child('button', _=>_
+        .text('Restart: ' + i)
+        .on('click', () => {
+          i = 0;
+          foo();
+        })
+      )
+      .child('div', _=>_
+        .class(['container'])
+        .children('span', i, (_, k) => _
+          .text(k % 10)
+        )
+      )
+    );
+  }
+  intervalID = setInterval(foo, intervalSpeed);
+  foo();
+}
+run(33);
   </script>
 </body>
 
