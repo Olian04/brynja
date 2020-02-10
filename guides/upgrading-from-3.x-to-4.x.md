@@ -53,3 +53,25 @@ render(_=>_
   )
 );
 ```
+
+## Peek Operation
+
+In version 4.x the children property on the ctx copy returned from the peek operation has been limited to only the "length" and numbered properties.
+
+```ts
+// IN 3.x
+render(_=>_
+  .peek(ctx => {
+    ctx.children.push({});
+    // Will run, but won't change the underlying vdom.
+  })
+);
+
+// IN 4.x
+render(_=>_
+  .peek(ctx => {
+    ctx.children.push({});
+    // Will throw. Error: Illegal Operation
+  })
+);
+```

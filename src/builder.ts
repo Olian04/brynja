@@ -113,13 +113,13 @@ export function buildNode(
                     props: ctx.props,
                     events: ctx.events,
                     children: new Proxy([], {
-                        get: (arr, key) => {
+                        get: (__, key) => {
                             if (key === 'length') {
                                 return ctx.children.length;
                             } else if (!isNaN(parseFloat(key.toString()))) {
                                 return ctxProxy(ctx.children[key]);
                             } else {
-                                return arr[key];
+                                throw new Error('Illegal operation');
                             }
                         },
                     }),
