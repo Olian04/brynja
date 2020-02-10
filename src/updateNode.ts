@@ -1,5 +1,5 @@
+import { VNode } from './interfaces/VNode';
 import { renderNode } from './renderNode';
-import { VNode } from './util/vnode';
 
 const TEXT_NODE = 3; // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
 

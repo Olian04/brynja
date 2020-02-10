@@ -4,5 +4,5 @@ export interface VNode {
     text: string;
     events: { [key: string]: Array<(event: object) => void> };
     props: { [key: string]: string };
-    children: VNode[];
+    children: this[];
 }

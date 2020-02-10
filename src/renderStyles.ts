@@ -1,11 +1,10 @@
 import { paramCase } from 'param-case';
-import { StyleObject } from './util/style-object';
+import { IStyleObject } from './interfaces/StyleObject';
+import { IStyles } from './interfaces/Styles';
 
-interface Styles { [key: string]: StyleObject; }
-export function renderStyle(styles: Styles): string {
-
+export function renderStyle(styles: IStyles): string {
   const renderedStyles = Object.keys(styles).reduce((res, className) => {
-    const allSelectors: Styles =
+    const allSelectors: IStyles =
       Object.keys(styles[className]).reduce((res, key) => {
         if (key.startsWith(':')) {
           // Extract pseudoClasses
@@ -20,7 +19,7 @@ export function renderStyle(styles: Styles): string {
         return res;
       }, {});
 
-    const renderStyleObject = (className: string, styleObj: StyleObject): string => {
+    const renderStyleObject = (className: string, styleObj: IStyleObject): string => {
       const properties = Object.keys(styleObj)
         .map((k) => `${paramCase(k)}: ${styleObj[k]};`);
 

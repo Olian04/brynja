@@ -19,7 +19,6 @@
 
 * It's small.
 * It requires NO transpilation, everything runs as is in the browser.
-* It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
 
 # Installation
@@ -33,6 +32,10 @@ __CDN:__
 ```html
 <script src="https://cdn.jsdelivr.net/npm/brynja/cdn/brynja.js"></script>
 ```
+
+# Upgrading from 3.x to 4.x
+
+_See [upgrading guide](./guides/upgrading-from-3.x-to-4.x.md)_
 
 # Help me help you
 
@@ -89,28 +92,24 @@ render(_=>_
 
 In brynja, method that are exposed on the chaining api is referred to as _operations_ and are divided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
-- [Operations](#operations)
-  - [Nesting operations](#nesting-operations)
-    - [.child(tagName, ctx)](#childtagname-ctx)
-    - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
-  - [Mutating operations](#mutating-operations)
-    - [.id(value)](#idvalue)
-    - [.class(valuesArr)](#classvaluesarr)
-    - [.name(value)](#namevalue)
-    - [.value(value)](#valuevalue)
-    - [.text(value)](#textvalue)
-    - [.prop(key, value)](#propkey-value)
-    - [.on(eventName, callback)](#oneventname-callback)
-    - [.style(styleObject)](#stylestyleobject)
-  - [Control flow operations](#control-flow-operations)
-    - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
-    - [.while(predicate, ctx)](#whilepredicate-ctx)
-    - [.do(ctx, ....)](#doctx)
-  - [Effect free operations](#effect-free-operations)
-    - [.peek(callback)](#peekcallback)
-- [Custom operations](#custom-operations)
-  - [Extend the default render method](#extend-the-default-render-method)
-  - [Extend a custom renderer instance](#extend-a-custom-renderer-instance)
+- [Nesting operations](#nesting-operations)
+  - [.child(tagName, ctx)](#childtagname-ctx)
+  - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
+- [Mutating operations](#mutating-operations)
+  - [.id(value)](#idvalue)
+  - [.class(valuesArr)](#classvaluesarr)
+  - [.name(value)](#namevalue)
+  - [.value(value)](#valuevalue)
+  - [.text(value)](#textvalue)
+  - [.prop(key, value)](#propkey-value)
+  - [.on(eventName, callback)](#oneventname-callback)
+  - [.style(styleObject)](#stylestyleobject)
+- [Control flow operations](#control-flow-operations)
+  - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
+  - [.while(predicate, ctx)](#whilepredicate-ctx)
+  - [.do(...ctx[])](#doctx)
+- [Effect free operations](#effect-free-operations)
+  - [.peek(callback)](#peekcallback)
 
 ## Nesting operations
 
@@ -345,16 +344,19 @@ render(_=>_
 </div>
 ```
 
-### .do(ctx, ....)
+### .do(...ctx[])
 
 ```ts
-const img = (width, height, src) => _=>_
+import { builder } from 'brynja';
+
+const img = (width, height, src) => builder(_=>_
   .child('img', _=>_
     .prop('width', width)
     .prop('height', heigh)
     .prop('src', src)
     .prop('alt', src.substring(src.lastIndexOf('/'), src.lastIndexOf('.')))
-  );
+  )
+);
 
 render(_=>_
   .do(
@@ -389,61 +391,7 @@ render(_=>_
 > { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] }
 ```
 
-# Custom operations
-
-On top of the pre defined operations you can also extend the renderer with your own custom operations.
-
-## Extend the default render method
-
-```ts
-import { render, extend } from 'brynja';
-
-extend('img', (width, height, src) => _=>_
-  .child('img', _=>_
-    .prop('width', width)
-    .prop('height', heigh)
-    .prop('src', src)
-    .prop('alt', src.substring(
-       src.lastIndexOf('/')+1,
-       src.lastIndexOf('.')
-    ))
-  )
-)
-
-render(_=>_
-  .img(64, 64, '/assets/logo_small.png')
-  .img(192, 192, '/assets/logo_medium.png')
-)
-```
-
-## Extend a custom renderer instance
-
-```ts
-import { Renderer } from 'brynja';
-
-const { render, extend } = Renderer({
-  rootElement: document.getElementById('root')
-});
-
-extend('img', (width, height, src) => _=>_
-  .child('img', _=>_
-    .prop('width', width)
-    .prop('height', heigh)
-    .prop('src', src)
-    .prop('alt', src.substring(
-       src.lastIndexOf('/')+1,
-       src.lastIndexOf('.')
-    ))
-  )
-)
-
-render(_=>_
-  .img(64, 64, '/assets/logo_small.png')
-  .img(192, 192, '/assets/logo_medium.png')
-)
-```
-
-## Legal
+# Legal
 
 Licensed under MIT. See [LICENSE](LICENSE).
 

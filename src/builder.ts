@@ -1,12 +1,7 @@
-import { Events } from './util/events';
+import { IBuilderCTX } from './interfaces/BuilderCTX';
+import { IStyleObject } from './interfaces/StyleObject';
+import { VNode } from './interfaces/VNode';
 import { objHash } from './util/hash';
-import { StyleObject } from './util/style-object';
-import { VNode } from './util/vnode';
-
-export type CustomOperation = (...args) => (_: BuilderCTX) => BuilderCTX;
-export interface CustomOperations {
-    [operationName: string]: CustomOperation;
-}
 
 export const newVNode = (ctx: Partial<VNode> = {}) => ({
     tag: '',
@@ -18,43 +13,19 @@ export const newVNode = (ctx: Partial<VNode> = {}) => ({
     ...ctx, // Replace defaults in present in ctx argument
 });
 
-export type BuilderCB = (ctx: BuilderCTX) => void;
-export interface BuilderCTX {
-    child(tagType: string, builder: BuilderCB): BuilderCTX;
-    children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
-    when(booleanExpression: boolean, then_builder: BuilderCB, else_builder?: BuilderCB): BuilderCTX;
-    while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void): BuilderCTX;
-    do(...builders: BuilderCB[]): BuilderCTX;
-    value(value: any): BuilderCTX;
-    prop(key: string, value: string): BuilderCTX;
-    id(value: string): BuilderCTX;
-    class(valuesArr: string[]): BuilderCTX;
-    name(value: string): BuilderCTX;
-    text(value: string): BuilderCTX;
-    peek(callback: (ctx: VNode) => void): BuilderCTX;
-    on(eventName: Events.Mouse.Wheel, handler: (event: WheelEvent) => void): BuilderCTX;
-    on(eventName: Events.Mouse, handler: (event: MouseEvent) => void): BuilderCTX;
-    on(eventName: Events.Keyboard, handler: (event: KeyboardEvent) => void): BuilderCTX;
-    on(eventName: Events.Drag, handler: (event: DragEvent) => void): BuilderCTX;
-    on(eventName: Events.Clipboard, handler: (event: ClipboardEvent) => void): BuilderCTX;
-    on(eventName: string, handler: (event: any) => void): BuilderCTX;
-    style(styleObject: StyleObject): BuilderCTX;
-    [operationName: string]: (...args) => BuilderCTX; // Needed for integration with customOperations
-}
-
-interface Styles { [key: string]: StyleObject; }
+export type BuilderCB = (ctx: IBuilderCTX) => void;
+interface Styles { [key: string]: IStyleObject; }
 export function buildNode(
     tagType: string,
     builder: BuilderCB,
-    customOperations: CustomOperations,
 ): [VNode, Styles] {
     const ctx: VNode = newVNode({
         tag: tagType,
     });
 
     let styles: Styles = {};
-    const builderCtx: BuilderCTX = {
-        style(styleObject: StyleObject) {
+    const builderCtx: IBuilderCTX = {
+        style(styleObject: IStyleObject) {
             const styleHash = objHash(styleObject);
             styles[styleHash] = styleObject;
             this.class([ styleHash ]);
@@ -69,14 +40,14 @@ export function buildNode(
             return this;
         },
         child(tagType: string, builder: BuilderCB) {
-            const [child, childStyles] = buildNode(tagType, builder, customOperations);
+            const [child, childStyles] = buildNode(tagType, builder);
             ctx.children.push(child);
             styles = {...styles, ...childStyles};
             return this;
         },
-        children(tagType: string, count: number, builder: (ctx: BuilderCTX, i: number) => void) {
+        children(tagType: string, count: number, builder: (ctx: IBuilderCTX, i: number) => void) {
             for (let __i = 0; __i < count; __i++) {
-                const [child, childStyles] = buildNode(tagType, (_) => builder(_, __i), customOperations);
+                const [child, childStyles] = buildNode(tagType, (_) => builder(_, __i));
                 ctx.children.push(child);
                 styles = {...styles, ...childStyles};
             }
@@ -90,7 +61,7 @@ export function buildNode(
             }
             return this;
         },
-        while(predicate: (i: number) => boolean, builder: (ctx: BuilderCTX, i: number) => void) {
+        while(predicate: (i: number) => boolean, builder: (ctx: IBuilderCTX, i: number) => void) {
             for (let i = 0; predicate(i); i++) {
                 builder(this, i);
             }
@@ -152,12 +123,6 @@ export function buildNode(
             callback( ctxProxy(ctx) );
             return this;
         },
-        ...Object.keys(customOperations).reduce((res: object, k) => ({...res,
-            [k]:  (...args) => {
-                customOperations[k](...args)(builderCtx);
-                return builderCtx;
-            },
-        }), {}),
     };
     builder(builderCtx);
     return [ctx, styles];

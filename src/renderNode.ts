@@ -1,4 +1,4 @@
-import { VNode } from './util/vnode';
+import { VNode } from './interfaces/VNode';
 
 export function renderNode(node: VNode): HTMLElement {
     const elem = document.createElement(node.tag);

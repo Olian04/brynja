@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import { describe } from 'mocha';
 import jsdom from 'mocha-jsdom';
 
-import { render, Renderer } from './brynja';
-import { BuilderCTX } from './builder';
+import { builder, render, Renderer } from './brynja';
+import { IBuilderCTX } from './interfaces/BuilderCTX';
 import { Events } from './util/events';
 
 describe('brynja', () => {
@@ -233,12 +233,13 @@ describe('brynja', () => {
             });
             it('do', () => {
                 // tslint:disable-next-line only-arrow-functions
-                const test1 = function(_: BuilderCTX) {
+                const test1 = function(_: IBuilderCTX) {
                     _.value('hello');
                 };
-                const test2 = (_: BuilderCTX) => _
-                    .child('foo', () => { /* */ });
-                function test3(_: BuilderCTX) {
+                const test2 = builder((_) => _
+                    .child('foo', () => { /* */ }),
+                );
+                function test3(_: IBuilderCTX) {
                     _.id('world');
                 }
                 render((_) => _
@@ -290,29 +291,6 @@ describe('brynja', () => {
             });
         });
 
-        describe('extension operations', () => {
-            it('hello world', () => {
-                const { render, extend } = Renderer({
-                    rootElement: document.getElementById('root'),
-                });
-                extend('hello', (name: string) => (_) => _
-                    .child('p', (_) => _
-                        .text(`Hello ${name}!`),
-                    ),
-                );
-                render((_) => _
-                    .hello('Oliver')
-                    .hello('world')
-                    .peek((ctx) => {
-                        expect(ctx.children[0].tag).to.equal('p');
-                        expect(ctx.children[0].text).to.equal('Hello Oliver!');
-
-                        expect(ctx.children[1].tag).to.equal('p');
-                        expect(ctx.children[1].text).to.equal('Hello world!');
-                    }),
-                );
-            });
-        });
         describe('updating a render', () => {
             it('child update', () => {
                 const config = {

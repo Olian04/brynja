@@ -1,26 +1,20 @@
-import { BuilderCB, buildNode, CustomOperation, CustomOperations, newVNode } from './builder';
+import { BuilderCB, buildNode, newVNode } from './builder';
+import { IRenderer } from './interfaces/Renderer';
+import { VNode } from './interfaces/VNode';
 import { renderNode } from './renderNode';
 import { renderStyle } from './renderStyles';
 import { updateNode } from './updateNode';
-import { VNode } from './util/vnode';
-
-export interface IRenderer {
-    render(rootBuilder: BuilderCB): void;
-    extend(operationName: string, constructor: CustomOperation): void;
-}
 
 export function Renderer(config: {
     rootElement: HTMLElement;
 }): IRenderer {
     let initialRender = true;
     let oldRootNode: VNode = null;
-    const customOperations: CustomOperations = {};
     return {
         render(rootBuilder: BuilderCB) {
             const [rootNode, styles] = buildNode(
                 config.rootElement.tagName.toLowerCase(),
                 rootBuilder,
-                customOperations,
             );
 
             // Append styles if needed
@@ -46,9 +40,6 @@ export function Renderer(config: {
 
             // Update refs for next render
             oldRootNode = rootNode;
-        },
-        extend(operationName: string, constructor: CustomOperation) {
-            customOperations[operationName] = constructor;
         },
     };
 }

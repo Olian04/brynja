@@ -16,7 +16,7 @@ describe('builder', () => {
             };
             const builder: BuilderCB = (_) => _
                 .style(inputStyle);
-            const [vdom, styles] = buildNode('div', builder, {});
+            const [vdom, styles] = buildNode('div', builder);
 
             const styleClasses = Object.keys(styles);
             expect(styleClasses.length).to.equal(1);

@@ -2,12 +2,9 @@
   "tslint.autoFixOnSave": true,
   "markdown.extension.toc.omittedFromToc": {
     "README.md": [
-      "# Why Brynja",
-      "# Installation",
-      "# Help me help you",
-      "# Demos",
-      "# Setup - Hello World",
-      "## Legal"
+      "## Using the default \"render\" method",
+      "## Setting up your own Renderer instance"
     ]
-  }
+  },
+  "markdown.extension.toc.levels": "2..6",
 }
