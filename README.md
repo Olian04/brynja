@@ -11,7 +11,7 @@
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/olian04/brynja/issues)
  [![# of contributors](https://img.shields.io/github/contributors/olian04/brynja.svg)](https://github.com/Olian04/brynja/graphs/contributors)
 
-![Logo](./assets/brynja_logo.png)
+![Logo](https://raw.githubusercontent.com/Olian04/brynja/master/assets/brynja_logo.png)
 
 > Brynja is a virtual DOM implementation with a declarative chaining based javascript API.
 
