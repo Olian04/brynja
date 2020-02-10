@@ -45,9 +45,14 @@ export function buildNode(
             styles = {...styles, ...childStyles};
             return this;
         },
-        children(tagType: string, count: number, builder: (ctx: IBuilderCTX, i: number) => void) {
+        children<T>(tagType: string, countOrArray: number | T[], builder: (ctx: IBuilderCTX, i: number | T) => void) {
+            const items = typeof countOrArray === 'number'
+                ? Array(countOrArray).fill(0).map((_, i) => i)
+                : countOrArray as T[];
+            const count = items.length;
+
             for (let __i = 0; __i < count; __i++) {
-                const [child, childStyles] = buildNode(tagType, (_) => builder(_, __i));
+                const [child, childStyles] = buildNode(tagType, (_) => builder(_, items[__i]));
                 ctx.children.push(child);
                 styles = {...styles, ...childStyles};
             }

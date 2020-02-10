@@ -94,7 +94,7 @@ In brynja, method that are exposed on the chaining api is referred to as _operat
 
 - [Nesting operations](#nesting-operations)
   - [.child(tagName, ctx)](#childtagname-ctx)
-  - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
+  - [.children(tagName, count | items[], ctx)](#childrentagname-count--items-ctx)
 - [Mutating operations](#mutating-operations)
   - [.id(value)](#idvalue)
   - [.class(valuesArr)](#classvaluesarr)
@@ -133,12 +133,15 @@ render(_=>_
 </div>
 ```
 
-### .children(tagName, count, ctx)
+### .children(tagName, count | items[], ctx)
 
 ```ts
 render(_=>_
   .children('div', 3, (_, i)=>_
     .text(i)
+  )
+  .children('div', ['a', 'b', 'c'], (_, item)=>_
+    .text(item)
   )
 );
 ```
@@ -148,6 +151,9 @@ render(_=>_
   <div>0</div>
   <div>1</div>
   <div>2</div>
+  <div>a</div>
+  <div>b</div>
+  <div>c</div>
 </div>
 ```
 

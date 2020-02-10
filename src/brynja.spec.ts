@@ -44,7 +44,7 @@ describe('brynja', () => {
                     .child('div', testBuilder),
                 );
             });
-            it('children', () => {
+            it('children - number', () => {
                 const targetCount = 3;
                 let counter = 0;
                 render((_) => _
@@ -55,6 +55,18 @@ describe('brynja', () => {
                     }),
                 );
                 expect(counter).to.equal(targetCount);
+            });
+            it('children - array', () => {
+                const items = ['a', 'b', 'c'];
+                let index = 0;
+                render((_) => _
+                    .children('li', items, (_, item) => {
+                        testBuilder(_);
+                        expect(item).to.equal(items[index]);
+                        index++;
+                    }),
+                );
+                expect(index).to.equal(items.length);
             });
         });
 

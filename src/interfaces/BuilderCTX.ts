@@ -6,6 +6,7 @@ import { VNode } from './VNode';
 export interface IBuilderCTX {
     child(tagType: string, builder: BuilderCB): this;
     children(tagType: string, count: number, builder: (ctx: this, i: number) => void): this;
+    children<T>(tagType: string, items: T[], builder: (ctx: this, item: T) => void): this;
     when(booleanExpression: boolean, then_builder: BuilderCB, else_builder?: BuilderCB): this;
     while(predicate: (i: number) => boolean, builder: (ctx: this, i: number) => void): this;
     do(...builders: BuilderCB[]): this;
