@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
-import jsdom from 'mocha-jsdom';
+
+// tslint:disable-next-line:no-var-requires
+const jsdom: () => void = require('mocha-jsdom');
 
 import { builder, render, Renderer } from './brynja';
 import { IBuilderCTX } from './interfaces/BuilderCTX';
@@ -13,7 +15,7 @@ describe('brynja', () => {
         document.body.innerHTML = '<div id="root"></div>';
     });
 
-    function testBuilder(ctx) {
+    function testBuilder(ctx: IBuilderCTX) {
         const funcs = [
             'child', 'children',
             'id', 'name', 'class',
@@ -26,7 +28,7 @@ describe('brynja', () => {
         expect(typeof ctx).to.equal('object');
         funcs.forEach((f) => {
             expect(ctx).to.have.haveOwnProperty(f);
-            expect(typeof ctx[f]).to.equal('function');
+            expect(typeof ctx[f as keyof IBuilderCTX]).to.equal('function');
             i++;
         });
         expect(i).to.equal(funcs.length);
@@ -197,8 +199,12 @@ describe('brynja', () => {
                     .id('style-root')
                     .style({}),
                 );
-                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
-                expect(conf.rootElement.lastChild.textContent).to.equal('');
+                if (conf.rootElement.lastChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                    expect(conf.rootElement.lastChild.textContent).to.equal('');
+                }
 
                 // One style
                 render((_) => _
@@ -207,8 +213,12 @@ describe('brynja', () => {
                         background: 'red',
                     }),
                 );
-                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
-                expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-0aaeba391250c07deb384c0a7b7285604d53946e{background: red;}');
+                if (conf.rootElement.lastChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                    expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-0aaeba391250c07deb384c0a7b7285604d53946e{background: red;}');
+                }
 
                 // Multiple styles
                 render((_) => _
@@ -218,8 +228,12 @@ describe('brynja', () => {
                         color: 'blue',
                     }),
                 );
-                expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
-                expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-e5faf53cd44644de5df0522498cb9302b9db722e{background: red;color: blue;}');
+                if (conf.rootElement.lastChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                    expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-e5faf53cd44644de5df0522498cb9302b9db722e{background: red;color: blue;}');
+                }
             });
         });
 
@@ -305,68 +319,84 @@ describe('brynja', () => {
 
         describe('updating a render', () => {
             it('child update', () => {
-                const config = {
-                    rootElement: document.getElementById('root'),
+                const conf = {
+                    rootElement: document.createElement('div'),
                 };
-                const { render } = Renderer(config);
+                const { render } = Renderer(conf);
 
                 render((_) => _
                     .child('h1', (_) => _),
                 );
-                expect(config.rootElement.firstElementChild.nodeName).to.equal('H1');
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.firstElementChild.nodeName).to.equal('H1');
+                }
 
                 render((_) => _
                     .child('p', (_) => _),
                 );
-                expect(config.rootElement.firstElementChild.nodeName).to.equal('P');
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.firstElementChild.nodeName).to.equal('P');
+                }
             });
 
             it('prop update', () => {
-                const config = {
-                    rootElement: document.getElementById('root'),
+                const conf = {
+                    rootElement: document.createElement('div'),
                 };
-                const { render } = Renderer(config);
+                const { render } = Renderer(conf);
 
                 render((_) => _
                     .child('div', (_) => _
                         .prop('bar', 'foo'),
                     ),
                 );
-                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
-                expect(
-                    config.rootElement.firstElementChild.hasAttribute('bar'),
-                    'rootElement should contain attribute "bar"',
-                ).to.be.true;
-                expect(
-                    config.rootElement.firstElementChild.getAttribute('bar'),
-                    'Attribute "bar" should have value "foo"',
-                ).to.equal('foo');
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                    expect(
+                        conf.rootElement.firstElementChild.hasAttribute('bar'),
+                        'rootElement should contain attribute "bar"',
+                    ).to.be.true;
+                    expect(
+                        conf.rootElement.firstElementChild.getAttribute('bar'),
+                        'Attribute "bar" should have value "foo"',
+                    ).to.equal('foo');
+                }
 
                 render((_) => _
                     .child('div', (_) => _
                         .prop('foo', 'bar'),
                     ),
                 );
-                expect(config.rootElement.firstElementChild.nodeName).to.equal('DIV');
-                expect(
-                    config.rootElement.firstElementChild.hasAttribute('bar'),
-                    'rootElement should not contain attribute "bar"',
-                ).to.be.false;
-                expect(
-                    config.rootElement.firstElementChild.hasAttribute('foo'),
-                    'rootElement should contain attribute "foo"',
-                ).to.be.true;
-                expect(
-                    config.rootElement.firstElementChild.getAttribute('foo'),
-                    'Attribute "foo" should have value "bar"',
-                ).to.equal('bar');
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.firstElementChild.nodeName).to.equal('DIV');
+                    expect(
+                        conf.rootElement.firstElementChild.hasAttribute('bar'),
+                        'rootElement should not contain attribute "bar"',
+                    ).to.be.false;
+                    expect(
+                        conf.rootElement.firstElementChild.hasAttribute('foo'),
+                        'rootElement should contain attribute "foo"',
+                    ).to.be.true;
+                    expect(
+                        conf.rootElement.firstElementChild.getAttribute('foo'),
+                        'Attribute "foo" should have value "bar"',
+                    ).to.equal('bar');
+                }
             });
 
             it('event update', () => {
-                const config = {
-                    rootElement: document.getElementById('root'),
+                const conf = {
+                    rootElement: document.createElement('root'),
                 };
-                const { render } = Renderer(config);
+                const { render } = Renderer(conf);
 
                 let counter = 0;
 
@@ -381,11 +411,15 @@ describe('brynja', () => {
                     ),
                 );
 
-                config.rootElement.firstElementChild.dispatchEvent(
-                    // @ts-ignore
-                    new window.Event('click'),
-                );
-                expect(counter).to.equal(1);
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    conf.rootElement.firstElementChild.dispatchEvent(
+                        // @ts-ignore
+                        new window.Event('click'),
+                    );
+                    expect(counter).to.equal(1);
+                }
 
                 render((_) => _
                     .child('div', (_) => _
@@ -395,11 +429,15 @@ describe('brynja', () => {
                     ),
                 );
 
-                config.rootElement.firstElementChild.dispatchEvent(
-                    // @ts-ignore
-                    new window.Event('click'),
-                );
-                expect(counter).to.equal(101);
+                if (conf.rootElement.firstElementChild === null) {
+                    expect.fail();
+                } else {
+                    conf.rootElement.firstElementChild.dispatchEvent(
+                        // @ts-ignore
+                        new window.Event('click'),
+                    );
+                    expect(counter).to.equal(101);
+                }
             });
         });
     });

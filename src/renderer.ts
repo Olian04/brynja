@@ -9,7 +9,7 @@ export function Renderer(config: {
     rootElement: HTMLElement;
 }): IRenderer {
     let initialRender = true;
-    let oldRootNode: VNode = null;
+    let oldRootNode: VNode | null = null;
     return {
         render(rootBuilder: BuilderCB) {
             const [rootNode, styles] = buildNode(
@@ -35,7 +35,7 @@ export function Renderer(config: {
                 config.rootElement.replaceWith(newRoot);
                 config.rootElement = newRoot;
             } else {
-                updateNode(rootNode, oldRootNode, config.rootElement);
+                updateNode(rootNode, oldRootNode as VNode, config.rootElement);
             }
 
             // Update refs for next render

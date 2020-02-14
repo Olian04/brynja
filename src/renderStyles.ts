@@ -5,7 +5,7 @@ import { IStyles } from './interfaces/Styles';
 export function renderStyle(styles: IStyles): string {
   const renderedStyles = Object.keys(styles).reduce((res, className) => {
     const allSelectors: IStyles =
-      Object.keys(styles[className]).reduce((res, key) => {
+      Object.keys(styles[className]).reduce((res: IStyles, key) => {
         if (key.startsWith(':')) {
           // Extract pseudoClasses
           res[className + key] = styles[className][key];

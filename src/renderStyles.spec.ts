@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import jsdom from 'mocha-jsdom';
+
+// tslint:disable-next-line:no-var-requires
+const jsdom: () => void = require('mocha-jsdom');
 
 import { renderStyle } from './renderStyles';
 

@@ -105,7 +105,7 @@ export function buildNode(
             return this;
         },
         peek(callback) {
-            function ctxProxy(ctx: VNode) {
+            function ctxProxy(ctx: VNode): VNode {
                 return {
                     tag: ctx.tag,
                     text: ctx.text,
@@ -113,13 +113,14 @@ export function buildNode(
                     props: ctx.props,
                     events: ctx.events,
                     children: new Proxy([], {
-                        get: (__, key) => {
+                        get: (__, key: string | number) => {
                             if (key === 'length') {
                                 return ctx.children.length;
                             } else if (!isNaN(parseFloat(key.toString()))) {
-                                return ctxProxy(ctx.children[key]);
+                                return ctxProxy(ctx.children[key as number]);
                             } else {
-                                throw new Error('Illegal operation');
+                                /* istanbul ignore next */
+                                throw new Error('Brynja: Illegal operation');
                             }
                         },
                     }),

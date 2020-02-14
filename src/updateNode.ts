@@ -7,7 +7,7 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   if (newNode.tag.toLowerCase() !== oldNode.tag.toLowerCase()) {
     // Different tags requires a re-render
     const newElem = renderNode(newNode);
-    elem.parentNode.replaceChild(newElem, elem);
+    elem.replaceWith(newElem);
   }
 
   // #region Update value
@@ -30,10 +30,9 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     const $text = document.createTextNode(newNode.text);
     elem.appendChild($text);
   } else if (oldNode.text !== '') {
-    if (elem.firstChild.nodeType !== TEXT_NODE) {
-      // This should never happen. So no need to test for it?
+    if (elem.firstChild === null || elem.firstChild.nodeType !== TEXT_NODE) {
       /* istanbul ignore next */
-      throw new Error('Unexpected "none text node" as first child of element: ' + elem);
+      throw new Error('Brynja: Unexpected "none text node" as first child of element: ' + elem);
     }
 
     if (newNode.text === '') {
@@ -110,7 +109,12 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   const elementsToRemove = elem.children.length - firstInvalidIndex;
   for (let i = 0; i < elementsToRemove; i++) {
     // Remove extra elements
-    elem.children.item(firstInvalidIndex).remove();
+    const childElement = elem.children.item(firstInvalidIndex);
+    if (childElement === null) {
+      /* istanbul ignore next */
+      throw new Error(`Brynja: Unexpected invalid child element while removing excess children from element: ${elem}`);
+    }
+    childElement.remove();
   }
 
   // #endregion

@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import jsdom from 'mocha-jsdom';
+
+// tslint:disable-next-line:no-var-requires
+const jsdom: () => void = require('mocha-jsdom');
 
 import { buildNode } from './builder';
 import { renderNode } from './renderNode';
@@ -65,7 +67,11 @@ describe('renderNode', () => {
             const div =  renderNode(buildNode('div', (_) => _
                 .text('foo'),
             )[0]);
-            expect(div.firstChild.textContent).to.equal('foo');
+            if (div.firstChild === null) {
+                expect.fail();
+            } else {
+                expect(div.firstChild.textContent).to.equal('foo');
+            }
         });
 
         it('prop', () => {

@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import jsdom from 'mocha-jsdom';
+
+// tslint:disable-next-line:no-var-requires
+const jsdom: () => void = require('mocha-jsdom');
 
 import { buildNode } from './builder';
 import { renderNode } from './renderNode';
@@ -74,7 +76,11 @@ describe('updateNode', () => {
         const $elem = renderNode(vElem1);
         expect($elem.tagName).to.equal('H1');
         expect($elem.children.length).to.equal(0);
-        expect($elem.firstChild.textContent).to.equal('Hello World');
+        if ($elem.firstChild === null) {
+            expect.fail();
+        } else {
+            expect($elem.firstChild.textContent).to.equal('Hello World');
+        }
 
         const [vElem2] = buildNode('h1', (_) => _
             .text('Hello')
@@ -85,9 +91,18 @@ describe('updateNode', () => {
         updateNode(vElem2, vElem1, $elem);
         expect($elem.tagName).to.equal('H1');
         expect($elem.children.length).to.equal(1);
-        expect($elem.firstChild.textContent).to.equal('Hello');
-        expect(($elem.children[0] as HTMLElement).tagName).to.equal('DIV');
-        expect(($elem.children[0] as HTMLElement).firstChild.textContent).to.equal('World');
+        if ($elem.firstChild === null) {
+            expect.fail();
+        } else {
+            expect($elem.firstChild.textContent).to.equal('Hello');
+        }
+        const $child = $elem.children[0] as HTMLElement;
+        expect($child.tagName).to.equal('DIV');
+        if ($child.firstChild === null) {
+            expect.fail();
+        } else {
+            expect($child.firstChild.textContent).to.equal('World');
+        }
 
         const [vElem3] = buildNode('h1', (_) => _
             .text('Hello World'),
@@ -95,7 +110,11 @@ describe('updateNode', () => {
         updateNode(vElem3, vElem2, $elem);
         expect($elem.tagName).to.equal('H1');
         expect($elem.children.length).to.equal(0);
-        expect($elem.firstChild.textContent).to.equal('Hello World');
+        if ($elem.firstChild === null) {
+            expect.fail();
+        } else {
+            expect($elem.firstChild.textContent).to.equal('Hello World');
+        }
 
         const [vElem4] = buildNode('h1', (_) => _
             .children('div', 5, (_, i) => _
