@@ -26,4 +26,9 @@ const defaultRenderer: (() =>  IRenderer) = (() => {
 export const render = (rootBuilder: BuilderCB) =>
     defaultRenderer().render(rootBuilder);
 
+/**
+ * Usage of this function is 100% optional.
+ * It serves ONLY to add type support for brynja operations through typescript and JSDocs.
+ * @param {BuilderCB} cb
+ */
 export const builder = (cb: BuilderCB) => cb;
