@@ -6,6 +6,7 @@ const jsdom: () => void = require('mocha-jsdom');
 import { buildNode } from './builder';
 import { renderNode } from './renderNode';
 import { updateNode } from './updateNode';
+import { Events } from './util/events';
 
 describe('updateNode', () => {
     jsdom();
@@ -67,6 +68,66 @@ describe('updateNode', () => {
             );
             updateNode(vdiv2, vdiv1, $div);
             expect($div.getAttribute('foo')).to.equal('bar');
+        });
+
+        it('on remove listener', () => {
+            let eventTriggered = false;
+            const originalVDOM =  buildNode('div', (_) => _
+                .on(Events.Mouse.Click, () => {
+                    console.log('Clicked');
+                    eventTriggered = true;
+                }),
+            )[0];
+
+            const div = renderNode(originalVDOM);
+
+            const newVDOM = buildNode('div', (_) => _)[0];
+
+            updateNode(newVDOM, originalVDOM, div);
+
+            // @ts-ignore
+            div.dispatchEvent(new window.Event(Events.Mouse.Click));
+            console.log('After Dispatch');
+
+            expect(eventTriggered, 'Failed to remove event listener').to.be.false;
+        });
+
+        it('on add listener', () => {
+            let eventTriggered = false;
+            const originalVDOM =  buildNode('div', (_) => _)[0];
+
+            const div = renderNode(originalVDOM);
+
+            const newVDOM = buildNode('div', (_) => _
+                .on(Events.Mouse.Click, () => eventTriggered = true),
+            )[0];
+
+            updateNode(newVDOM, originalVDOM, div);
+
+            // @ts-ignore
+            div.dispatchEvent(new window.Event(Events.Mouse.Click));
+
+            expect(eventTriggered, 'Failed to add event listener').to.be.true;
+        });
+
+        it('on update listener', () => {
+            let eventTriggeredValue = 'none';
+            const originalVDOM =  buildNode('div', (_) => _
+                .on(Events.Mouse.Click, () => eventTriggeredValue = 'wrong'),
+            )[0];
+
+            const div = renderNode(originalVDOM);
+
+            const newVDOM = buildNode('div', (_) => _
+                .on(Events.Mouse.Click, () => eventTriggeredValue = 'right'),
+            )[0];
+
+            updateNode(newVDOM, originalVDOM, div);
+
+            // @ts-ignore
+            div.dispatchEvent(new window.Event(Events.Mouse.Click));
+
+            expect(eventTriggeredValue, 'Failed to update listener').to.equal('right');
         });
     });
     it('Multiple sequential updates', () => {
