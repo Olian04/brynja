@@ -54,7 +54,7 @@ Please ⭐️ this repository!
   1. <https://jsfiddle.net/olian04/7ub58xj4/>
   2. <https://jsfiddle.net/olian04/9cnjofv1/>
   3. <https://jsfiddle.net/olian04/9cnjofv1/16/>
-* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/olian04/mu5sz029/>
+* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/olian04/mu5sz029/25/>
 
 # Setup - Hello World
 
