@@ -3,7 +3,11 @@ import { renderNode } from './renderNode';
 
 const TEXT_NODE = 3; // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
 
-export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): void {
+export function updateNode(
+  newNode: VNode,
+  oldNode: VNode,
+  elem: HTMLElement,
+): void {
   if (newNode.tag.toLowerCase() !== oldNode.tag.toLowerCase()) {
     // Different tags requires a re-render
     const newElem = renderNode(newNode);
@@ -12,13 +16,13 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
 
   // #region Update value
   if (newNode.value && newNode.value !== oldNode.value) {
-      // @ts-ignore
-      elem.value = newNode.value;
-      elem.setAttribute('value', '' + newNode.value);
+    // @ts-ignore
+    elem.value = newNode.value;
+    elem.setAttribute('value', '' + newNode.value);
   } else if (newNode.value !== oldNode.value) {
-      // @ts-ignore
-      elem.value = undefined;
-      elem.removeAttribute('value');
+    // @ts-ignore
+    elem.value = undefined;
+    elem.removeAttribute('value');
   }
   // #endregion
 
@@ -32,7 +36,9 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   } else if (oldNode.text !== '') {
     if (elem.firstChild === null || elem.firstChild.nodeType !== TEXT_NODE) {
       /* istanbul ignore next */
-      throw new Error('Brynja: Unexpected "none text node" as first child of element: ' + elem);
+      throw new Error(
+        'Brynja: Unexpected "none text node" as first child of element: ' + elem,
+      );
     }
 
     if (newNode.text === '') {
@@ -56,7 +62,11 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     } else if (prop in newNode.props && !(prop in oldNode.props)) {
       // Add prop
       elem.setAttribute(prop, newNode.props[prop]);
-    } else if (prop in newNode.props && prop in oldNode.props && newNode.props[prop] !== oldNode.props[prop]) {
+    } else if (
+      prop in newNode.props &&
+      prop in oldNode.props &&
+      newNode.props[prop] !== oldNode.props[prop]
+    ) {
       // Update prop
       elem.setAttribute(prop, newNode.props[prop]);
     }
@@ -71,7 +81,7 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     if (event in oldNode.events && !(event in newNode.events)) {
       // Remove all listeners
       oldNode.events[event].forEach((cb) => {
-          elem.removeEventListener(event, cb);
+        elem.removeEventListener(event, cb);
       });
     } else if (event in newNode.events && !(event in oldNode.events)) {
       // Add new listeners
@@ -80,7 +90,12 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
       });
     } else if (event in newNode.events && event in oldNode.events) {
       // Some listeners might have changed
-      for (let i = 0; i < Math.max(oldNode.events[event].length, newNode.events[event].length); i++) {
+      for (
+        let i = 0;
+        i <
+        Math.max(oldNode.events[event].length, newNode.events[event].length);
+        i++
+      ) {
         const oldHandler = oldNode.events[event][i];
         const newHandler = newNode.events[event][i];
 
@@ -98,7 +113,11 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
   for (let i = 0; i < newNode.children.length; i++) {
     if (i < oldNode.children.length) {
       // Updated elements compared to previous nodeTree
-      updateNode(newNode.children[i], oldNode.children[i], elem.children.item(i) as HTMLElement);
+      updateNode(
+        newNode.children[i],
+        oldNode.children[i],
+        elem.children.item(i) as HTMLElement,
+      );
     } else {
       // Create new elements
       elem.appendChild(renderNode(newNode.children[i]));
@@ -112,7 +131,9 @@ export function updateNode(newNode: VNode, oldNode: VNode,  elem: HTMLElement): 
     const childElement = elem.children.item(firstInvalidIndex);
     if (childElement === null) {
       /* istanbul ignore next */
-      throw new Error(`Brynja: Unexpected invalid child element while removing excess children from element: ${elem}`);
+      throw new Error(
+        `Brynja: Unexpected invalid child element while removing excess children from element: ${elem}`,
+      );
     }
     childElement.remove();
   }

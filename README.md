@@ -107,7 +107,7 @@ In brynja, method that are exposed on the chaining api is referred to as _operat
   - [.on(eventName, callback)](#oneventname-callback)
   - [.style(styleObject)](#stylestyleobject)
 - [Control flow operations](#control-flow-operations)
-  - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
+  - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-then_ctx-else_ctx)
   - [.while(predicate, ctx)](#whilepredicate-ctx)
   - [.do(...ctx[])](#doctx)
 - [Effect free operations](#effect-free-operations)
@@ -355,9 +355,9 @@ render(_=>_
 ### .do(...ctx[])
 
 ```ts
-import { builder } from 'brynja';
+import { createComponent } from 'brynja';
 
-const img = (width, height, src) => builder(_=>_
+const Image = createComponent((width, height, src) => _=>_
   .child('img', _=>_
     .prop('width', width)
     .prop('height', heigh)
@@ -368,8 +368,8 @@ const img = (width, height, src) => builder(_=>_
 
 render(_=>_
   .do(
-    img(64, 64, '/assets/logo_small.png'),
-    img(192, 192, '/assets/logo_medium.png')
+    Image(64, 64, '/assets/logo_small.png'),
+    Image(192, 192, '/assets/logo_medium.png')
   )
 );
 ```

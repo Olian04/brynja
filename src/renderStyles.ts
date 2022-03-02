@@ -4,8 +4,8 @@ import { IStyles } from './interfaces/Styles';
 
 export function renderStyle(styles: IStyles): string {
   const renderedStyles = Object.keys(styles).reduce((res, className) => {
-    const allSelectors: IStyles =
-      Object.keys(styles[className]).reduce((res: IStyles, key) => {
+    const allSelectors: IStyles = Object.keys(styles[className]).reduce(
+      (res: IStyles, key) => {
         if (key.startsWith(':')) {
           // Extract pseudoClasses
           res[className + key] = styles[className][key];
@@ -17,11 +17,17 @@ export function renderStyle(styles: IStyles): string {
           };
         }
         return res;
-      }, {});
+      },
+      {},
+    );
 
-    const renderStyleObject = (className: string, styleObj: IStyleObject): string => {
-      const properties = Object.keys(styleObj)
-        .map((k) => `${paramCase(k)}: ${styleObj[k]};`);
+    const renderStyleObject = (
+      className: string,
+      styleObj: IStyleObject,
+    ): string => {
+      const properties = Object.keys(styleObj).map(
+        (k) => `${paramCase(k)}: ${styleObj[k]};`,
+      );
 
       return `.${className}{${properties.join('')}}`;
     };

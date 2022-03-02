@@ -5,41 +5,41 @@ import { renderNode } from './renderNode';
 import { renderStyle } from './renderStyles';
 import { updateNode } from './updateNode';
 
-export function Renderer(config: {
-    rootElement: HTMLElement;
-}): IRenderer {
-    let initialRender = true;
-    let oldRootNode: VNode | null = null;
-    return {
-        render(rootBuilder: BuilderCB) {
-            const [rootNode, styles] = buildNode(
-                config.rootElement.tagName.toLowerCase(),
-                rootBuilder,
-            );
+export function Renderer(config: { rootElement: HTMLElement }): IRenderer {
+  let initialRender = true;
+  let oldRootNode: VNode | null = null;
+  return {
+    render(rootBuilder: BuilderCB) {
+      const [rootNode, styles] = buildNode(
+        config.rootElement.tagName.toLowerCase(),
+        rootBuilder,
+      );
 
-            // Append styles if needed
-            if (Object.keys(styles).length > 0) {
-                rootNode.children.push(newVNode({
-                    tag: 'style',
-                    text: renderStyle(styles),
-                    props: {
-                        type: 'text/css',
-                    },
-                }));
-            }
+      // Append styles if needed
+      if (Object.keys(styles).length > 0) {
+        rootNode.children.push(
+          newVNode({
+            tag: 'style',
+            text: renderStyle(styles),
+            props: {
+              type: 'text/css',
+            },
+          }),
+        );
+      }
 
-            // Render / Update HTML
-            if (initialRender) {
-                initialRender = false;
-                const newRoot = renderNode(rootNode);
-                config.rootElement.replaceWith(newRoot);
-                config.rootElement = newRoot;
-            } else {
-                updateNode(rootNode, oldRootNode as VNode, config.rootElement);
-            }
+      // Render / Update HTML
+      if (initialRender) {
+        initialRender = false;
+        const newRoot = renderNode(rootNode);
+        config.rootElement.replaceWith(newRoot);
+        config.rootElement = newRoot;
+      } else {
+        updateNode(rootNode, oldRootNode as VNode, config.rootElement);
+      }
 
-            // Update refs for next render
-            oldRootNode = rootNode;
-        },
-    };
+      // Update refs for next render
+      oldRootNode = rootNode;
+    },
+  };
 }

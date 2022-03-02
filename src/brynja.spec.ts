@@ -4,7 +4,7 @@ import { describe } from 'mocha';
 // tslint:disable-next-line:no-var-requires
 const jsdom: () => void = require('mocha-jsdom');
 
-import { builder, render, Renderer } from './brynja';
+import { createComponent, createStyles, render, Renderer } from './brynja';
 import { IBuilderCTX } from './interfaces/BuilderCTX';
 import { Events } from './util/events';
 
@@ -234,6 +234,22 @@ describe('brynja', () => {
                     expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
                     expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-e5faf53cd44644de5df0522498cb9302b9db722e{background: red;color: blue;}');
                 }
+
+                // Multiple styles using createStyles
+                const SomeStyles = createStyles({
+                  background: 'red',
+                  color: 'blue',
+                });
+                render((_) => _
+                    .id('style-root')
+                    .style(SomeStyles),
+                );
+                if (conf.rootElement.lastChild === null) {
+                    expect.fail();
+                } else {
+                    expect(conf.rootElement.lastChild.nodeName).to.equal('STYLE');
+                    expect(conf.rootElement.lastChild.textContent).to.equal('.brynja-e5faf53cd44644de5df0522498cb9302b9db722e{background: red;color: blue;}');
+                }
             });
         });
 
@@ -262,7 +278,7 @@ describe('brynja', () => {
                 const test1 = function(_: IBuilderCTX) {
                     _.value('hello');
                 };
-                const test2 = builder((_) => _
+                const test2 = createComponent(() => (_) => _
                     .child('foo', () => { /* */ }),
                 );
                 function test3(_: IBuilderCTX) {

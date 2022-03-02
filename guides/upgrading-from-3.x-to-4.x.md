@@ -38,9 +38,9 @@ render(_=>_
 );
 
 // IN 4.x
-import { render, builder } from 'brynja';
+import { render, createComponent } from 'brynja';
 
-const myOperation = (name: string = 'World') => builder(_=>_
+const Greeter = createComponent((name: string = 'World') => _=>_
   .child('span', _=>_
     .text(`Hello ${name}!`)
   )
@@ -48,8 +48,8 @@ const myOperation = (name: string = 'World') => builder(_=>_
 
 render(_=>_
   .do(
-    myOperation(),
-    myOperation('Brynja'),
+    Greeter(),
+    Greeter('Brynja'),
   )
 );
 ```
