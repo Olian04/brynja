@@ -17,11 +17,12 @@ export function renderNode(node: VNode): HTMLElement {
     elem.setAttribute(prop, node.props[prop]);
   });
   Object.keys(node.events).forEach((event) => {
-    elem.addEventListener(event, (e) => {
+    // @ts-ignore
+    elem[`on${event}`] = (e) => {
       node.events[event].forEach((cb) => {
         cb(e);
       });
-    });
+    };
   });
   node.children.forEach((node) => {
     elem.appendChild(renderNode(node));
