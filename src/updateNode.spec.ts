@@ -74,7 +74,6 @@ describe('updateNode', () => {
             let eventTriggered = false;
             const originalVDOM =  buildNode('div', (_) => _
                 .on(Events.Mouse.Click, () => {
-                    console.log('Clicked');
                     eventTriggered = true;
                 }),
             )[0];
