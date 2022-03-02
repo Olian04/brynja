@@ -1,18 +1,10 @@
+import { describe, it } from 'mocha';
 import { expect } from 'chai';
 
-// tslint:disable-next-line:no-var-requires
-const jsdom: () => void = require('mocha-jsdom');
+import { renderStyle } from '../../src/renderStyles';
 
-import { renderStyle } from './renderStyles';
-
-describe('renderStyle', () => {
-  jsdom();
-
-  it('typecheck', () => {
-    expect(typeof renderStyle).to.equal('function');
-  });
-
-  it('single property applied once', () => {
+describe('Render styles', () => {
+  it('should compute a correct style string for a single property applied once', () => {
     const inputStyle = {
       'some-class': {
         background: 'orangered',
@@ -23,7 +15,7 @@ describe('renderStyle', () => {
     expect(styles).to.equal('.some-class{background:orangered;}');
   });
 
-  it('camel cased property transformed to kebab case', () => {
+  it('should transform camel cased properties to kebab case', () => {
     const inputStyle = {
       'some-class': {
         borderTopColor: 'orangered',
@@ -34,7 +26,7 @@ describe('renderStyle', () => {
     expect(styles).to.equal('.some-class{border-top-color:orangered;}');
   });
 
-  it('single pseudo selector applied once', () => {
+  it('should compute a correct style string for a single pseudo selector applied once', () => {
     const inputStyle = {
       'some-class': {
         ':hover': {
