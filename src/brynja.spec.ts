@@ -292,7 +292,7 @@ describe('brynja', () => {
                     .peek((ctx) => {
                         expect(ctx.value).to.equal('hello');
                     })
-                    .do(test2)
+                    .do(test2())
                     .peek((ctx) => {
                         expect(ctx.value).to.equal('hello');
                         expect(ctx.children).to.be.of.length(1);
