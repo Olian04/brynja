@@ -20,6 +20,7 @@
       "ban-keywords"
     ],
     "no-console": false,
+    "forin": false,
     "no-shadowed-variable": false // needs to be turned off due to the nature of nesting _=>_ in the api
   },
   "rulesDirectory": []
