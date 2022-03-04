@@ -44,7 +44,7 @@ __CDN:__
 * Table generation: https://jsfiddle.net/olian04/4feazykx/
 * Updates: https://jsfiddle.net/olian04/6tnLbvaz/
 * User input: https://jsfiddle.net/olian04/jwqa6Le1/40/
-* Probabilistic Propagation: https://jsfiddle.net/olian04/bL0hjrd5/
+* Probabilistic Propagation: https://jsfiddle.net/pmkf10xc/15/
 * Interpolation animation: 
   1. https://jsfiddle.net/olian04/7ub58xj4/ 
   2. https://jsfiddle.net/olian04/9cnjofv1/
