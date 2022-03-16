@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 
-import { renderStyle } from '../../src/renderStyles';
+import { renderStyle } from '../../../src/renderStyles';
 
 describe('Render styles', () => {
   it('should compute a correct style string for a single property applied once', () => {
