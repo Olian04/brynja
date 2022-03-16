@@ -30,7 +30,7 @@ export interface IBuilderCTX {
   id(value: string): this;
   class(...valuesArr: string[]): this;
   name(value: string): this;
-  text(value: string): this;
+  text(value: any): this;
   peek(callback: (ctx: VNode) => void): this;
   on(eventName: Events.Mouse.Wheel, handler: (event: WheelEvent) => void): this;
   on(eventName: Events.Mouse, handler: (event: MouseEvent) => void): this;

@@ -13,8 +13,8 @@ const defaultRenderer: (() =>  IRenderer) = (() => {
         if (default_renderer === null) {
             // This makes sure the dom is ready when the Renderer is constructed.
             const rootElement = document.getElementById('root');
+            /* istanbul ignore if */
             if (rootElement === null) {
-                /* istanbul ignore next */
                 throw new Error('Brynja: Unable to locate element with id "root"');
             }
             default_renderer = Renderer({

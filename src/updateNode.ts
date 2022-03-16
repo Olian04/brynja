@@ -34,8 +34,8 @@ export function updateNode(
     const $text = document.createTextNode(newNode.text);
     elem.appendChild($text);
   } else if (oldNode.text !== '') {
+    /* istanbul ignore if */
     if (elem.firstChild === null || elem.firstChild.nodeType !== TEXT_NODE) {
-      /* istanbul ignore next */
       throw new Error(
         'Brynja: Unexpected "none text node" as first child of element: ' + elem,
       );

@@ -4,6 +4,7 @@ import { IStyles } from './interfaces/Styles';
 import { VNode } from './interfaces/VNode';
 import { objHash } from './util/hash';
 
+/* istanbul ignore next */ // istanbul doesn't recognize this function as covered by tests, even though it clearly is
 export const newVNode = (ctx: Partial<VNode> = {}) => ({
   tag: '',
   value: null,
@@ -20,13 +21,28 @@ const naiveTypeCheck = <T>(
   expectedType: string,
   argumentValue: T,
 ) => {
+  /* istanbul ignore if */
   if (typeof argumentValue !== expectedType) {
-    /* istanbul ignore next */
     throw new TypeError(
       `Brynja: Expected ${argumentPosition} argument of "${operationName}" operation to be of type ${expectedType}, but received ${typeof argumentValue}`,
     );
   }
-};
+}
+
+const serializableTypeCheck = <T>(
+  operationName: string,
+  argumentPosition: string,
+  argumentValue: T
+) => {
+  try {
+    String(argumentValue)
+  } catch {
+    /* istanbul ignore next */
+    throw new TypeError(
+      `Brynja: Expected ${argumentPosition} argument of "${operationName}" operation to be serializable.`,
+    );
+  }
+}
 
 export type BuilderCB = (ctx: IBuilderCTX) => void;
 export function buildNode(
@@ -73,8 +89,8 @@ export function buildNode(
       builder: (ctx: IBuilderCTX, i: number | T) => void,
     ) {
       naiveTypeCheck('child', 'first', 'string', tagType);
+      /* istanbul ignore if */
       if (typeof countOrArray !== 'number' && !Array.isArray(countOrArray)) {
-        /* istanbul ignore next */
         throw new TypeError(
           `Brynja: Expected second argument of "child" operation to be of type number or array, but received ${typeof countOrArray}`,
         );
@@ -145,21 +161,20 @@ export function buildNode(
       ctx.value = value;
       return this;
     },
-    text(value: string) {
-      naiveTypeCheck('text', 'first', 'string', value);
-
-      ctx.text = value;
+    text(value: any) {
+      serializableTypeCheck('text', 'first', value);
+      ctx.text = String(value);
       return this;
     },
-    prop(key: string, value: string) {
-      naiveTypeCheck('text', 'first', 'string', key);
-      naiveTypeCheck('text', 'second', 'string', value);
+    prop(key: string, value: any) {
+      naiveTypeCheck('prop', 'first', 'string', key);
+      serializableTypeCheck('prop', 'second', value);
 
-      ctx.props[key] = value;
+      ctx.props[key] = String(value);
       return this;
     },
     id(value: string) {
-      naiveTypeCheck('text', 'first', 'string', value);
+      naiveTypeCheck('id', 'first', 'string', value);
       ctx.props.id = value;
       return this;
     },
