@@ -55,6 +55,7 @@ describe('Integrations test', () => {
           try {
             render((_) => _
                 .when(true, _=>_)
+                .when(false, _=>_)
             );
           } catch {
             expect.fail();

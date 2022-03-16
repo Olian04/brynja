@@ -27,6 +27,7 @@ export function updateNode(
   // #endregion
 
   // #region Update text node
+  /* istanbul ignore else */ // there is no else statement, and istanbul doesn't like it
   if (oldNode.text === newNode.text) {
     // No change needed
   } else if (oldNode.text === '' && newNode.text !== '') {
@@ -101,8 +102,8 @@ export function updateNode(
   for (let i = 0; i < elementsToRemove; i++) {
     // Remove extra elements
     const childElement = elem.children.item(firstInvalidIndex);
+    /* istanbul ignore if */
     if (childElement === null) {
-      /* istanbul ignore next */
       throw new Error(
         `Brynja: Unexpected invalid child element while removing excess children from element: ${elem}`,
       );
