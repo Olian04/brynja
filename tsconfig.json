@@ -11,10 +11,12 @@
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "strict": true,
     },
     "include": [
-        "src/**/*.ts"
+        "src/mocha-jsdom.d.ts",
+        "src/**/*.ts",
     ],
     "exclude": [
         "node_modules",

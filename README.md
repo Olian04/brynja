@@ -11,15 +11,14 @@
  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/olian04/brynja/issues)
  [![# of contributors](https://img.shields.io/github/contributors/olian04/brynja.svg)](https://github.com/Olian04/brynja/graphs/contributors)
 
-![Logo](./assets/brynja_logo.png)
+![Logo](https://raw.githubusercontent.com/Olian04/brynja/master/assets/brynja_logo.png)
 
 > Brynja is a virtual DOM implementation with a declarative chaining based javascript API.
 
-# Why Brynja?
+# Why Brynja
 
 * It's small.
 * It requires NO transpilation, everything runs as is in the browser.
-* It's fully extendable!
 * Everything is 100% typed and ready for Typescript!
 
 # Installation
@@ -34,22 +33,28 @@ __CDN:__
 <script src="https://cdn.jsdelivr.net/npm/brynja/cdn/brynja.js"></script>
 ```
 
+# Upgrading from 3.x to 4.x
+
+_See [upgrading guide](./guides/upgrading-from-3.x-to-4.x.md)_
+
 # Help me help you
+
+Please ⭐️ this repository!
 
 <a href="https://www.buymeacoffee.com/olian04" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 # Demos
 
-* Hello World: https://jsfiddle.net/olian04/kcfserx5/
-* Table generation: https://jsfiddle.net/olian04/4feazykx/
-* Updates: https://jsfiddle.net/olian04/6tnLbvaz/
-* User input: https://jsfiddle.net/olian04/jwqa6Le1/40/
-* Probabilistic Propagation: https://jsfiddle.net/pmkf10xc/15/
-* Interpolation animation: 
-  1. https://jsfiddle.net/olian04/7ub58xj4/ 
-  2. https://jsfiddle.net/olian04/9cnjofv1/
-  3. https://jsfiddle.net/olian04/9cnjofv1/16/
-* With [html-router](https://github.com/Olian04/html-router): https://jsfiddle.net/olian04/mu5sz029/
+* Hello World: <https://jsfiddle.net/olian04/kcfserx5/>
+* Table generation: <https://jsfiddle.net/olian04/4feazykx/>
+* Updates: <https://jsfiddle.net/olian04/6tnLbvaz/>
+* User input: <https://jsfiddle.net/olian04/jwqa6Le1/40/>
+* Probabilistic Propagation: <https://jsfiddle.net/olian04/bL0hjrd5/>
+* Interpolation animation:
+  1. <https://jsfiddle.net/olian04/7ub58xj4/>
+  2. <https://jsfiddle.net/olian04/9cnjofv1/>
+  3. <https://jsfiddle.net/olian04/9cnjofv1/16/>
+* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/olian04/mu5sz029/25/>
 
 # Setup - Hello World
 
@@ -74,7 +79,7 @@ render(_=>_
 ```ts
 import { Renderer } from 'brynja';
 
-const { render } = Renderer({
+const { render } = new Renderer({
   rootElement: document.getElementById('root')
 });
 
@@ -87,29 +92,26 @@ render(_=>_
 
 # Operations
 
-In brynja, method that are exposed on the chaining api is refered to as _operations_ and are devided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
+In brynja, method that are exposed on the chaining api is referred to as _operations_ and are divided into 4 categories; Nesting operations, Mutating operations, Control flow operations, and Effect free operations.
 
-  - [Nesting operations](#nesting-operations)
-    - [.child(tagName, ctx)](#childtagname-ctx)
-    - [.children(tagName, count, ctx)](#childrentagname-count-ctx)
-  - [Mutating operations](#mutating-operations)
-    - [.id(value)](#idvalue)
-    - [.class(valuesArr)](#classvaluesarr)
-    - [.name(value)](#namevalue)
-    - [.value(value)](#valuevalue)
-    - [.text(value)](#textvalue)
-    - [.prop(key, value)](#propkey-value)
-    - [.on(eventName, callback)](#oneventname-callback)
-    - [.style(styleObject)](#stylestyleobject)
-  - [Control flow operations](#control-flow-operations)
-    - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-thenctx-elsectx)
-    - [.while(predicate, ctx)](#whilepredicate-ctx)
-    - [.do(ctx, ....)](#doctx)
-  - [Effect free operations](#effect-free-operations)
-    - [.peek(callback)](#peekcallback)
-- [Custom operations](#custom-operations)
-  - [Extend the default render method](#extend-the-default-render-method)
-  - [Extend a custom renderer instance](#extend-a-custom-renderer-instance)
+- [Nesting operations](#nesting-operations)
+  - [.child(tagName, ctx)](#childtagname-ctx)
+  - [.children(tagName, count | items[], ctx)](#childrentagname-count--items-ctx)
+- [Mutating operations](#mutating-operations)
+  - [.id(value)](#idvalue)
+  - [.class(valuesArr)](#classvaluesarr)
+  - [.name(value)](#namevalue)
+  - [.value(value)](#valuevalue)
+  - [.text(value)](#textvalue)
+  - [.prop(key, value)](#propkey-value)
+  - [.on(eventName, callback)](#oneventname-callback)
+  - [.style(styleObject)](#stylestyleobject)
+- [Control flow operations](#control-flow-operations)
+  - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-then_ctx-else_ctx)
+  - [.while(predicate, ctx)](#whilepredicate-ctx)
+  - [.do(...ctx[])](#doctx)
+- [Effect free operations](#effect-free-operations)
+  - [.peek(callback)](#peekcallback)
 
 ## Nesting operations
 
@@ -133,12 +135,15 @@ render(_=>_
 </div>
 ```
 
-### .children(tagName, count, ctx) 
+### .children(tagName, count | items[], ctx)
 
 ```ts
 render(_=>_
   .children('div', 3, (_, i)=>_
     .text(i)
+  )
+  .children('div', ['a', 'b', 'c'], (_, item)=>_
+    .text(item)
   )
 );
 ```
@@ -148,12 +153,15 @@ render(_=>_
   <div>0</div>
   <div>1</div>
   <div>2</div>
+  <div>a</div>
+  <div>b</div>
+  <div>c</div>
 </div>
 ```
 
 ## Mutating operations
 
-Mutating operations are used for adding and modifying data on the current vdom node. 
+Mutating operations are used for adding and modifying data on the current vdom node.
 
 ### .id(value)
 
@@ -176,8 +184,8 @@ render(_=>_
 ```ts
 render(_=>_
   .child('div', _=>_
-    .class([ 'foo', 'bar' ])
-    .class([ 'biz' ])
+    .class('foo', 'bar')
+    .class('biz')
   )
 );
 ```
@@ -188,7 +196,7 @@ render(_=>_
 </div>
 ```
 
-### .name(value) 
+### .name(value)
 
 ```ts
 render(_=>_
@@ -300,7 +308,7 @@ render(_=>_
 
 ## Control flow operations
 
-Control flow operations are used for conditional rendering. 
+Control flow operations are used for conditional rendering.
 
 ### .when(booleanExpression, then_ctx, else_ctx?)
 
@@ -324,7 +332,7 @@ render(_=>_
 </div>
 ```
 
-### .while(predicate, ctx) 
+### .while(predicate, ctx)
 
 ```ts
 render(_=>_
@@ -344,21 +352,24 @@ render(_=>_
 </div>
 ```
 
-### .do(ctx, ....) 
+### .do(...ctx[])
 
 ```ts
-const img = (width, height, src) => _=>_
+import { createComponent } from 'brynja';
+
+const Image = createComponent((width, height, src) => _=>_
   .child('img', _=>_
     .prop('width', width)
     .prop('height', heigh)
     .prop('src', src)
     .prop('alt', src.substring(src.lastIndexOf('/'), src.lastIndexOf('.')))
-  );
+  )
+);
 
 render(_=>_
   .do(
-    img(64, 64, '/assets/logo_small.png'),
-    img(192, 192, '/assets/logo_medium.png')
+    Image(64, 64, '/assets/logo_small.png'),
+    Image(192, 192, '/assets/logo_medium.png')
   )
 );
 ```
@@ -388,61 +399,8 @@ render(_=>_
 > { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] }
 ```
 
-# Custom operations
-On top of the pre defined operations you can also extend the renderer with your own custom operations. 
-
-## Extend the default render method
-
-```ts
-import { render, extend } from 'brynja';
-
-extend('img', (width, height, src) => _=>_
-  .child('img', _=>_
-    .prop('width', width)
-    .prop('height', heigh)
-    .prop('src', src)
-    .prop('alt', src.substring(
-       src.lastIndexOf('/')+1,
-       src.lastIndexOf('.')
-    ))
-  )
-)
-
-render(_=>_
-  .img(64, 64, '/assets/logo_small.png')
-  .img(192, 192, '/assets/logo_medium.png')
-)
-```   
-
-## Extend a custom renderer instance
-
-```ts
-import { Renderer } from 'brynja';
-
-const { render, extend } = Renderer({
-  rootElement: document.getElementById('root')
-});
-
-extend('img', (width, height, src) => _=>_
-  .child('img', _=>_
-    .prop('width', width)
-    .prop('height', heigh)
-    .prop('src', src)
-    .prop('alt', src.substring(
-       src.lastIndexOf('/')+1,
-       src.lastIndexOf('.')
-    ))
-  )
-)
-
-render(_=>_
-  .img(64, 64, '/assets/logo_small.png')
-  .img(192, 192, '/assets/logo_medium.png')
-)
-```
-
-## Legal
+# Legal
 
 Licensed under MIT. See [LICENSE](LICENSE).
 
-<div>Logo made by <a href="https://www.freepik.com/?__hstc=57440181.05b687f541f472b41b82875365d361dd.1557313741285.1557313741285.1557313741285.1&__hssc=57440181.3.1557313741288&__hsfp=1938472413" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+<div>Logo made by <a href="https://www.freepik.com/?__hstc=57440181.05b687f541f472b41b82875365d361dd.1557313741285.1557313741285.1557313741285.1&__hssc=57440181.3.1557313741288&__hsfp=1938472413" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"        title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"        title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

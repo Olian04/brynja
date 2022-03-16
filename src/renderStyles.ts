@@ -1,11 +1,11 @@
-import { StyleObject } from './util/style-object';
+import { paramCase } from 'param-case';
+import { IStyleObject } from './interfaces/StyleObject';
+import { IStyles } from './interfaces/Styles';
 
-interface Styles { [key: string]: StyleObject; }
-export function renderStyle(styles: Styles): string {
-
+export function renderStyle(styles: IStyles): string {
   const renderedStyles = Object.keys(styles).reduce((res, className) => {
-    const allSelectors: Styles =
-      Object.keys(styles[className]).reduce((res, key) => {
+    const allSelectors: IStyles = Object.keys(styles[className]).reduce(
+      (res: IStyles, key) => {
         if (key.startsWith(':')) {
           // Extract pseudoClasses
           res[className + key] = styles[className][key];
@@ -17,10 +17,19 @@ export function renderStyle(styles: Styles): string {
           };
         }
         return res;
-      }, {});
+      },
+      {},
+    );
 
-    const renderStyleObject = (className: string, styleObj: StyleObject): string => {
-      return `.${className}{${Object.keys(styleObj).map((k) => `${k}: ${styleObj[k]};`)}}`;
+    const renderStyleObject = (
+      className: string,
+      styleObj: IStyleObject,
+    ): string => {
+      const properties = Object.keys(styleObj).map(
+        (k) => `${paramCase(k)}: ${styleObj[k]};`,
+      );
+
+      return `.${className}{${properties.join('')}}`;
     };
 
     // Render all styles for the current className (including pseudo selectors)
