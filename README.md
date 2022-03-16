@@ -79,7 +79,7 @@ render(_=>_
 ```ts
 import { Renderer } from 'brynja';
 
-const { render } = Renderer({
+const { render } = new Renderer({
   rootElement: document.getElementById('root')
 });
 
