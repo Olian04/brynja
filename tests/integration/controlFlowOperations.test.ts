@@ -34,13 +34,27 @@ describe('Integrations test', () => {
     }
 
     describe('Control flow operations', ()  => {
-        it('when', () => {
+      describe('when', () => {
+        it('should run TRUE builder when predicate is true', () => {
             render((_) => _
                 .when(true, testBuilder, () => expect.fail())
-                .when(false,  () => expect.fail(), testBuilder),
             );
         });
-        it('while', () => {
+        it('should run FALSE builder when predicate is false', () => {
+          render((_) => _
+              .when(false,  () => expect.fail(), testBuilder),
+          );
+        });
+        it('should only run TRUE or FALSE builder never both', () => {
+          render((_) => _
+              .when(true, testBuilder, () => expect.fail())
+              .when(false,  () => expect.fail(), testBuilder),
+          );
+        });
+      });
+
+      describe('while', () => {
+        it('should pass test builder for each iteration', () => {
             const targetCount = 3;
             let counter = 0;
             render((_) => _
@@ -49,11 +63,18 @@ describe('Integrations test', () => {
                     expect(i).to.equal(counter);
                     counter++;
                 })
-                .while(() => false, () => expect.fail()),
             );
             expect(counter).to.equal(targetCount);
         });
-        it('do', () => {
+        it('should only run builder when predicate is true', () => {
+          render((_) => _
+              .while(() => false, () => expect.fail()),
+          );
+        });
+      });
+
+      describe('do', () => {
+        it('should run any builder function passed to it', () => {
             // tslint:disable-next-line only-arrow-functions
             const test1 = function(_: IBuilderCTX) {
                 _.value('hello');
@@ -87,5 +108,6 @@ describe('Integrations test', () => {
                 }),
             );
         });
+      });
     });
 });

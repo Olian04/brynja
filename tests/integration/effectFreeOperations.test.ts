@@ -14,26 +14,30 @@ describe('Integrations test', () => {
     });
 
     describe('Effect free operations', ()  => {
-        it('peek', () => {
+        it('peek should return correct vdom data for root builder', () => {
             render((_) => _
                 .peek((ctx) => {
                     const expected = { tag: 'div', value: null,  text: '', events: {}, props: {}, children: [] };
                     expect(ctx).to.deep.equal(expected);
                 })
-                .child('foobar', (_) => _
-                    .peek((ctx) => {
-                        const expected = {
-                            tag: 'foobar',
-                            value: null,
-                            text: '',
-                            events: {},
-                            props: {},
-                            children: [],
-                        };
-                        expect(ctx).to.deep.equal(expected);
-                    }),
-                ),
             );
         });
+        it('peek should return correct vdom data for child builder', () => {
+          render((_) => _
+              .child('foobar', (_) => _
+                  .peek((ctx) => {
+                      const expected = {
+                          tag: 'foobar',
+                          value: null,
+                          text: '',
+                          events: {},
+                          props: {},
+                          children: [],
+                      };
+                      expect(ctx).to.deep.equal(expected);
+                  }),
+              ),
+          );
+      });
     });
 });

@@ -35,18 +35,18 @@ describe('Integrations test', () => {
 
 
     describe('Nesting operations', () => {
-        it('root', () => {
+        it('root build context should pass test builder', () => {
             expect(typeof render).to.equal('function');
             render(testBuilder);
         });
 
-        it('child', () => {
+        it('child builder context should pass test builder', () => {
             render((_) => _
                 .child('div', testBuilder),
             );
         });
 
-        it('children - number', () => {
+        it('each children builder context should pass test builder - number', () => {
             const targetCount = 3;
             let counter = 0;
             render((_) => _
@@ -59,7 +59,7 @@ describe('Integrations test', () => {
             expect(counter).to.equal(targetCount);
         });
 
-        it('children - array', () => {
+        it('each children builder context should pass test builder - array', () => {
             const items = ['a', 'b', 'c'];
             let index = 0;
             render((_) => _
@@ -72,7 +72,7 @@ describe('Integrations test', () => {
             expect(index).to.equal(items.length);
         });
 
-        it('child update', () => {
+        it('should update single child correctly when calling render twice with different builders', () => {
           const conf = {
               rootElement: document.createElement('div'),
           };
