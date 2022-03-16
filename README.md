@@ -1,15 +1,9 @@
+[![NPM Version](https://img.shields.io/npm/v/brynja.svg?logo=npm)](https://www.npmjs.com/package/brynja)
+[![Size](https://img.shields.io/bundlephobia/minzip/brynja)](https://bundlephobia.com/result?p=brynja)
+![Available types](https://img.shields.io/npm/types/brynja.svg)
+[![License](https://img.shields.io/npm/l/brynja.svg)](LICENSE)
 [![CircleCI](https://img.shields.io/circleci/project/github/Olian04/brynja.svg?label=tests&logo=circleci)](https://circleci.com/gh/Olian04/brynja)
 [![Test coverage](https://img.shields.io/codecov/c/gh/Olian04/brynja.svg?logo=codecov)](https://codecov.io/gh/Olian04/brynja)
-[![Maintainability](https://api.codeclimate.com/v1/badges/0f31d9a1d3596ee82859/maintainability)](https://codeclimate.com/github/Olian04/brynja/maintainability)
-[![Known Vulnerabilities](https://snyk.io/test/github/Olian04/brynja/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Olian04/brynja?targetFile=package.json)
-
-[![NPM Version](https://img.shields.io/npm/v/brynja.svg?logo=npm)](https://www.npmjs.com/package/brynja)
-[![License](https://img.shields.io/npm/l/brynja.svg)](LICENSE)
-![Available types](https://img.shields.io/npm/types/brynja.svg)
-[![Size](https://img.shields.io/bundlephobia/min/brynja.svg)](https://bundlephobia.com/result?p=brynja)
-
- [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/olian04/brynja/issues)
- [![# of contributors](https://img.shields.io/github/contributors/olian04/brynja.svg)](https://github.com/Olian04/brynja/graphs/contributors)
 
 ![Logo](https://raw.githubusercontent.com/Olian04/brynja/master/assets/brynja_logo.png)
 
@@ -17,7 +11,7 @@
 
 # Why Brynja
 
-* It's small.
+* It's small. Less than 4kb gzipped.
 * It requires NO transpilation, everything runs as is in the browser.
 * Everything is 100% typed and ready for Typescript!
 
@@ -46,15 +40,15 @@ Please ⭐️ this repository!
 # Demos
 
 * Hello World: <https://jsfiddle.net/olian04/kcfserx5/>
-* Table generation: <https://jsfiddle.net/olian04/4feazykx/>
-* Updates: <https://jsfiddle.net/olian04/6tnLbvaz/>
-* User input: <https://jsfiddle.net/olian04/jwqa6Le1/40/>
-* Probabilistic Propagation: <https://jsfiddle.net/olian04/bL0hjrd5/>
+* Table generation: <https://jsfiddle.net/yvmaue6x/1/>
+* Updates: <https://jsfiddle.net/hrnxq01d/4/>
+* User input: <https://jsfiddle.net/gapu4dh5/2/>
+* Probabilistic Propagation: <https://jsfiddle.net/ebh7z13y/4/>
 * Interpolation animation:
-  1. <https://jsfiddle.net/olian04/7ub58xj4/>
-  2. <https://jsfiddle.net/olian04/9cnjofv1/>
-  3. <https://jsfiddle.net/olian04/9cnjofv1/16/>
-* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/olian04/mu5sz029/25/>
+  1. <https://jsfiddle.net/2qg7dkwx/2/>
+  2. <https://jsfiddle.net/t2zrf61o/2/>
+  3. <https://jsfiddle.net/4u0f1mcz/3/>
+* With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
 
 # Setup - Hello World
 
@@ -109,7 +103,7 @@ In brynja, method that are exposed on the chaining api is referred to as _operat
 - [Control flow operations](#control-flow-operations)
   - [.when(booleanExpression, then_ctx, else_ctx?)](#whenbooleanexpression-then_ctx-else_ctx)
   - [.while(predicate, ctx)](#whilepredicate-ctx)
-  - [.do(...ctx[])](#doctx)
+  - [.do(ctx)](#doctx)
 - [Effect free operations](#effect-free-operations)
   - [.peek(callback)](#peekcallback)
 
@@ -352,7 +346,7 @@ render(_=>_
 </div>
 ```
 
-### .do(...ctx[])
+### .do(ctx)
 
 ```ts
 import { createComponent } from 'brynja';
