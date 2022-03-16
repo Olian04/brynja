@@ -146,8 +146,8 @@ export function buildNode(
     },
     do(...builders: BuilderCB[]) {
       builders.forEach((builder) => {
+        /* istanbul ignore if */
         if (typeof builder !== 'function') {
-          /* istanbul ignore next */
           throw new TypeError(
             `Brynja: Expected all arguments of "do" operation to be functions, but received ${typeof builder}`,
           );
@@ -180,8 +180,8 @@ export function buildNode(
     },
     class(...valuesArr: string[]) {
       valuesArr.forEach((className) => {
+        /* istanbul ignore if */
         if (typeof className !== 'string') {
-          /* istanbul ignore next */
           throw new TypeError(
             `Brynja: Expected all arguments of "class" operation to be strings, but received ${typeof className}`,
           );
@@ -215,12 +215,12 @@ export function buildNode(
           events: ctx.events,
           children: new Proxy([], {
             get: (__, key: any) => {
+              /* istanbul ignore else */
               if (key === 'length') {
                 return ctx.children.length;
               } else if (!isNaN(parseFloat(key.toString()))) {
                 return ctxProxy(ctx.children[key as number]);
               } else {
-                /* istanbul ignore next */
                 throw new Error('Brynja: Illegal operation');
               }
             },
