@@ -22,6 +22,19 @@ describe('Integrations test', () => {
                 })
             );
         });
+        it('peek should be able to access vdom of children', () => {
+          render((_) => _
+              .children('div', 3, (_,i)=>_
+                .text(i)
+              )
+              .peek((ctx) => {
+                expect(ctx.children.length).to.equal(3);
+                expect(ctx.children[0].text).to.equal('0');
+                expect(ctx.children[1].text).to.equal('1');
+                expect(ctx.children[2].text).to.equal('2');
+              })
+          );
+      });
         it('peek should return correct vdom data for child builder', () => {
           render((_) => _
               .child('foobar', (_) => _

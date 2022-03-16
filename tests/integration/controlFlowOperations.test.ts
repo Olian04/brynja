@@ -51,6 +51,15 @@ describe('Integrations test', () => {
               .when(false,  () => expect.fail(), testBuilder),
           );
         });
+        it('ELSE builder should be optional', () => {
+          try {
+            render((_) => _
+                .when(true, _=>_)
+            );
+          } catch {
+            expect.fail();
+          }
+      });
       });
 
       describe('while', () => {
