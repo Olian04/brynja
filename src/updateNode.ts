@@ -61,7 +61,7 @@ export function updateNode(
   }
   for (const prop in newNode.props) {
     if (oldNode.props[prop] === newNode.props[prop]) { continue; }
-    
+
     // @ts-ignore
     elem.setAttribute(prop, newNode.props[prop]);
   }
