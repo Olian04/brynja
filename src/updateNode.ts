@@ -54,7 +54,7 @@ export function updateNode(
 
   // #region Update props
   for (const prop in oldNode.props) {
-    if (prop in newNode.events) { continue; }
+    if (prop in newNode.props) { continue; }
 
     // @ts-ignore
     elem.removeAttribute(prop);
