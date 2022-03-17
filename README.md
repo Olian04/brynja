@@ -288,12 +288,12 @@ render(_=>_
 
 ```html
 <div><!--Root-->
-  <div class="brynja-d047bd7b6186cdc860a6348471743d9f76adfafa">Hello</div>
+  <div class="brynja-k8xf37">Hello</div>
   <style>
-    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa {
+    .brynja-k8xf37 {
       background:  blue;
     }
-    .brynja-d047bd7b6186cdc860a6348471743d9f76adfafa:hover {
+    .brynja-k8xf37:hover {
       background:  red;
     }
   </style>
