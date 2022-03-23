@@ -2,6 +2,8 @@ import { IBuilderCTX } from './interfaces/BuilderCTX';
 import { IStyleObject } from './interfaces/StyleObject';
 import { IStyles } from './interfaces/Styles';
 import { VNode } from './interfaces/VNode';
+import { BrynjaError } from './util/BrynjaError';
+import { BrynjaTypeError } from './util/BrynjaTypeError';
 import { objHash } from './util/hash';
 
 /* istanbul ignore next */ // istanbul doesn't recognize this function as covered by tests, even though it clearly is
@@ -21,12 +23,16 @@ const naiveTypeCheck = <T>(
   expectedType: string,
   argumentValue: T,
 ) => {
-  /* istanbul ignore if */
-  if (typeof argumentValue !== expectedType) {
-    throw new TypeError(
-      `Brynja: Expected ${argumentPosition} argument of "${operationName}" operation to be of type ${expectedType}, but received ${typeof argumentValue}`,
-    );
+  const isArray = Array.isArray(argumentValue);
+  if (expectedType === 'array' && isArray) {
+    return;
   }
+  if (typeof argumentValue === expectedType && !isArray) {
+    return;
+  }
+  throw new BrynjaTypeError(
+    `Expected ${argumentPosition} argument of "${operationName}" operation to be of type ${expectedType}, but received ${typeof argumentValue}`,
+  );
 }
 
 const serializableTypeCheck = <T>(
@@ -35,11 +41,10 @@ const serializableTypeCheck = <T>(
   argumentValue: T
 ) => {
   try {
-    String(argumentValue)
+    JSON.stringify(argumentValue)
   } catch {
-    /* istanbul ignore next */
-    throw new TypeError(
-      `Brynja: Expected ${argumentPosition} argument of "${operationName}" operation to be serializable.`,
+    throw new BrynjaTypeError(
+      `Expected ${argumentPosition} argument of "${operationName}" operation to be serializable.`,
     );
   }
 }
@@ -91,8 +96,8 @@ export function buildNode(
       naiveTypeCheck('child', 'first', 'string', tagType);
       /* istanbul ignore if */
       if (typeof countOrArray !== 'number' && !Array.isArray(countOrArray)) {
-        throw new TypeError(
-          `Brynja: Expected second argument of "child" operation to be of type number or array, but received ${typeof countOrArray}`,
+        throw new BrynjaTypeError(
+          `Expected second argument of "child" operation to be of type number or array, but received ${typeof countOrArray}`,
         );
       }
       naiveTypeCheck('child', 'third', 'function', builder);
@@ -148,8 +153,8 @@ export function buildNode(
       builders.forEach((builder) => {
         /* istanbul ignore if */
         if (typeof builder !== 'function') {
-          throw new TypeError(
-            `Brynja: Expected all arguments of "do" operation to be functions, but received ${typeof builder}`,
+          throw new BrynjaTypeError(
+            `Expected all arguments of "do" operation to be functions, but received ${typeof builder}`,
           );
         }
 
@@ -182,8 +187,8 @@ export function buildNode(
       valuesArr.forEach((className) => {
         /* istanbul ignore if */
         if (typeof className !== 'string') {
-          throw new TypeError(
-            `Brynja: Expected all arguments of "class" operation to be strings, but received ${typeof className}`,
+          throw new BrynjaTypeError(
+            `Expected all arguments of "class" operation to be strings, but received ${typeof className}`,
           );
         }
       });
@@ -221,7 +226,7 @@ export function buildNode(
               } else if (!isNaN(parseFloat(key.toString()))) {
                 return ctxProxy(ctx.children[key as number]);
               } else {
-                throw new Error('Brynja: Illegal operation');
+                throw new BrynjaError('Illegal operation');
               }
             },
           }),

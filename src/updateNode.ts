@@ -1,5 +1,6 @@
 import { VNode } from './interfaces/VNode';
 import { renderNode } from './renderNode';
+import { BrynjaError } from './util/BrynjaError';
 
 const TEXT_NODE = 3; // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
 
@@ -37,8 +38,8 @@ export function updateNode(
   } else if (oldNode.text !== '') {
     /* istanbul ignore if */
     if (elem.firstChild === null || elem.firstChild.nodeType !== TEXT_NODE) {
-      throw new Error(
-        'Brynja: Unexpected "none text node" as first child of element: ' + elem,
+      throw new BrynjaError(
+        'Unexpected "none text node" as first child of element: ' + elem,
       );
     }
 
@@ -104,8 +105,8 @@ export function updateNode(
     const childElement = elem.children.item(firstInvalidIndex);
     /* istanbul ignore if */
     if (childElement === null) {
-      throw new Error(
-        `Brynja: Unexpected invalid child element while removing excess children from element: ${elem}`,
+      throw new BrynjaError(
+        `Unexpected invalid child element while removing excess children from element: ${elem}`,
       );
     }
     childElement.remove();
