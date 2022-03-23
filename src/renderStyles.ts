@@ -1,4 +1,4 @@
-import { paramCase } from 'param-case';
+import { paramCase } from './lib/paramCase';
 import { IStyleObject } from './interfaces/StyleObject';
 import { IStyles } from './interfaces/Styles';
 

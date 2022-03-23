@@ -55,12 +55,14 @@ export function updateNode(
 
   // #region Update props
   for (const prop in oldNode.props) {
-    if (prop in newNode.events) { continue; }
+    if (prop in newNode.props) { continue; }
 
     // @ts-ignore
     elem.removeAttribute(prop);
   }
   for (const prop in newNode.props) {
+    if (oldNode.props[prop] === newNode.props[prop]) { continue; }
+
     // @ts-ignore
     elem.setAttribute(prop, newNode.props[prop]);
   }
