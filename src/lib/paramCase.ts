@@ -49,13 +49,7 @@ export const paramCase = (input: string) => {
         stripRegexp,
         '\0'
     );
-    let start = 0;
-    let end = result.length;
-
-    // Trim the delimiter from around the output string.
-    while (result.charAt(start) === '\0') start++;
-    while (result.charAt(end - 1) === '\0') end--;
 
     // Transform each token independently.
-    return result.slice(start, end).split('\0').map(transform).join(delimiter);
+    return result.split('\0').map(transform).join(delimiter);
 }
