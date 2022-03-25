@@ -24,7 +24,12 @@ const naiveTypeCheck = <T>(
   argumentValue: T,
 ) => {
   const isArray = Array.isArray(argumentValue);
+  /* istanbul ignore if */
   if (expectedType === 'array' && isArray) {
+    /*
+    Note: There are no calls to "naiveTypeCheck(str, str, 'array', val)" in any operation.
+    However this type check is needed for completeness sake.
+    */
     return;
   }
   if (typeof argumentValue === expectedType && !isArray) {
@@ -62,6 +67,7 @@ export function buildNode(
   const builderCtx: IBuilderCTX = {
     style(styleObject: IStyleObject) {
       naiveTypeCheck('style', 'first', 'object', styleObject);
+      serializableTypeCheck('style', 'first', styleObject);
 
       const styleHash = objHash(styleObject);
       styles[styleHash] = styleObject;
@@ -94,7 +100,6 @@ export function buildNode(
       builder: (ctx: IBuilderCTX, i: number | T) => void,
     ) {
       naiveTypeCheck('child', 'first', 'string', tagType);
-      /* istanbul ignore if */
       if (typeof countOrArray !== 'number' && !Array.isArray(countOrArray)) {
         throw new BrynjaTypeError(
           `Expected second argument of "child" operation to be of type number or array, but received ${typeof countOrArray}`,
@@ -151,7 +156,6 @@ export function buildNode(
     },
     do(...builders: BuilderCB[]) {
       builders.forEach((builder) => {
-        /* istanbul ignore if */
         if (typeof builder !== 'function') {
           throw new BrynjaTypeError(
             `Expected all arguments of "do" operation to be functions, but received ${typeof builder}`,
@@ -185,7 +189,6 @@ export function buildNode(
     },
     class(...valuesArr: string[]) {
       valuesArr.forEach((className) => {
-        /* istanbul ignore if */
         if (typeof className !== 'string') {
           throw new BrynjaTypeError(
             `Expected all arguments of "class" operation to be strings, but received ${typeof className}`,
@@ -212,7 +215,7 @@ export function buildNode(
       naiveTypeCheck('peek', 'first', 'function', callback);
 
       function ctxProxy(ctx: VNode): VNode {
-        return {
+        return Object.freeze({
           tag: ctx.tag,
           text: ctx.text,
           value: ctx.value,
@@ -220,17 +223,16 @@ export function buildNode(
           events: ctx.events,
           children: new Proxy([], {
             get: (__, key: any) => {
-              /* istanbul ignore else */
               if (key === 'length') {
                 return ctx.children.length;
               } else if (!isNaN(parseFloat(key.toString()))) {
                 return ctxProxy(ctx.children[key as number]);
               } else {
-                throw new BrynjaError('Illegal operation');
+                throw new BrynjaError(`Illegal operation "${key}". Peek children is a read-only array which exposes integer indices and the "length" property.`);
               }
             },
           }),
-        };
+        });
       }
       callback(ctxProxy(ctx));
       return this;

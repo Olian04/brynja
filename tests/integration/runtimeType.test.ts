@@ -44,6 +44,18 @@ const prepareRuntimeTypeChecks = (operation: keyof IBuilderCTX) => {
   }
 }
 
+const Some = {
+  number: 42,
+  string: 'foo',
+  object: {},
+  array: [],
+  boolean: true,
+  function:  () => {},
+  regex: / /i,
+  circularReferencingObject: { circularRef: {} as object },
+};
+Some.circularReferencingObject.circularRef = Some.circularReferencingObject;
+
 describe('Integrations test', () => {
   jsdom();
 
@@ -70,116 +82,226 @@ describe('Integrations test', () => {
     });
 
     describe('Operations', () => {
+      it('peek', () => {
+        const { expectFail, expectSuccess } = prepareRuntimeTypeChecks('peek');
+        expectSuccess(Some.function);
+        expectFail(Some.number);
+        expectFail(Some.string);
+        expectFail(Some.object);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail();
+      });
       it('id', () => {
         const { expectFail, expectSuccess } = prepareRuntimeTypeChecks('id');
-        expectSuccess('someString');
-        expectFail(42);
-        expectFail(() => {});
-        expectFail({});
-        expectFail(true);
-        expectFail([]);
+        expectSuccess(Some.string);
+        expectFail(Some.number);
+        expectFail(Some.function);
+        expectFail(Some.object);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail();
       });
       it('value', () => {
         const { expectSuccess } = prepareRuntimeTypeChecks('value');
-        expectSuccess('someString');
-        expectSuccess(42);
-        expectSuccess(() => {});
-        expectSuccess({});
-        expectSuccess(true);
-        expectSuccess([]);
+        expectSuccess(Some.string);
+        expectSuccess(Some.number);
+        expectSuccess(Some.function);
+        expectSuccess(Some.object);
+        expectSuccess(Some.boolean);
+        expectSuccess(Some.array);
+        expectSuccess(Some.circularReferencingObject);
+        expectSuccess();
       });
       it('text', () => {
         const { expectFail, expectSuccess } = prepareRuntimeTypeChecks('text');
-        expectSuccess('someString');
-        expectSuccess(42);
-        expectSuccess(() => {});
-        expectSuccess({});
-        expectSuccess(true);
-        expectSuccess([]);
-
-        const a = { circularRef: {} as object };
-        a.circularRef = a;
-        expectFail(a);
+        expectSuccess(Some.string);
+        expectSuccess(Some.number);
+        expectSuccess(Some.function);
+        expectSuccess(Some.object);
+        expectSuccess(Some.boolean);
+        expectSuccess(Some.array);
+        expectSuccess();
+        expectFail(Some.circularReferencingObject);
       });
       it('on', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('on');
-        expectFail('someEvent', 42);
-        expectFail('someEvent', 'foo');
-        expectFail('someEvent', {});
-        expectFail('someEvent', true);
-        expectFail('someEvent', []);
+        const { expectFail, expectSuccess } = prepareRuntimeTypeChecks('on');
+        expectSuccess(Some.string, Some.function);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.object, Some.function);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.boolean, Some.function);
+        expectFail(Some.array, Some.function);
+        expectFail(Some.string);
+        expectFail(Some.string, Some.number);
+        expectFail(Some.string, Some.string);
+        expectFail(Some.string, Some.object);
+        expectFail(Some.string, Some.boolean);
+        expectFail(Some.string, Some.array);
+        expectFail();
       });
       it('prop', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('prop');
-        // TODO: Add expectSuccess tests
-        const a = { circularRef: {} as object };
-        a.circularRef = a;
-        expectFail('prop', 'someProp', a);
+        const { expectSuccess, expectFail } = prepareRuntimeTypeChecks('prop');
+        expectSuccess(Some.string, Some.string);
+        expectSuccess(Some.string, Some.number);
+        expectSuccess(Some.string, Some.function);
+        expectSuccess(Some.string, Some.object);
+        expectSuccess(Some.string, Some.boolean);
+        expectSuccess(Some.string, Some.array);
+        expectFail(Some.number, Some.string);
+        expectFail(Some.object, Some.string);
+        expectFail(Some.number, Some.string);
+        expectFail(Some.boolean, Some.string);
+        expectFail(Some.array, Some.string);
+        expectFail(Some.string, Some.circularReferencingObject);
+        expectFail();
       });
       it('do', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('do');
-        // TODO: Add expectSuccess tests
-        expectFail(42);
-        expectFail({});
-        expectFail(true);
-        expectFail([]);
-        expectFail(() => {}, 42);
-        expectFail(() => {}, {});
-        expectFail(() => {}, true);
-        expectFail(() => {}, []);
-        expectFail(42, () => {},);
-        expectFail({}, () => {},);
-        expectFail(true, () => {},);
-        expectFail([], () => {},);
+        const { expectSuccess, expectFail } = prepareRuntimeTypeChecks('do');
+        expectSuccess(Some.function);
+        expectSuccess(Some.function, Some.function);
+        expectSuccess(Some.function, Some.function, Some.function);
+        expectSuccess(...Array(100).fill(Some.function));
+        expectSuccess();
+        expectFail(Some.number);
+        expectFail(Some.object);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail(Some.function, Some.number);
+        expectFail(Some.function, Some.object);
+        expectFail(Some.function, Some.boolean);
+        expectFail(Some.function, Some.array);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.object, Some.function);
+        expectFail(Some.boolean, Some.function);
+        expectFail(Some.array, Some.function);
       });
       it('style', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('style');
-        // TODO: Add expectSuccess tests
-        expectFail(42);
-        expectFail('foo');
-        expectFail(() => {});
-        expectFail(true);
-        expectFail([]);
+        const { expectSuccess, expectFail } = prepareRuntimeTypeChecks('style');
+        expectSuccess(Some.object);
+        expectFail(Some.circularReferencingObject);
+        expectFail(Some.number);
+        expectFail(Some.string);
+        expectFail(Some.function);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail();
       });
       it('name', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('name');
-        // TODO: Add expectSuccess tests
-        expectFail(42);
-        expectFail('foo');
-        expectFail(() => {});
-        expectFail(true);
-        expectFail([]);
-      });
-      it('when', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('when');
-        // TODO: Add expectSuccess tests
-        expectFail(42, () => {});
-        expectFail('', () => {});
-        expectFail(() => {}, () => {});
-        expectFail({}, () => {});
-        expectFail([], () => {});
-        expectFail(true, true);
-        expectFail(true, 'foo');
-        expectFail(true, 42);
-        expectFail(true, []);
-        expectFail(true, {});
-        expectFail(true, () => {}, true);
-        expectFail(true, () => {}, 'foo');
-        expectFail(true, () => {}, 42);
-        expectFail(true, () => {}, []);
-        expectFail(true, () => {}, {});
+        const { expectSuccess, expectFail } = prepareRuntimeTypeChecks('name');
+        expectSuccess(Some.string);
+        expectFail(Some.number);
+        expectFail(Some.function);
+        expectFail(Some.boolean);
+        expectFail(Some.object);
+        expectFail(Some.array);
+        expectFail();
       });
       it('class', () => {
-        const { expectFail } = prepareRuntimeTypeChecks('class');
-        // TODO: Add expectSuccess tests
-        expectFail(42);
-        expectFail(() => {});
-        expectFail({});
-        expectFail(true);
-        expectFail([]);
-        expectFail('', 42);
-        expectFail(42, '');
-        expectFail('', 42, '');
+        const {  expectSuccess, expectFail } = prepareRuntimeTypeChecks('class');
+        expectSuccess(Some.string);
+        expectSuccess(Some.string, Some.string);
+        expectSuccess(Some.string, Some.string, Some.string);
+        expectSuccess(...Array(100).fill(Some.string));
+        expectSuccess();
+        expectFail(Some.number);
+        expectFail(Some.function);
+        expectFail(Some.object);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail(Some.string, Some.number);
+        expectFail(Some.number, Some.string);
+        expectFail(Some.string, Some.number, Some.string);
+      });
+      it('when', () => {
+        const {  expectSuccess, expectFail } = prepareRuntimeTypeChecks('when');
+        expectSuccess(Some.boolean, Some.function);
+        expectSuccess(Some.boolean, Some.function, Some.function);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.string, Some.function);
+        expectFail(Some.function, Some.function);
+        expectFail(Some.object, Some.function);
+        expectFail(Some.array, Some.function);
+        expectFail(Some.boolean, Some.boolean);
+        expectFail(Some.boolean, Some.string);
+        expectFail(Some.boolean, Some.number);
+        expectFail(Some.boolean, Some.array);
+        expectFail(Some.boolean, Some.object);
+        expectFail(Some.boolean, Some.function, Some.boolean);
+        expectFail(Some.boolean, Some.function, Some.string);
+        expectFail(Some.boolean, Some.function, Some.number);
+        expectFail(Some.boolean, Some.function, Some.array);
+        expectFail(Some.boolean, Some.function, Some.object);
+        expectFail();
+      });
+      it('while', () => {
+        const {  expectSuccess, expectFail } = prepareRuntimeTypeChecks('while');
+        expectSuccess(Some.function, Some.function);
+        expectFail(Some.function, Some.number);
+        expectFail(Some.function, Some.boolean);
+        expectFail(Some.function, Some.array);
+        expectFail(Some.function, Some.object);
+        expectFail(Some.function, Some.string);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.boolean, Some.function);
+        expectFail(Some.array, Some.function);
+        expectFail(Some.object, Some.function);
+        expectFail(Some.string, Some.function);
+        expectFail(Some.function);
+        expectFail(Some.number);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail(Some.object);
+        expectFail(Some.string);
+        expectFail();
+      });
+      it('child', () => {
+        const {  expectSuccess, expectFail } = prepareRuntimeTypeChecks('child');
+        expectSuccess(Some.string, Some.function);
+        expectFail(Some.string);
+        expectFail(Some.function);
+        expectFail(Some.number);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail(Some.object);
+        expectFail(Some.function, Some.function);
+        expectFail(Some.number, Some.function);
+        expectFail(Some.boolean, Some.function);
+        expectFail(Some.array, Some.function);
+        expectFail(Some.object, Some.function);
+      });
+      it('children', () => {
+        const {  expectSuccess, expectFail } = prepareRuntimeTypeChecks('children');
+        expectSuccess(Some.string, Some.number, Some.function);
+        expectSuccess(Some.string, Some.array, Some.function);
+        expectFail(Some.string);
+        expectFail(Some.function);
+        expectFail(Some.number);
+        expectFail(Some.boolean);
+        expectFail(Some.array);
+        expectFail(Some.object);
+        expectFail(Some.string, Some.number);
+        expectFail(Some.function, Some.number);
+        expectFail(Some.number, Some.number);
+        expectFail(Some.boolean, Some.number);
+        expectFail(Some.array, Some.number);
+        expectFail(Some.object, Some.number);
+        expectFail(Some.string, Some.array);
+        expectFail(Some.function, Some.array);
+        expectFail(Some.number, Some.array);
+        expectFail(Some.boolean, Some.array);
+        expectFail(Some.array, Some.array);
+        expectFail(Some.object, Some.array);
+        expectFail(Some.function, Some.number, Some.function);
+        expectFail(Some.number, Some.number, Some.function);
+        expectFail(Some.boolean, Some.number, Some.function);
+        expectFail(Some.array, Some.number, Some.function);
+        expectFail(Some.object, Some.number, Some.function);
+        expectFail(Some.function, Some.array, Some.function);
+        expectFail(Some.number, Some.array, Some.function);
+        expectFail(Some.boolean, Some.array, Some.function);
+        expectFail(Some.array, Some.array, Some.function);
+        expectFail(Some.object, Some.array, Some.function);
       });
     });
   });
