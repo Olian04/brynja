@@ -40,6 +40,7 @@ Please ⭐️ this repository!
 # Demos
 
 * Hello World: <https://jsfiddle.net/olian04/kcfserx5/>
+* TODO App: <https://jsfiddle.net/psen89bL/37/>
 * Table generation: <https://jsfiddle.net/yvmaue6x/1/>
 * Updates: <https://jsfiddle.net/hrnxq01d/4/>
 * User input: <https://jsfiddle.net/gapu4dh5/2/>
