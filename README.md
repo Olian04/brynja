@@ -49,7 +49,7 @@ Please ⭐️ this repository!
   1. <https://jsfiddle.net/2qg7dkwx/2/>
   2. <https://jsfiddle.net/t2zrf61o/2/>
   3. <https://jsfiddle.net/4u0f1mcz/3/>
-  4. <https://jsfiddle.net/dkn521ea/13/>
+  4. <https://jsfiddle.net/dkn521ea/27/>
 * With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
 
 # Setup - Hello World
