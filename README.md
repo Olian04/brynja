@@ -51,6 +51,7 @@ Please ⭐️ this repository!
   3. <https://jsfiddle.net/4u0f1mcz/3/>
   4. <https://jsfiddle.net/dkn521ea/27/>
 * With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
+* With [simply-reactive](https://github.com/Olian04/simply-reactive): <https://jsfiddle.net/rb4xc25f/47/>
 
 # Setup - Hello World
 
