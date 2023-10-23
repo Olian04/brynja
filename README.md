@@ -45,10 +45,7 @@ Please ⭐️ this repository!
 * Updates: <https://jsfiddle.net/hrnxq01d/4/>
 * User input: <https://jsfiddle.net/gapu4dh5/2/>
 * Probabilistic Propagation: <https://jsfiddle.net/ebh7z13y/4/>
-* Interpolation animation:
-  1. <https://jsfiddle.net/2qg7dkwx/2/>
-  2. <https://jsfiddle.net/t2zrf61o/2/>
-  3. <https://jsfiddle.net/4u0f1mcz/3/>
+* Interpolation animation: <https://jsfiddle.net/t2zrf61o/2/>
 * Aim Trainer Game: <https://jsfiddle.net/olian04/fxz53wcy/240/>
 * With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
 * With [simply-reactive](https://github.com/Olian04/simply-reactive): <https://jsfiddle.net/rb4xc25f/47/>
