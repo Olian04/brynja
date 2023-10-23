@@ -39,14 +39,12 @@ Please ⭐️ this repository!
 
 # Demos
 
-* Hello World: <https://jsfiddle.net/olian04/kcfserx5/>
-* TODO App: <https://jsfiddle.net/psen89bL/37/>
+* Hello World: <https://jsfiddle.net/olian04/kcfserx5/216/>
+* Counting: <https://jsfiddle.net/hrnxq01d/4/>
 * Table generation: <https://jsfiddle.net/yvmaue6x/1/>
-* Updates: <https://jsfiddle.net/hrnxq01d/4/>
-* User input: <https://jsfiddle.net/gapu4dh5/2/>
 * Probabilistic Propagation: <https://jsfiddle.net/ebh7z13y/4/>
 * Interpolation animation: <https://jsfiddle.net/t2zrf61o/2/>
-* Aim Trainer Game: <https://jsfiddle.net/olian04/fxz53wcy/240/>
+* Aim trainer game: <https://jsfiddle.net/olian04/fxz53wcy/240/>
 * With [html-router](https://github.com/Olian04/html-router): <https://jsfiddle.net/ao941b5r/1/>
 * With [simply-reactive](https://github.com/Olian04/simply-reactive): <https://jsfiddle.net/rb4xc25f/47/>
 
